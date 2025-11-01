@@ -1,0 +1,232 @@
+/* ==========  VARIABLES  ========== */
+:root {
+  --primary-bg: #1e1e1e;
+  --secondary-bg: #2b2b2b;
+  --container-bg: rgba(42, 42, 42, 0.85);
+  --text-color: #e0e0e0;
+  --border-color: #444;
+  --accent-color: #ffffff;
+  --disabled-color: #555;
+  --hover-color: #575757;
+  --border-radius: 8px;
+}
+
+/* ==========  LOCAL DIGITAL FONT  ========== */
+@font-face {
+  font-family: 'DigitalPlay';
+  src: url('digitalplay.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* ==========  GLOBAL FONT  ========== */
+* {
+  font-family: Papyrus, fantasy;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* ==========  RESET + BASE  ========== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+  color: var(--text-color);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ==========  HIDE DEFAULT CURSOR  ========== */
+*, *::before, *::after {
+  cursor: none !important;
+}
+
+/* ==========  BACKGROUND  ========== */
+#bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  pointer-events: none;
+  filter: brightness(0.95);
+  z-index: 0;
+}
+
+/* ==========  WRAPPER  ========== */
+.center-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 1vh;
+}
+
+/* ==========  LOGO  ========== */
+.title-video {
+  max-height: 20vh;
+  margin-bottom: 1vh;
+  pointer-events: none;
+}
+
+/* ==========  MAIN CARD  ========== */
+.container {
+  width: 90vw;
+  max-width: 550px;
+  padding: 1.5rem 2rem;
+  background: var(--container-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  text-align: center;
+}
+
+/* ==========  FORM CONTROLS  ========== */
+input, textarea, button, .dropbtn {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  background: var(--primary-bg);
+  color: var(--text-color);
+  transition: background 0.25s ease;
+}
+input { width: 100%; }
+textarea {
+  width: 100%;
+  min-height: 18vh;
+  max-height: 25vh;
+  resize: none;
+}
+::placeholder {
+  font-family: Papyrus, fantasy;
+}
+
+/* ==========  DROPDOWN  ========== */
+.dropdown { position: relative; }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  min-width: 160px;
+  z-index: 10;
+}
+.dropdown-content a {
+  display: block;
+  padding: 0.6rem 1rem;
+  color: var(--text-color);
+  text-decoration: none;
+}
+.dropdown-content a:hover { background: var(--hover-color); }
+.dropdown.show .dropdown-content { display: block; }
+
+/* ==========  BUTTONS  ========== */
+button { cursor: pointer; }
+button:hover:not(:disabled) { background: var(--hover-color); }
+button:disabled { background: var(--disabled-color); cursor: not-allowed; }
+#copyBtn { background: var(--border-color); }
+
+/* ==========  SIDE-BY-SIDE BUTTON GROUP  ========== */
+.button-group.side {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  justify-content: center;
+}
+
+/* ==========  PROGRESS  ========== */
+#progress-container {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.1); /* faint background track */
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 5px 0 1px 0;
+}
+
+#progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: var(--accent-color);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 8px var(--accent-color);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+/* ==========  STATUS + COPY  ========== */
+#status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #444; /* always readable */
+  font-weight: 700;
+  font-family: Papyrus, fantasy;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  pointer-events: none;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.9); /* soft glow for visibility */
+}
+
+/* ========== TIMER STYLE ========== */
+#timer {
+  font-family: 'DigitalPlay', monospace;
+  font-weight: 700;
+  font-size: 3rem;
+  color: var(--accent-color);
+  text-shadow: 0 0 10px var(--accent-color);
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+#timer #colon {
+  font: inherit;
+  color: inherit;
+  text-shadow: inherit;
+  line-height: 1;
+  display: inline-block;
+  width: 0.6ch;
+  transition: opacity 0.25s ease-in-out;
+  vertical-align: middle;
+}
+
+
+/* ==========  DISCLAIMER  ========== */
+.disclaimer {
+  font-size: 0.65rem;
+  line-height: 1.3;
+  color: #aaa;
+  text-align: center;
+  width: 90vw;
+  max-width: 550px;
+  margin-top: 1vh;
+}
+
+/* ==========  CURSOR  ========== */
+.custom-cursor {
+  position: fixed;
+  width: 96px;
+  height: 96px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-24px, -24px);
+}

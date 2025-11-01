@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Shorts2Text — Instantly transcribe and extract captions from Reels, TikToks, and YouTube Shorts." />
+  <!-- Content Security Policy: Helps prevent XSS attacks -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' http://127.0.0.1:5000;" />
+  <title>Shorts 2 Text</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.ico" />
+  <meta name="theme-color" content="#000000" />
+</head>
+<body>
+
+  <!-- BACKGROUND -->
+  <video autoplay muted loop playsinline preload="auto" id="bg-video">
+    <source src="JellyDarkMode12.webm" type="video/webm">
+    <source src="JellyDarkMode12.mp4" type="video/mp4">
+  </video>
+
+  <!-- MAIN WRAPPER -->
+  <div class="center-wrapper">
+    <!-- LOGO -->
+    <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo">
+      <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
+      <source src="Shorts2Text02Pixelated02.mp4" type="video/mp4">
+    </video>
+
+    <!-- APP CONTAINER -->
+    <div class="container">
+      <input id="url" placeholder="Paste Reel / TikTok / YouTube link here" aria-label="Video link input" type="url" />
+
+      <div class="button-group side">
+        <div class="dropdown">
+          <button id="dropdownBtn" class="dropbtn" aria-haspopup="true" aria-expanded="false">Plain Text ▼</button>
+          <div class="dropdown-content" id="dropdownMenu">
+            <a href="#" data-value="plain">Plain Text</a>
+            <a href="#" data-value="timestamps">With Timestamps</a>
+          </div>
+        </div>
+        <button id="transcribeBtn" disabled>Transcribe</button>
+      </div>
+
+      <div id="progress-container">
+        <div id="progress-bar"></div>
+        <span id="status">Enter a link to begin</span>
+      </div>
+
+      <!-- TIMER -->
+      <p id="timer" aria-live="polite">00<span id="colon">:</span>00</p>
+
+      <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result"></textarea>
+
+      <div class="button-group">
+        <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>	
+      </div>
+    </div>
+
+    <p class="disclaimer">
+      By using this service you confirm that you have the right to download and
+      transcribe the linked content. Respect copyright, platform terms-of-service,
+      and local laws; we assume no liability for misuse or any consequences that
+      may arise from your actions.
+    </p>
+  </div>
+
+  <!-- ANIMATED CURSOR -->
+  <video autoplay muted loop playsinline preload="auto" class="custom-cursor" id="customCursor" aria-hidden="true">
+    <source src="cursor05.webm" type="video/webm">
+  </video>
+  
+  <script src="app.js" defer></script>
+</body>
+</html>
