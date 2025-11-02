@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const CONFIG = {
     // ✅ CORRECTED: The IP address is now 127.0.0.1
-    API_BASE_URL: 'api-production-6812.up.railway.app',
+    API_BASE_URL: 'https://api-production-6812.up.railway.app',
     POLLING_INTERVAL: 1500, // ms
     MAX_POLLING_ATTEMPTS: 240,
   };
@@ -237,4 +237,5 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
 
 });
+
 
