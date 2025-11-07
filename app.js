@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const CONFIG = {
-    // ✅ CORRECTED: The IP address is now 127.0.0.1
     API_BASE_URL: 'https://api-production-6812.up.railway.app',
     POLLING_INTERVAL: 1500, // ms
     MAX_POLLING_ATTEMPTS: 240,
@@ -157,7 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify({ url, format: STATE.selectedFormat }),
     });
     if (!response.ok) {
-      throw new Error(`Server error: ${response.statusText}`);
+      const errorText = await response.text();
+      throw new Error(`Server error: ${response.status} ${errorText}`);
     }
     const data = await response.json();
     return data.task_id;
@@ -212,7 +212,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ===== CURSOR LOGIC ===== */
   function setupCursor() {
+    // ✅ NEW: Check if the device is touch-capable. If so, do nothing.
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) {
+      return; // Exit the function, don't set up the cursor
+    }
+
+    // Fade the cursor in now that we know we're on a desktop
+    DOM.cursor.style.opacity = '1';
+
     let lastMove = 0;
     document.addEventListener('mousemove', e => {
       const now = performance.now();
@@ -237,6 +247,3 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
 
 });
-
-
-
