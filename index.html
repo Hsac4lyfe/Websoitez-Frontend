@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Shorts2Text — Instantly transcribe and extract captions from Reels, TikToks, and YouTube Shorts." />
-  <!-- ✅ UPDATED: Connect-src now includes your final Railway API URL -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' https://api-production-6812.up.railway.app;" />
   <title>Shorts 2 Text</title>
 
@@ -14,9 +13,8 @@
 </head>
 <body>
 
-  <!-- BACKGROUND -->
+  <!-- BACKGROUND: No change needed here. A standard MP4 fallback is good practice. -->
   <video autoplay muted loop playsinline preload="auto" id="bg-video">
-    <!-- ✅ FIX: Add an MP4 source as a fallback for browsers that don't support WebM -->
     <source src="JellyDarkMode12.mp4" type="video/mp4">
     <source src="JellyDarkMode12.webm" type="video/webm">
   </video>
@@ -25,13 +23,14 @@
   <div class="center-wrapper">
     <!-- LOGO -->
     <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo">
-      <!-- ✅ FIX FOR SAFARI: Provide a transparent MP4 (HEVC w/ Alpha) as the first choice. -->
-      <!-- The browser will try this first, and if it fails, it will try the WebM below. -->
-      <source src="Shorts2Text02Pixelated02.mp4" type="video/mp4; codecs=hvc1">
-      <source src="Shorts2Text02Pixelated0.webm" type="video/webm">
+      <!-- ✅ FINAL FIX FOR SAFARI: This is the only change you need. -->
+      <!-- Safari will try the special transparent MP4 first and play it. -->
+      <!-- Other browsers will ignore it and play the standard transparent WebM. -->
+      <source src="ShortsText02Pixelated02.mp4" type="video/mp4; codecs=hvc1">
+      <source src="ShortsText02Pixelated02.webm" type="video/webm">
     </video>
 
-    <!-- APP CONTAINER -->
+    <!-- APP CONTAINER (No changes needed below) -->
     <div class="container">
       <input id="url" placeholder="Paste Reel / TikTok / YouTube link here" aria-label="Video link input" type="url" />
 
@@ -51,7 +50,6 @@
         <span id="status">Enter a link to begin</span>
       </div>
 
-      <!-- TIMER -->
       <p id="timer" aria-live="polite">00<span id="colon">:</span>00</p>
 
       <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result"></textarea>
@@ -69,14 +67,11 @@
     </p>
   </div>
 
-  <!-- ANIMATED CURSOR -->
+  <!-- ANIMATED CURSOR: No change needed. WebM is fine for desktop. -->
   <video autoplay muted loop playsinline preload="auto" class="custom-cursor" id="customCursor" aria-hidden="true">
-    <!-- ✅ FIX FOR SAFARI: Provide a transparent MP4 (HEVC w/ Alpha) as the first choice. -->
-    <source src="cursor05.mp4" type="video/mp4; codecs=hvc1">
     <source src="cursor05.webm" type="video/webm">
   </video>
   
   <script src="app.js" defer></script>
 </body>
-</html>```
-
+</html>
