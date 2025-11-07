@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <!-- BACKGROUND: No change needed here. A standard MP4 fallback is good practice. -->
+  <!-- BACKGROUND: No change needed here. -->
   <video autoplay muted loop playsinline preload="auto" id="bg-video">
     <source src="JellyDarkMode12.mp4" type="video/mp4">
     <source src="JellyDarkMode12.webm" type="video/webm">
@@ -23,11 +23,10 @@
   <div class="center-wrapper">
     <!-- LOGO -->
     <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo">
-      <!-- ✅ FINAL FIX FOR SAFARI: This is the only change you need. -->
-      <!-- Safari will try the special transparent MP4 first and play it. -->
-      <!-- Other browsers will ignore it and play the standard transparent WebM. -->
-      <source src="Shorts2Text02Pixelated02.mp4" type="video/mp4; codecs=hvc1">
-      <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
+      <!-- ✅ FINAL FIX: The browser will now look for a .mov file first. -->
+      <!-- Safari on iPhone will find and play this with perfect transparency. -->
+      <source src="ShortsText02Pixelated02.mov" type="video/quicktime">
+      <source src="ShortsText02Pixelated02.webm" type="video/webm">
     </video>
 
     <!-- APP CONTAINER (No changes needed below) -->
@@ -67,7 +66,7 @@
     </p>
   </div>
 
-  <!-- ANIMATED CURSOR: No change needed. WebM is fine for desktop. -->
+  <!-- ANIMATED CURSOR: No change needed. -->
   <video autoplay muted loop playsinline preload="auto" class="custom-cursor" id="customCursor" aria-hidden="true">
     <source src="cursor05.webm" type="video/webm">
   </video>
@@ -75,7 +74,3 @@
   <script src="app.js" defer></script>
 </body>
 </html>
-
-
-
-
