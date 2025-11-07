@@ -17,6 +17,8 @@
   src: url('digitalplay.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
+  /* ✅ OPTIMIZATION: Prevents text from being invisible while the font loads. */
+  font-display: swap;
 }
 
 /* ==========  GLOBAL FONT  ========== */
@@ -43,11 +45,13 @@ body {
 }
 
 /* ==========  HIDE DEFAULT CURSOR  ========== */
+/* This will be overridden for mobile devices in the media query */
 *, *::before, *::after {
   cursor: none !important;
 }
 
 /* ==========  BACKGROUND  ========== */
+/* This was already correct, no changes needed. It will always cover the screen. */
 #bg-video {
   position: fixed;
   inset: 0;
@@ -114,6 +118,12 @@ textarea {
   font-family: Papyrus, fantasy;
 }
 
+/* ✅ OPTIMIZATION: Adds a visible outline for keyboard users for better accessibility. */
+button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
 /* ==========  DROPDOWN  ========== */
 .dropdown { position: relative; }
 .dropdown-content {
@@ -153,7 +163,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   position: relative;
   width: 100%;
   height: 20px;
-  background-color: rgba(255, 255, 255, 0.1); /* faint background track */
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   overflow: hidden;
   margin: 5px 0 1px 0;
@@ -178,13 +188,13 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #444; /* always readable */
+  color: #444;
   font-weight: 700;
   font-family: Papyrus, fantasy;
   font-size: 0.9rem;
   letter-spacing: 1px;
   pointer-events: none;
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.9); /* soft glow for visibility */
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.9);
 }
 
 /* ========== TIMER STYLE ========== */
@@ -209,7 +219,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   vertical-align: middle;
 }
 
-
 /* ==========  DISCLAIMER  ========== */
 .disclaimer {
   font-size: 0.65rem;
@@ -222,11 +231,59 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 }
 
 /* ==========  CURSOR  ========== */
+/* This will be hidden on mobile devices by the media query below */
 .custom-cursor {
   position: fixed;
   width: 96px;
   height: 96px;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-24px, -24px);
+  transform: translate(-50%, -50%);
+  /* Start hidden to avoid a flash on load */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+
+/* ========================================================== */
+/* ✅ NEW SECTION: RESPONSIVE STYLES FOR MOBILE DEVICES      */
+/* ========================================================== */
+/* This "if-statement" applies styles only to screens smaller than 768px wide. */
+@media (max-width: 768px) {
+  
+  /* Bring back the default cursor on mobile */
+  *, *::before, *::after {
+    cursor: auto !important;
+  }
+
+  /* Hide the custom video cursor */
+  .custom-cursor {
+    display: none !important;
+  }
+
+  /* Make the main container less wide and reduce padding */
+  .container {
+    width: 95vw;
+    padding: 1rem 1.25rem;
+  }
+
+  /* Make the main font size slightly smaller */
+  * {
+    font-size: 1rem;
+  }
+
+  /* Make the timer smaller so it doesn't overflow */
+  #timer {
+    font-size: 2.5rem;
+  }
+
+  /* Make the text box a bit bigger on mobile */
+  textarea {
+    min-height: 20vh;
+  }
+
+  /* Adjust disclaimer text size */
+  .disclaimer {
+    font-size: 0.6rem;
+  }
 }
