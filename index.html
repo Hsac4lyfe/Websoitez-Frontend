@@ -43,13 +43,17 @@
         </div>
         <button id="transcribeBtn" disabled>Transcribe</button>
       </div>
+      
+      <!-- ✅ MODIFICATION: Status and Timer are now grouped and outside the progress bar -->
+      <div class="status-timer-group">
+        <span id="status">Enter a link to begin</span>
+        <p id="timer" aria-live="polite">00<span id="colon">:</span>00</p>
+      </div>
 
       <div id="progress-container">
         <div id="progress-bar"></div>
-        <span id="status">Enter a link to begin</span>
+        <!-- The status text is NO LONGER INSIDE here -->
       </div>
-
-      <p id="timer" aria-live="polite">00<span id="colon">:</span>00</p>
 
       <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result"></textarea>
 
@@ -74,5 +78,3 @@
   <script src="app.js" defer></script>
 </body>
 </html>
-
-
