@@ -158,6 +158,16 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   justify-content: center;
 }
 
+/* ✅ MODIFICATION: New group for status and timer */
+.status-timer-group {
+  display: flex;
+  flex-direction: column; /* Stack status and timer vertically */
+  align-items: center;
+  width: 100%;
+  gap: 8px; /* Space between status and timer */
+  margin-top: 10px; /* Space above progress container */
+}
+
 /* ==========  PROGRESS  ========== */
 #progress-container {
   position: relative;
@@ -166,7 +176,8 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   overflow: hidden;
-  margin: 5px 0 1px 0;
+  /* Removed margin-top and margin-bottom as the parent group handles spacing */
+  margin: 0; 
 }
 
 #progress-bar {
@@ -182,19 +193,19 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   transition: width 0.3s ease;
 }
 
-/* ==========  STATUS + COPY  ========== */
+/* ==========  STATUS (now outside progress bar)  ========== */
 #status {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #444;
+  position: static; /* ✅ MODIFICATION: Remove absolute positioning */
+  transform: none; /* ✅ MODIFICATION: Remove transform */
+  color: var(--text-color); /* ✅ MODIFICATION: Make it more visible */
   font-weight: 700;
   font-family: Papyrus, fantasy;
-  font-size: 0.9rem;
+  font-size: 0.95rem; /* Slightly larger for readability */
   letter-spacing: 1px;
   pointer-events: none;
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Slightly stronger shadow */
+  text-align: center; /* Ensure it's centered */
+  width: 100%; /* Take full width */
 }
 
 /* ========== TIMER STYLE ========== */
