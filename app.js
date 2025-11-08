@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     urlInput: document.getElementById('url'),
     transcribeBtn: document.getElementById('transcribeBtn'),
     resultEl: document.getElementById('result'),
-    statusEl: document.getElementById('status'),
+    statusEl: document.getElementById('status'), // This is now outside the progress bar
     timerEl: document.getElementById('timer'),
     barEl: document.getElementById('progress-bar'),
     copyBtn: document.getElementById('copyBtn'),
@@ -82,7 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetUI() {
     DOM.resultEl.value = '';
     DOM.barEl.style.width = '0%';
-    DOM.statusEl.innerText = 'Connecting to backend…';
+    // ✅ MODIFICATION: More user-friendly initial status message
+    DOM.statusEl.innerText = 'Warming up the servers…';
     DOM.timerEl.innerHTML = '00<span id="colon">:</span>00';
   }
 
@@ -142,7 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (err) {
       console.error(err);
-      DOM.statusEl.innerText = `❌ Error: ${err.message}`;
+      // ✅ MODIFICATION: More user-friendly error message
+      DOM.statusEl.innerText = `❌ Oops! Something went wrong. Please try again.`;
     } finally {
       stopTimer();
       setUIState(false);
@@ -189,10 +191,27 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'processing':
         const pct = data.progress || 0;
         DOM.barEl.style.width = `${pct}%`;
-        DOM.statusEl.innerText = pct < 100 ? `Transcribing… (${pct.toFixed(0)}%)` : 'Finalising…';
+        // ✅ MODIFICATION: More descriptive and user-friendly processing messages
+        if (pct < 30) {
+          DOM.statusEl.innerText = `Analyzing audio… (${pct.toFixed(0)}%)`;
+        } else if (pct < 70) {
+          DOM.statusEl.innerText = `Generating text… (${pct.toFixed(0)}%)`;
+        } else if (pct < 100) {
+          DOM.statusEl.innerText = `Polishing results… (${pct.toFixed(0)}%)`;
+        } else {
+          DOM.statusEl.innerText = 'Finalising…';
+        }
         break;
       case 'pending':
-        DOM.statusEl.innerText = 'Queued…';
+        // ✅ MODIFICATION: Clearer queued status message
+        DOM.statusEl.innerText = 'In line, preparing for transcription…';
+        break;
+      // Added a 'started' status for clarity if the backend sends it
+      case 'started':
+        DOM.statusEl.innerText = 'Transcription started…';
+        break;
+      default:
+        DOM.statusEl.innerText = 'Working on it…';
         break;
     }
   }
