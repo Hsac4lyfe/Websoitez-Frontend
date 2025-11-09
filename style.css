@@ -212,7 +212,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 #timer {
   font-family: 'DigitalPlay', monospace;
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 2rem;
   color: var(--accent-color);
   text-shadow: 0 0 10px var(--accent-color);
   letter-spacing: 2px;
@@ -286,7 +286,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 
   /* Make the timer smaller so it doesn't overflow */
   #timer {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
 
   /* Make the text box a bit bigger on mobile */
@@ -299,5 +299,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
     font-size: 0.6rem;
   }
 }
+
 
 
