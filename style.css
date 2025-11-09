@@ -250,7 +250,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   pointer-events: none;
   z-index: 9999;
   /* ✅ FIX: Remove translate(-50%, -50%) to align to top-left */
-  transform: translate(-10%, -10%);
+  transform: translate(-25%, -25%);
   /* Start hidden to avoid a flash on load */
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -299,4 +299,5 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
     font-size: 0.6rem;
   }
 }
+
 
