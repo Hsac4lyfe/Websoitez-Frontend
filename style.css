@@ -251,7 +251,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   height: 96px;
   pointer-events: none;
   z-index: 9999;
-  transform: none; 
+  transform: translate(-25px, -25px);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -303,3 +303,4 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
     margin-top: 1.5vh; /* Adjusted for mobile consistency */
   }
 }
+
