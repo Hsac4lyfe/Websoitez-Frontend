@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== INITIALIZATION ===== */
   function init() {
     setupEventListeners();
-    toggleTranscribeButton();
+    toggleTranscribeButton(); // This will also initialize dropdown button state correctly
     setupCursor();
     setupBackgroundVideo();
   }
@@ -49,7 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== DROPDOWN LOGIC ===== */
   function handleDropdownToggle(e) {
     e.preventDefault();
-    DOM.dropdown.classList.toggle('show');
+    // ✅ MODIFICATION: Only toggle the dropdown if the button is NOT disabled
+    if (!DOM.dropdownBtn.disabled) {
+      DOM.dropdown.classList.toggle('show');
+    }
   }
 
   function handleFormatSelect(e) {
@@ -71,12 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== UI STATE MANAGEMENT ===== */
   function toggleTranscribeButton() {
     DOM.transcribeBtn.disabled = !DOM.urlInput.value.trim() || STATE.isTranscribing;
+    // ✅ NEW: Disable the dropdown button if transcription is in progress
+    DOM.dropdownBtn.disabled = STATE.isTranscribing;
   }
 
   function setUIState(isTranscribing) {
     STATE.isTranscribing = isTranscribing;
     DOM.transcribeBtn.textContent = isTranscribing ? 'Transcribing…' : 'Transcribe';
-    toggleTranscribeButton();
+    toggleTranscribeButton(); // This function now correctly updates both buttons
   }
 
   function resetUI() {
@@ -126,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    setUIState(true);
+    setUIState(true); // This will now disable both transcribe and dropdown buttons
     resetUI();
     startTimer();
 
@@ -147,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
       DOM.statusEl.innerText = `❌ Oops! Something went wrong. Please try again.`;
     } finally {
       stopTimer();
-      setUIState(false);
+      setUIState(false); // This will re-enable both transcribe and dropdown buttons
     }
   }
 
