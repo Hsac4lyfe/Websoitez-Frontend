@@ -246,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', e => {
       const now = performance.now();
       if (now - lastMove >= 16) { // ~60 FPS throttle
+        // ✅ FIX: Remove -50% offset from cursor position to align to top-left
         DOM.cursor.style.left = `${e.clientX}px`;
         DOM.cursor.style.top = `${e.clientY}px`;
         lastMove = now;
