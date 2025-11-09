@@ -72,14 +72,11 @@
 
   <!-- ANIMATED CURSOR: No change needed. -->
   <video autoplay muted loop playsinline preload="auto" class="custom-cursor" id="customCursor" aria-hidden="true">
+    <!-- ✅ FIX: Added .mov source for Safari compatibility for the cursor -->
+    <source src="cursor05.mov" type="video/quicktime">
     <source src="cursor05.webm" type="video/webm">
   </video>
   
   <script src="app.js" defer></script>
 </body>
 </html>
-
-
-
-
-
