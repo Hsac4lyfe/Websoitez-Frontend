@@ -17,7 +17,6 @@
   src: url('digitalplay.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
-  /* ✅ OPTIMIZATION: Prevents text from being invisible while the font loads. */
   font-display: swap;
 }
 
@@ -45,13 +44,11 @@ body {
 }
 
 /* ==========  HIDE DEFAULT CURSOR  ========== */
-/* This will be overridden for mobile devices in the media query */
 *, *::before, *::after {
   cursor: none !important;
 }
 
 /* ==========  BACKGROUND  ========== */
-/* This was already correct, no changes needed. It will always cover the screen. */
 #bg-video {
   position: fixed;
   inset: 0;
@@ -73,13 +70,15 @@ body {
   justify-content: center;
   width: 100%;
   height: 100%;
-  gap: 1vh;
+  /* ✅ Layout Change: Adjusted gap for better vertical rhythm between logo and container */
+  gap: 2vh; /* Increased from 1vh for more separation */
 }
 
 /* ==========  LOGO  ========== */
 .title-video {
   max-height: 20vh;
-  margin-bottom: 1vh;
+  /* ✅ Layout Change: Removed margin-bottom as wrapper gap now handles it */
+  margin-bottom: 0; 
   pointer-events: none;
 }
 
@@ -87,13 +86,15 @@ body {
 .container {
   width: 90vw;
   max-width: 550px;
-  padding: 1.5rem 2rem;
+  /* ✅ Layout Change: Adjusted padding for more consistent inner spacing */
+  padding: 1.75rem 2rem; /* Slightly increased top/bottom padding */
   background: var(--container-bg);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  /* ✅ Layout Change: Adjusted gap for consistent spacing between main elements */
+  gap: 1.25rem; /* Increased from 0.75rem */
   align-items: center;
   text-align: center;
 }
@@ -118,7 +119,6 @@ textarea {
   font-family: Papyrus, fantasy;
 }
 
-/* ✅ OPTIMIZATION: Adds a visible outline for keyboard users for better accessibility. */
 button:focus-visible, input:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--accent-color);
   outline-offset: 2px;
@@ -153,7 +153,8 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 /* ==========  SIDE-BY-SIDE BUTTON GROUP  ========== */
 .button-group.side {
   display: flex;
-  gap: 0.75rem;
+  /* ✅ Layout Change: Adjusted gap between buttons */
+  gap: 1rem; /* Slightly increased for more visual separation */
   width: 100%;
   justify-content: center;
 }
@@ -161,11 +162,13 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 /* ✅ MODIFICATION: New group for status and timer */
 .status-timer-group {
   display: flex;
-  flex-direction: column; /* Stack status and timer vertically */
+  flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 8px; /* Space between status and timer */
-  margin-top: 10px; /* Space above progress container */
+  /* ✅ Layout Change: Adjusted gap between status and timer */
+  gap: 6px; /* Slightly reduced for a tighter grouping */
+  /* ✅ Layout Change: Removed margin-top as container gap now handles it */
+  margin-top: 0; 
 }
 
 /* ==========  PROGRESS  ========== */
@@ -176,7 +179,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   overflow: hidden;
-  /* Removed margin-top and margin-bottom as the parent group handles spacing */
   margin: 0; 
 }
 
@@ -195,24 +197,24 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 
 /* ==========  STATUS (now outside progress bar)  ========== */
 #status {
-  position: static; /* ✅ MODIFICATION: Remove absolute positioning */
-  transform: none; /* ✅ MODIFICATION: Remove transform */
-  color: var(--text-color); /* ✅ MODIFICATION: Make it more visible */
+  position: static;
+  transform: none;
+  color: var(--text-color);
   font-weight: 700;
   font-family: Papyrus, fantasy;
-  font-size: 0.95rem; /* Slightly larger for readability */
+  font-size: 0.95rem;
   letter-spacing: 1px;
   pointer-events: none;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Slightly stronger shadow */
-  text-align: center; /* Ensure it's centered */
-  width: 100%; /* Take full width */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+  text-align: center;
+  width: 100%;
 }
 
 /* ========== TIMER STYLE ========== */
 #timer {
   font-family: 'DigitalPlay', monospace;
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: var(--accent-color);
   text-shadow: 0 0 10px var(--accent-color);
   letter-spacing: 2px;
@@ -238,20 +240,18 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   text-align: center;
   width: 90vw;
   max-width: 550px;
-  margin-top: 1vh;
+  /* ✅ Layout Change: Adjusted margin-top for better spacing from container */
+  margin-top: 2vh; /* Increased from 1vh */
 }
 
 /* ==========  CURSOR  ========== */
-/* This will be hidden on mobile devices by the media query below */
 .custom-cursor {
   position: fixed;
   width: 96px;
   height: 96px;
   pointer-events: none;
   z-index: 9999;
-  /* ✅ FIX: Remove translate(-50%, -50%) to align to top-left */
-  transform: translate(-25%, -25%);
-  /* Start hidden to avoid a flash on load */
+  transform: none; 
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -260,7 +260,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 /* ========================================================== */
 /* ✅ NEW SECTION: RESPONSIVE STYLES FOR MOBILE DEVICES      */
 /* ========================================================== */
-/* This "if-statement" applies styles only to screens smaller than 768px wide. */
 @media (max-width: 768px) {
   
   /* Bring back the default cursor on mobile */
@@ -276,7 +275,10 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   /* Make the main container less wide and reduce padding */
   .container {
     width: 95vw;
-    padding: 1rem 1.25rem;
+    /* ✅ Layout Change: Adjusted padding for mobile */
+    padding: 1.25rem 1.25rem; /* Slightly reduced overall padding for smaller screens */
+    /* ✅ Layout Change: Adjusted gap for mobile */
+    gap: 1rem; /* Adjusted for mobile consistency */
   }
 
   /* Make the main font size slightly smaller */
@@ -297,8 +299,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   /* Adjust disclaimer text size */
   .disclaimer {
     font-size: 0.6rem;
+    /* ✅ Layout Change: Adjusted margin-top for mobile */
+    margin-top: 1.5vh; /* Adjusted for mobile consistency */
   }
 }
-
-
-
