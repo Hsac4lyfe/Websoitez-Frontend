@@ -249,7 +249,8 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   height: 96px;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
+  /* ✅ FIX: Remove translate(-50%, -50%) to align to top-left */
+  transform: none; 
   /* Start hidden to avoid a flash on load */
   opacity: 0;
   transition: opacity 0.3s ease;
