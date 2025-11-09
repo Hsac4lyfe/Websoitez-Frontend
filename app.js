@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== INITIALIZATION ===== */
   function init() {
     setupEventListeners();
-    updateInputAndButtonStates(); // Renamed and will handle initial states for all relevant inputs/buttons
+    updateInputAndButtonStates(); 
     setupCursor();
     setupBackgroundVideo();
   }
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.dropdownBtn.addEventListener('click', handleDropdownToggle);
     DOM.dropdownMenu.addEventListener('click', handleFormatSelect);
     window.addEventListener('click', closeDropdown);
-    DOM.urlInput.addEventListener('input', updateInputAndButtonStates); // Now calls the new name
+    DOM.urlInput.addEventListener('input', updateInputAndButtonStates); 
     DOM.transcribeBtn.addEventListener('click', transcribe);
     DOM.copyBtn.addEventListener('click', copyTextToClipboard);
   }
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== DROPDOWN LOGIC ===== */
   function handleDropdownToggle(e) {
     e.preventDefault();
-    if (!DOM.dropdownBtn.disabled) { // Only toggle if the dropdown button is NOT disabled
+    if (!DOM.dropdownBtn.disabled) { 
       DOM.dropdown.classList.toggle('show');
     }
   }
@@ -71,20 +71,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ===== UI STATE MANAGEMENT ===== */
-  // ✅ MODIFICATION: Renamed function to be more descriptive of its new responsibilities
   function updateInputAndButtonStates() {
-    // Disable transcribe button if URL is empty or transcribing
     DOM.transcribeBtn.disabled = !DOM.urlInput.value.trim() || STATE.isTranscribing;
-    // Disable dropdown button if transcribing
     DOM.dropdownBtn.disabled = STATE.isTranscribing;
-    // ✅ NEW: Disable URL input if transcribing
     DOM.urlInput.disabled = STATE.isTranscribing;
   }
 
   function setUIState(isTranscribing) {
     STATE.isTranscribing = isTranscribing;
     DOM.transcribeBtn.textContent = isTranscribing ? 'Transcribing…' : 'Transcribe';
-    updateInputAndButtonStates(); // Calls the renamed function to update all relevant UI elements
+    updateInputAndButtonStates(); 
   }
 
   function resetUI() {
@@ -133,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    setUIState(true); // This will now disable transcribe button, dropdown, and URL input
+    setUIState(true); 
     resetUI();
     startTimer();
 
@@ -153,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
       DOM.statusEl.innerText = `❌ Oops! Something went wrong. Please try again.`;
     } finally {
       stopTimer();
-      setUIState(false); // This will re-enable all buttons and inputs
+      setUIState(false); 
     }
   }
 
