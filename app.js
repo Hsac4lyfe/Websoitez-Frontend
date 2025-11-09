@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== INITIALIZATION ===== */
   function init() {
     setupEventListeners();
-    toggleTranscribeButton(); // This will also initialize dropdown button state correctly
+    updateInputAndButtonStates(); // Renamed and will handle initial states for all relevant inputs/buttons
     setupCursor();
     setupBackgroundVideo();
   }
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.dropdownBtn.addEventListener('click', handleDropdownToggle);
     DOM.dropdownMenu.addEventListener('click', handleFormatSelect);
     window.addEventListener('click', closeDropdown);
-    DOM.urlInput.addEventListener('input', toggleTranscribeButton);
+    DOM.urlInput.addEventListener('input', updateInputAndButtonStates); // Now calls the new name
     DOM.transcribeBtn.addEventListener('click', transcribe);
     DOM.copyBtn.addEventListener('click', copyTextToClipboard);
   }
@@ -49,8 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== DROPDOWN LOGIC ===== */
   function handleDropdownToggle(e) {
     e.preventDefault();
-    // ✅ MODIFICATION: Only toggle the dropdown if the button is NOT disabled
-    if (!DOM.dropdownBtn.disabled) {
+    if (!DOM.dropdownBtn.disabled) { // Only toggle if the dropdown button is NOT disabled
       DOM.dropdown.classList.toggle('show');
     }
   }
@@ -72,22 +71,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ===== UI STATE MANAGEMENT ===== */
-  function toggleTranscribeButton() {
+  // ✅ MODIFICATION: Renamed function to be more descriptive of its new responsibilities
+  function updateInputAndButtonStates() {
+    // Disable transcribe button if URL is empty or transcribing
     DOM.transcribeBtn.disabled = !DOM.urlInput.value.trim() || STATE.isTranscribing;
-    // ✅ NEW: Disable the dropdown button if transcription is in progress
+    // Disable dropdown button if transcribing
     DOM.dropdownBtn.disabled = STATE.isTranscribing;
+    // ✅ NEW: Disable URL input if transcribing
+    DOM.urlInput.disabled = STATE.isTranscribing;
   }
 
   function setUIState(isTranscribing) {
     STATE.isTranscribing = isTranscribing;
     DOM.transcribeBtn.textContent = isTranscribing ? 'Transcribing…' : 'Transcribe';
-    toggleTranscribeButton(); // This function now correctly updates both buttons
+    updateInputAndButtonStates(); // Calls the renamed function to update all relevant UI elements
   }
 
   function resetUI() {
     DOM.resultEl.value = '';
     DOM.barEl.style.width = '0%';
-    // ✅ MODIFICATION: More user-friendly initial status message
     DOM.statusEl.innerText = 'Warming up the servers…';
     DOM.timerEl.innerHTML = '00<span id="colon">:</span>00';
   }
@@ -131,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    setUIState(true); // This will now disable both transcribe and dropdown buttons
+    setUIState(true); // This will now disable transcribe button, dropdown, and URL input
     resetUI();
     startTimer();
 
@@ -148,11 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (err) {
       console.error(err);
-      // ✅ MODIFICATION: More user-friendly error message
       DOM.statusEl.innerText = `❌ Oops! Something went wrong. Please try again.`;
     } finally {
       stopTimer();
-      setUIState(false); // This will re-enable both transcribe and dropdown buttons
+      setUIState(false); // This will re-enable all buttons and inputs
     }
   }
 
@@ -196,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'processing':
         const pct = data.progress || 0;
         DOM.barEl.style.width = `${pct}%`;
-        // ✅ MODIFICATION: More descriptive and user-friendly processing messages
         if (pct < 30) {
           DOM.statusEl.innerText = `Analyzing audio… (${pct.toFixed(0)}%)`;
         } else if (pct < 70) {
@@ -208,10 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         break;
       case 'pending':
-        // ✅ MODIFICATION: Clearer queued status message
         DOM.statusEl.innerText = 'In line, preparing for transcription…';
         break;
-      // Added a 'started' status for clarity if the backend sends it
       case 'started':
         DOM.statusEl.innerText = 'Transcription started…';
         break;
@@ -238,20 +236,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ===== CURSOR LOGIC ===== */
   function setupCursor() {
-    // ✅ NEW: Check if the device is touch-capable. If so, do nothing.
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice) {
-      return; // Exit the function, don't set up the cursor
+      return;
     }
-
-    // Fade the cursor in now that we know we're on a desktop
     DOM.cursor.style.opacity = '1';
-
     let lastMove = 0;
     document.addEventListener('mousemove', e => {
       const now = performance.now();
-      if (now - lastMove >= 16) { // ~60 FPS throttle
-        // ✅ FIX: Remove -50% offset from cursor position to align to top-left
+      if (now - lastMove >= 16) {
         DOM.cursor.style.left = `${e.clientX}px`;
         DOM.cursor.style.top = `${e.clientY}px`;
         lastMove = now;
