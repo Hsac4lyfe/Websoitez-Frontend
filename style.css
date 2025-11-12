@@ -33,7 +33,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: #000;
+  background: transparent !important;  /* ✅ fixed: allow video background to show */
   color: var(--text-color);
 }
 
@@ -41,6 +41,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 /* ==========  HIDE DEFAULT CURSOR  ========== */
@@ -51,13 +53,14 @@ body {
 /* ==========  BACKGROUND  ========== */
 #bg-video {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   object-fit: cover;
   pointer-events: none;
   filter: brightness(0.95);
-  z-index: 0;
+  z-index: -1 !important; /* ✅ ensures visible */
 }
 
 /* ==========  WRAPPER  ========== */
@@ -70,15 +73,13 @@ body {
   justify-content: center;
   width: 100%;
   height: 100%;
-  /* ✅ Layout Change: Adjusted gap for better vertical rhythm between logo and container */
-  gap: 2vh; /* Increased from 1vh for more separation */
+  gap: 2vh;
 }
 
 /* ==========  LOGO  ========== */
 .title-video {
   max-height: 20vh;
-  /* ✅ Layout Change: Removed margin-bottom as wrapper gap now handles it */
-  margin-bottom: 0; 
+  margin-bottom: 0;
   pointer-events: none;
 }
 
@@ -86,15 +87,13 @@ body {
 .container {
   width: 90vw;
   max-width: 550px;
-  /* ✅ Layout Change: Adjusted padding for more consistent inner spacing */
-  padding: 1.75rem 2rem; /* Slightly increased top/bottom padding */
+  padding: 1.75rem 2rem;
   background: var(--container-bg);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  /* ✅ Layout Change: Adjusted gap for consistent spacing between main elements */
-  gap: 1.25rem; /* Increased from 0.75rem */
+  gap: 1.25rem;
   align-items: center;
   text-align: center;
 }
@@ -153,22 +152,19 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 /* ==========  SIDE-BY-SIDE BUTTON GROUP  ========== */
 .button-group.side {
   display: flex;
-  /* ✅ Layout Change: Adjusted gap between buttons */
-  gap: 1rem; /* Slightly increased for more visual separation */
+  gap: 1rem;
   width: 100%;
   justify-content: center;
 }
 
-/* ✅ MODIFICATION: New group for status and timer */
+/* ==========  STATUS + TIMER  ========== */
 .status-timer-group {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  /* ✅ Layout Change: Adjusted gap between status and timer */
-  gap: 6px; /* Slightly reduced for a tighter grouping */
-  /* ✅ Layout Change: Removed margin-top as container gap now handles it */
-  margin-top: 0; 
+  gap: 6px;
+  margin-top: 0;
 }
 
 /* ==========  PROGRESS  ========== */
@@ -179,7 +175,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   overflow: hidden;
-  margin: 0; 
+  margin: 0;
 }
 
 #progress-bar {
@@ -195,22 +191,16 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   transition: width 0.3s ease;
 }
 
-/* ==========  STATUS (now outside progress bar)  ========== */
+/* ==========  STATUS TEXT  ========== */
 #status {
-  position: static;
-  transform: none;
   color: var(--text-color);
   font-weight: 700;
-  font-family: Papyrus, fantasy;
-  font-size: 0.95rem;
-  letter-spacing: 1px;
-  pointer-events: none;
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
   text-align: center;
   width: 100%;
 }
 
-/* ========== TIMER STYLE ========== */
+/* ==========  TIMER STYLE  ========== */
 #timer {
   font-family: 'DigitalPlay', monospace;
   font-weight: 700;
@@ -224,12 +214,10 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 #timer #colon {
   font: inherit;
   color: inherit;
-  text-shadow: inherit;
   line-height: 1;
   display: inline-block;
   width: 0.6ch;
   transition: opacity 0.25s ease-in-out;
-  vertical-align: middle;
 }
 
 /* ==========  DISCLAIMER  ========== */
@@ -240,8 +228,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   text-align: center;
   width: 90vw;
   max-width: 550px;
-  /* ✅ Layout Change: Adjusted margin-top for better spacing from container */
-  margin-top: 2vh; /* Increased from 1vh */
+  margin-top: 2vh;
 }
 
 /* ==========  CURSOR  ========== */
@@ -256,51 +243,116 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   transition: opacity 0.3s ease;
 }
 
-
-/* ========================================================== */
-/* ✅ NEW SECTION: RESPONSIVE STYLES FOR MOBILE DEVICES      */
-/* ========================================================== */
+/* ==========  RESPONSIVE  ========== */
 @media (max-width: 768px) {
-  
-  /* Bring back the default cursor on mobile */
-  *, *::before, *::after {
-    cursor: auto !important;
-  }
+  *, *::before, *::after { cursor: auto !important; }
+  .custom-cursor { display: none !important; }
 
-  /* Hide the custom video cursor */
-  .custom-cursor {
-    display: none !important;
-  }
-
-  /* Make the main container less wide and reduce padding */
   .container {
     width: 95vw;
-    /* ✅ Layout Change: Adjusted padding for mobile */
-    padding: 1.25rem 1.25rem; /* Slightly reduced overall padding for smaller screens */
-    /* ✅ Layout Change: Adjusted gap for mobile */
-    gap: 1rem; /* Adjusted for mobile consistency */
+    padding: 1.25rem;
+    gap: 1rem;
   }
 
-  /* Make the main font size slightly smaller */
-  * {
-    font-size: 1rem;
-  }
+  * { font-size: 1rem; }
+  #timer { font-size: 1.5rem; }
+  textarea { min-height: 20vh; }
 
-  /* Make the timer smaller so it doesn't overflow */
-  #timer {
-    font-size: 1.5rem;
-  }
-
-  /* Make the text box a bit bigger on mobile */
-  textarea {
-    min-height: 20vh;
-  }
-
-  /* Adjust disclaimer text size */
   .disclaimer {
     font-size: 0.6rem;
-    /* ✅ Layout Change: Adjusted margin-top for mobile */
-    margin-top: 1.5vh; /* Adjusted for mobile consistency */
+    margin-top: 1.5vh;
   }
 }
 
+/* ==========  AD PLACEHOLDERS  ========== */
+.s2t-ad-placeholder,
+.s2t-ad-placeholder * {
+  box-sizing: border-box;
+  font-family: system-ui, Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+.s2t-ad-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+.s2t-ad-top .s2t-ad-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 580px;
+  max-width: 1200px;
+  height: 64px;
+  background: rgba(0,0,0,0.6);
+  color: #00ffcc;
+  font-weight: 800;
+  border: 2px dashed rgba(0,255,204,0.3);
+  border-radius: 8px;
+}
+
+.s2t-ad-sidebar {
+  position: fixed;
+  top: 108px;
+  width: 180px;
+  display: none;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 99998;
+}
+.s2t-ad-sidebar .s2t-ad-box {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  color: #00ffcc;
+  font-weight: 800;
+  border: 2px dashed rgba(0,255,204,0.3);
+  border-radius: 10px;
+}
+.s2t-ad-left { left: 12px; }
+.s2t-ad-right { right: 12px; }
+
+.s2t-ad-bottom-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+.s2t-ad-bottom-mobile .s2t-ad-box {
+  width: calc(100% - 24px);
+  height: 46px;
+  background: rgba(0,0,0,0.6);
+  color: #00ffcc;
+  font-weight: 800;
+  border: 2px dashed rgba(0,255,204,0.3);
+  border-radius: 8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Desktop & mobile visibility */
+@media (min-width: 1024px) {
+  .s2t-ad-top, .s2t-ad-sidebar { display: flex; }
+  .s2t-ad-bottom-mobile { display: none; }
+  .center-wrapper { margin-top: 96px; }
+}
+@media (max-width: 1023px) {
+  .s2t-ad-top, .s2t-ad-sidebar { display: none; }
+  .s2t-ad-bottom-mobile { display: flex; }
+  .center-wrapper { margin-bottom: 96px; }
+}
