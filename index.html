@@ -10,140 +10,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.ico" />
   <meta name="theme-color" content="#000000" />
-
-  <!-- Minimal, conflict-resistant CSS for ad placeholders only.
-       This intentionally uses highly specific selectors and high z-index
-       to avoid being hidden by your existing styles in style.css. -->
-  <style>
-    /* Ensure placeholders sit above everything */
-    .s2t-ad-placeholder,
-    .s2t-ad-placeholder * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    /* Top banner: full width, centered text */
-    .s2t-ad-top {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 88px !important;
-      display: none; /* enabled on large screens via media query below */
-      align-items: center;
-      justify-content: center;
-      z-index: 99999 !important;
-      pointer-events: none; /* placeholder non-interactive by default */
-      -webkit-print-color-adjust: exact;
-    }
-    .s2t-ad-top .s2t-ad-box {
-      pointer-events: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 580px;
-      max-width: 1200px;
-      height: 64px;
-      background: rgba(0,0,0,0.66);
-      color: #00ffcc;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-      border-radius: 8px;
-      border: 2px dashed rgba(0,255,204,0.12);
-      padding: 8px 16px;
-      text-align: center;
-    }
-
-    /* Sidebars: stacked boxes on left & right */
-    .s2t-ad-sidebar {
-      position: fixed !important;
-      top: 108px !important; /* place below top area */
-      width: 180px !important;
-      display: none; /* enabled on large screens via media query below */
-      flex-direction: column;
-      gap: 18px;
-      z-index: 99998 !important;
-      pointer-events: none;
-    }
-    .s2t-ad-sidebar .s2t-ad-box {
-      pointer-events: auto;
-      width: 180px;
-      height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.66);
-      color: #00ffcc;
-      font-weight: 800;
-      border-radius: 10px;
-      border: 2px dashed rgba(0,255,204,0.12);
-      text-align: center;
-      padding: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-    }
-
-    .s2t-ad-left { left: 12px !important; }
-    .s2t-ad-right { right: 12px !important; }
-
-    /* Mobile bottom sticky ad placeholder */
-    .s2t-ad-bottom-mobile {
-      position: fixed !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 64px !important;
-      display: none; /* enabled on small screens via media query below */
-      align-items: center;
-      justify-content: center;
-      z-index: 99999 !important;
-      pointer-events: none;
-    }
-    .s2t-ad-bottom-mobile .s2t-ad-box {
-      pointer-events: auto;
-      width: calc(100% - 24px);
-      height: 46px;
-      background: rgba(0,0,0,0.66);
-      color: #00ffcc;
-      font-weight: 800;
-      border-radius: 8px;
-      border: 2px dashed rgba(0,255,204,0.12);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 6px 12px;
-      margin: 0 12px;
-    }
-
-    /* Make sure background video remains visible behind everything */
-    #bg-video {
-      z-index: -9999 !important;
-    }
-
-    /* Desktop-only: show top banner and sidebars */
-    @media (min-width: 1024px) {
-      .s2t-ad-top { display: flex !important; }
-      .s2t-ad-sidebar { display: flex !important; }
-      .s2t-ad-bottom-mobile { display: none !important; }
-      /* push the center-wrapper down a little so it doesn't overlap the top placeholder */
-      .center-wrapper {
-        /* Only apply if center-wrapper doesn't already have a large top margin */
-        margin-top: calc(var(--s2t-top-offset, 0px) + 96px) !important;
-      }
-    }
-
-    /* Mobile-only: show bottom sticky ad, hide side/top ads */
-    @media (max-width: 1023px) {
-      .s2t-ad-top, .s2t-ad-sidebar { display: none !important; }
-      .s2t-ad-bottom-mobile { display: flex !important; }
-      /* ensure center-wrapper has bottom space so content isn't covered by mobile ad */
-      .center-wrapper {
-        margin-bottom: 96px !important;
-      }
-    }
-
-    /* Accessibility: ensure the placeholder text is readable on demos */
-    .s2t-ad-box { font-size: 15px; line-height: 1.1; text-transform: uppercase; }
-  </style>
 </head>
 <body>
 
@@ -171,7 +37,7 @@
     <div class="s2t-ad-box">PLACE ADS HERE</div>
   </div>
 
-  <!-- BACKGROUND: No change needed here. -->
+  <!-- BACKGROUND -->
   <video autoplay muted loop playsinline preload="auto" id="bg-video">
     <source src="JellyDarkMode12.mp4" type="video/mp4">
     <source src="JellyDarkMode12.webm" type="video/webm">
@@ -181,13 +47,10 @@
   <div class="center-wrapper">
     <!-- LOGO -->
     <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo">
-      <!-- ✅ FINAL FIX: The browser will now look for a .mov file first. -->
-      <!-- Safari on iPhone will find and play this with perfect transparency. -->
       <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
       <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
     </video>
 
-    <!-- APP CONTAINER (No changes needed below) -->
     <div class="container">
       <input id="url" placeholder="Paste Reel / TikTok / YouTube link here" aria-label="Video link input" type="url" />
 
@@ -201,8 +64,7 @@
         </div>
         <button id="transcribeBtn" disabled>Transcribe</button>
       </div>
-      
-      <!-- ✅ MODIFICATION: Status and Timer are now grouped and outside the progress bar -->
+
       <div class="status-timer-group">
         <span id="status">Enter a link to begin</span>
         <p id="timer" aria-live="polite">00<span id="colon">:</span>00</p>
@@ -210,13 +72,12 @@
 
       <div id="progress-container">
         <div id="progress-bar"></div>
-        <!-- The status text is NO LONGER INSIDE here -->
       </div>
 
       <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result"></textarea>
 
       <div class="button-group">
-        <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>	
+        <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>
       </div>
     </div>
 
@@ -228,13 +89,5 @@
     </p>
   </div>
 
-  <!-- ANIMATED CURSOR: No change needed. -->
-  <video autoplay muted loop playsinline preload="auto" class="custom-cursor" id="customCursor" aria-hidden="true">
-    <!-- ✅ FIX: Added .mov source for Safari compatibility for the cursor -->
-    <source src="cursor05.mov" type="video/quicktime">
-    <source src="cursor05.webm" type="video/webm">
-  </video>
-  
-  <script src="app.js" defer></script>
-</body>
-</html>
+  <!-- ANIMATED CURSOR -->
+  <video autoplay muted loop playsinline preload="auto" class="
