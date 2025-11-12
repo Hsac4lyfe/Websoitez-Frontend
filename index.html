@@ -10,26 +10,237 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.ico" />
   <meta name="theme-color" content="#000000" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: sans-serif;
+      color: white;
+      position: relative;
+    }
+
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Centered main wrapper */
+    .center-wrapper {
+      max-width: 700px;
+      margin: 80px auto; /* Extra space for top banner */
+      padding: 20px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .title-video {
+      width: 250px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input#url {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      width: 100%;
+      text-align: center;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .dropbtn, #transcribeBtn, #copyBtn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #444;
+      color: white;
+    }
+
+    #progress-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    #progress-bar {
+      height: 6px;
+      width: 0%;
+      background: #00ffcc;
+      transition: width 0.4s ease;
+    }
+
+    textarea#result {
+      width: 100%;
+      height: 200px;
+      border-radius: 8px;
+      border: none;
+      padding: 10px;
+      resize: none;
+    }
+
+    .status-timer-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .disclaimer {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 15px;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      width: 40px;
+      height: 40px;
+    }
+
+    /* ---------- AD PLACEHOLDERS ---------- */
+
+    /* Top Banner */
+    .ad-top {
+      width: 100%;
+      height: 90px;
+      background: rgba(0,0,0,0.5);
+      color: #00ffcc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* Sidebars for Desktop */
+    .ad-sidebar {
+      position: fixed;
+      top: 100px;
+      width: 160px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 5;
+    }
+
+    .ad-left {
+      left: 15px;
+    }
+
+    .ad-right {
+      right: 15px;
+    }
+
+    .ad-box {
+      width: 160px;
+      height: 200px;
+      background: rgba(0,0,0,0.5);
+      border: 1px dashed #00ffcc;
+      border-radius: 8px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #00ffcc;
+      font-weight: bold;
+    }
+
+    /* Mobile bottom ad */
+    .ad-bottom-mobile {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(0,0,0,0.5);
+      color: #00ffcc;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+      z-index: 15;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* Responsive visibility */
+    @media (max-width: 1023px) {
+      .ad-left, .ad-right, .ad-top {
+        display: none;
+      }
+      .ad-bottom-mobile {
+        display: flex;
+      }
+      .center-wrapper {
+        margin: 40px auto 80px auto;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- BACKGROUND: No change needed here. -->
+  <!-- Top Banner Ad (desktop only) -->
+  <div class="ad-top">PLACE TOP BANNER AD HERE</div>
+
+  <!-- Left Sidebar Ads (desktop only) -->
+  <div class="ad-sidebar ad-left">
+    <div class="ad-box">PLACE AD HERE</div>
+    <div class="ad-box">PLACE AD HERE</div>
+    <div class="ad-box">PLACE AD HERE</div>
+  </div>
+
+  <!-- Right Sidebar Ads (desktop only) -->
+  <div class="ad-sidebar ad-right">
+    <div class="ad-box">PLACE AD HERE</div>
+    <div class="ad-box">PLACE AD HERE</div>
+    <div class="ad-box">PLACE AD HERE</div>
+  </div>
+
+  <!-- Mobile Bottom Ad -->
+  <div class="ad-bottom-mobile">PLACE MOBILE BOTTOM AD HERE</div>
+
+  <!-- BACKGROUND -->
   <video autoplay muted loop playsinline preload="auto" id="bg-video">
     <source src="JellyDarkMode12.mp4" type="video/mp4">
     <source src="JellyDarkMode12.webm" type="video/webm">
   </video>
 
-  <!-- MAIN WRAPPER -->
+  <!-- MAIN APP -->
   <div class="center-wrapper">
-    <!-- LOGO -->
     <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo">
-      <!-- ✅ FINAL FIX: The browser will now look for a .mov file first. -->
-      <!-- Safari on iPhone will find and play this with perfect transparency. -->
       <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
       <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
     </video>
 
-    <!-- APP CONTAINER (No changes needed below) -->
     <div class="container">
       <input id="url" placeholder="Paste Reel / TikTok / YouTube link here" aria-label="Video link input" type="url" />
 
@@ -43,8 +254,7 @@
         </div>
         <button id="transcribeBtn" disabled>Transcribe</button>
       </div>
-      
-      <!-- ✅ MODIFICATION: Status and Timer are now grouped and outside the progress bar -->
+
       <div class="status-timer-group">
         <span id="status">Enter a link to begin</span>
         <p id="timer" aria-live="polite">00<span id="colon">:</span>00</p>
@@ -52,13 +262,12 @@
 
       <div id="progress-container">
         <div id="progress-bar"></div>
-        <!-- The status text is NO LONGER INSIDE here -->
       </div>
 
       <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result"></textarea>
 
       <div class="button-group">
-        <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>	
+        <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>
       </div>
     </div>
 
@@ -70,13 +279,12 @@
     </p>
   </div>
 
-  <!-- ANIMATED CURSOR: No change needed. -->
+  <!-- Animated Cursor -->
   <video autoplay muted loop playsinline preload="auto" class="custom-cursor" id="customCursor" aria-hidden="true">
-    <!-- ✅ FIX: Added .mov source for Safari compatibility for the cursor -->
     <source src="cursor05.mov" type="video/quicktime">
     <source src="cursor05.webm" type="video/webm">
   </video>
-  
+
   <script src="app.js" defer></script>
 </body>
 </html>
