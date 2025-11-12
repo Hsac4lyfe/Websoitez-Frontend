@@ -4,12 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Shorts2Text — Instantly transcribe and extract captions from Reels, TikToks, and YouTube Shorts." />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' https://api-production-6812.up.railway.app;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' https://api-production-6812.up.railway.app;" />
   <title>Shorts 2 Text</title>
 
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.ico" />
   <meta name="theme-color" content="#000000" />
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXX" crossorigin="anonymous"></script>
 
   <style>
     body {
@@ -34,7 +37,7 @@
     /* Centered main wrapper */
     .center-wrapper {
       max-width: 700px;
-      margin: 80px auto; /* Extra space for top banner */
+      margin: 80px auto; /* Added top margin to fit banner ad */
       padding: 20px;
       text-align: center;
       backdrop-filter: blur(8px);
@@ -120,24 +123,18 @@
       height: 40px;
     }
 
-    /* ---------- AD PLACEHOLDERS ---------- */
+    /* ---------- AD LAYOUT ---------- */
 
-    /* Top Banner */
+    /* Top Banner Ad */
     .ad-top {
       width: 100%;
       height: 90px;
-      background: rgba(0,0,0,0.5);
-      color: #00ffcc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 18px;
+      background: rgba(0,0,0,0.3);
+      text-align: center;
       position: fixed;
       top: 0;
       left: 0;
       z-index: 10;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 
     /* Sidebars for Desktop */
@@ -162,16 +159,10 @@
     .ad-box {
       width: 160px;
       height: 200px;
-      background: rgba(0,0,0,0.5);
-      border: 1px dashed #00ffcc;
+      background: rgba(0,0,0,0.25);
       border-radius: 8px;
       text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: #00ffcc;
-      font-weight: bold;
+      overflow: hidden;
     }
 
     /* Mobile bottom ad */
@@ -181,15 +172,10 @@
       left: 0;
       width: 100%;
       height: 60px;
-      background: rgba(0,0,0,0.5);
-      color: #00ffcc;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 16px;
+      background: rgba(0,0,0,0.4);
+      text-align: center;
       z-index: 15;
-      border-top: 1px solid rgba(255,255,255,0.2);
+      display: none;
     }
 
     /* Responsive visibility */
@@ -198,7 +184,7 @@
         display: none;
       }
       .ad-bottom-mobile {
-        display: flex;
+        display: block;
       }
       .center-wrapper {
         margin: 40px auto 80px auto;
@@ -209,24 +195,34 @@
 <body>
 
   <!-- Top Banner Ad (desktop only) -->
-  <div class="ad-top">PLACE TOP BANNER AD HERE</div>
+  <div class="ad-top">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-XXXXXXX"
+         data-ad-slot="1111111"></ins>
+  </div>
 
   <!-- Left Sidebar Ads (desktop only) -->
   <div class="ad-sidebar ad-left">
-    <div class="ad-box">PLACE AD HERE</div>
-    <div class="ad-box">PLACE AD HERE</div>
-    <div class="ad-box">PLACE AD HERE</div>
+    <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXX" data-ad-slot="2222221"></ins></div>
+    <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXX" data-ad-slot="2222222"></ins></div>
+    <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXX" data-ad-slot="2222223"></ins></div>
   </div>
 
   <!-- Right Sidebar Ads (desktop only) -->
   <div class="ad-sidebar ad-right">
-    <div class="ad-box">PLACE AD HERE</div>
-    <div class="ad-box">PLACE AD HERE</div>
-    <div class="ad-box">PLACE AD HERE</div>
+    <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXX" data-ad-slot="3333331"></ins></div>
+    <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXX" data-ad-slot="3333332"></ins></div>
+    <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXX" data-ad-slot="3333333"></ins></div>
   </div>
 
   <!-- Mobile Bottom Ad -->
-  <div class="ad-bottom-mobile">PLACE MOBILE BOTTOM AD HERE</div>
+  <div class="ad-bottom-mobile">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:100%;height:60px"
+         data-ad-client="ca-pub-XXXXXXX"
+         data-ad-slot="4444444"></ins>
+  </div>
 
   <!-- BACKGROUND -->
   <video autoplay muted loop playsinline preload="auto" id="bg-video">
