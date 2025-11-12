@@ -11,150 +11,164 @@
   <link rel="icon" href="favicon.ico" />
   <meta name="theme-color" content="#000000" />
 
-  <!-- Minimal inline CSS for ad placeholders only (keeps your original styles in style.css untouched) -->
+  <!-- Minimal, conflict-resistant CSS for ad placeholders only.
+       This intentionally uses highly specific selectors and high z-index
+       to avoid being hidden by your existing styles in style.css. -->
   <style>
-    /* ensure background video remains visible */
-    #bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -2; /* behind everything */
+    /* Ensure placeholders sit above everything */
+    .s2t-ad-placeholder,
+    .s2t-ad-placeholder * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
-    /* Top banner placeholder (desktop only) */
-    .ad-top-placeholder {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 90px;
+    /* Top banner: full width, centered text */
+    .s2t-ad-top {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 88px !important;
+      display: none; /* enabled on large screens via media query below */
+      align-items: center;
+      justify-content: center;
+      z-index: 99999 !important;
+      pointer-events: none; /* placeholder non-interactive by default */
+      -webkit-print-color-adjust: exact;
+    }
+    .s2t-ad-top .s2t-ad-box {
+      pointer-events: auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: none; /* non-interactive placeholder for PoC */
-      z-index: 50;
-    }
-    .ad-top-placeholder .box {
-      pointer-events: auto;
-      background: rgba(0,0,0,0.6);
+      min-width: 580px;
+      max-width: 1200px;
+      height: 64px;
+      background: rgba(0,0,0,0.66);
       color: #00ffcc;
-      font-weight: 700;
-      padding: 12px 18px;
-      border-radius: 6px;
-      border: 1px dashed rgba(0,255,204,0.2);
-      backdrop-filter: blur(4px);
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      border-radius: 8px;
+      border: 2px dashed rgba(0,255,204,0.12);
+      padding: 8px 16px;
+      text-align: center;
     }
 
-    /* Sidebars (desktop only) */
-    .ad-sidebar {
-      position: fixed;
-      top: calc(100px); /* below top area */
-      width: 170px;
-      display: flex;
+    /* Sidebars: stacked boxes on left & right */
+    .s2t-ad-sidebar {
+      position: fixed !important;
+      top: 108px !important; /* place below top area */
+      width: 180px !important;
+      display: none; /* enabled on large screens via media query below */
       flex-direction: column;
       gap: 18px;
-      z-index: 45;
+      z-index: 99998 !important;
       pointer-events: none;
     }
-    .ad-sidebar .box {
+    .s2t-ad-sidebar .s2t-ad-box {
       pointer-events: auto;
-      width: 170px;
+      width: 180px;
       height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.66);
       color: #00ffcc;
-      font-weight: 700;
-      border-radius: 8px;
-      border: 1px dashed rgba(0,255,204,0.2);
+      font-weight: 800;
+      border-radius: 10px;
+      border: 2px dashed rgba(0,255,204,0.12);
       text-align: center;
-      padding: 8px;
-    }
-    .ad-left {
-      left: 12px;
-    }
-    .ad-right {
-      right: 12px;
+      padding: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
     }
 
-    /* Mobile bottom placeholder */
-    .ad-bottom-mobile {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      display: none;
+    .s2t-ad-left { left: 12px !important; }
+    .s2t-ad-right { right: 12px !important; }
+
+    /* Mobile bottom sticky ad placeholder */
+    .s2t-ad-bottom-mobile {
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 64px !important;
+      display: none; /* enabled on small screens via media query below */
       align-items: center;
       justify-content: center;
-      z-index: 60;
+      z-index: 99999 !important;
+      pointer-events: none;
     }
-    .ad-bottom-mobile .box {
-      width: calc(100% - 12px);
+    .s2t-ad-bottom-mobile .s2t-ad-box {
+      pointer-events: auto;
+      width: calc(100% - 24px);
       height: 46px;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.66);
       color: #00ffcc;
-      font-weight: 700;
+      font-weight: 800;
       border-radius: 8px;
-      border: 1px dashed rgba(0,255,204,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px;
+      border: 2px dashed rgba(0,255,204,0.12);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 6px 12px;
+      margin: 0 12px;
     }
 
-    /* Visibility rules:
-       - show side/top on screens >= 1024px
-       - show mobile bottom on screens <= 1023px
-    */
-    @media (max-width: 1023px) {
-      .ad-top-placeholder, .ad-sidebar { display: none; }
-      .ad-bottom-mobile { display: flex; }
-      /* ensure main wrapper isn't overlapped by sticky mobile ad */
-      .center-wrapper { margin-bottom: 100px; }
+    /* Make sure background video remains visible behind everything */
+    #bg-video {
+      z-index: -9999 !important;
     }
+
+    /* Desktop-only: show top banner and sidebars */
     @media (min-width: 1024px) {
-      .ad-top-placeholder, .ad-sidebar { display: block; }
-      .ad-bottom-mobile { display: none; }
-      /* add a top margin so the top banner doesn't overlap the centered content */
-      .center-wrapper { margin-top: 100px; }
+      .s2t-ad-top { display: flex !important; }
+      .s2t-ad-sidebar { display: flex !important; }
+      .s2t-ad-bottom-mobile { display: none !important; }
+      /* push the center-wrapper down a little so it doesn't overlap the top placeholder */
+      .center-wrapper {
+        /* Only apply if center-wrapper doesn't already have a large top margin */
+        margin-top: calc(var(--s2t-top-offset, 0px) + 96px) !important;
+      }
     }
 
-    /* Small accessibility improvement so placeholders are readable in demos */
-    .ad-top-placeholder .box, .ad-sidebar .box, .ad-bottom-mobile .box {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      letter-spacing: 0.2px;
+    /* Mobile-only: show bottom sticky ad, hide side/top ads */
+    @media (max-width: 1023px) {
+      .s2t-ad-top, .s2t-ad-sidebar { display: none !important; }
+      .s2t-ad-bottom-mobile { display: flex !important; }
+      /* ensure center-wrapper has bottom space so content isn't covered by mobile ad */
+      .center-wrapper {
+        margin-bottom: 96px !important;
+      }
     }
+
+    /* Accessibility: ensure the placeholder text is readable on demos */
+    .s2t-ad-box { font-size: 15px; line-height: 1.1; text-transform: uppercase; }
   </style>
 </head>
 <body>
 
   <!-- Top Banner Ad Placeholder (desktop only) -->
-  <div class="ad-top-placeholder" aria-hidden="true">
-    <div class="box">PLACE ADS HERE</div>
+  <div class="s2t-ad-placeholder s2t-ad-top" aria-hidden="true">
+    <div class="s2t-ad-box">PLACE ADS HERE</div>
   </div>
 
   <!-- Left Sidebar Ads (desktop only) -->
-  <div class="ad-sidebar ad-left" aria-hidden="true">
-    <div class="box">PLACE ADS HERE</div>
-    <div class="box">PLACE ADS HERE</div>
-    <div class="box">PLACE ADS HERE</div>
+  <div class="s2t-ad-placeholder s2t-ad-sidebar s2t-ad-left" aria-hidden="true">
+    <div class="s2t-ad-box">PLACE ADS HERE</div>
+    <div class="s2t-ad-box">PLACE ADS HERE</div>
+    <div class="s2t-ad-box">PLACE ADS HERE</div>
   </div>
 
   <!-- Right Sidebar Ads (desktop only) -->
-  <div class="ad-sidebar ad-right" aria-hidden="true">
-    <div class="box">PLACE ADS HERE</div>
-    <div class="box">PLACE ADS HERE</div>
-    <div class="box">PLACE ADS HERE</div>
+  <div class="s2t-ad-placeholder s2t-ad-sidebar s2t-ad-right" aria-hidden="true">
+    <div class="s2t-ad-box">PLACE ADS HERE</div>
+    <div class="s2t-ad-box">PLACE ADS HERE</div>
+    <div class="s2t-ad-box">PLACE ADS HERE</div>
   </div>
 
-  <!-- Mobile Bottom Ad Placeholder -->
-  <div class="ad-bottom-mobile" aria-hidden="true">
-    <div class="box">PLACE ADS HERE</div>
+  <!-- Mobile Bottom Ad Placeholder (mobile only) -->
+  <div class="s2t-ad-placeholder s2t-ad-bottom-mobile" aria-hidden="true">
+    <div class="s2t-ad-box">PLACE ADS HERE</div>
   </div>
 
   <!-- BACKGROUND: No change needed here. -->
@@ -202,7 +216,7 @@
       <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result"></textarea>
 
       <div class="button-group">
-        <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>  
+        <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>	
       </div>
     </div>
 
