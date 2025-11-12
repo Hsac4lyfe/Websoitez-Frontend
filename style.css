@@ -33,7 +33,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: transparent !important;  /* ✅ fixed: allow video background to show */
+  background: transparent !important; /* show video background */
   color: var(--text-color);
 }
 
@@ -43,11 +43,7 @@ body {
   align-items: center;
   position: relative;
   z-index: 1;
-}
-
-/* ==========  HIDE DEFAULT CURSOR  ========== */
-*, *::before, *::after {
-  cursor: none !important;
+  cursor: auto !important; /* ✅ Restore normal cursor */
 }
 
 /* ==========  BACKGROUND  ========== */
@@ -60,7 +56,7 @@ body {
   object-fit: cover;
   pointer-events: none;
   filter: brightness(0.95);
-  z-index: -1 !important; /* ✅ ensures visible */
+  z-index: -1 !important;
 }
 
 /* ==========  WRAPPER  ========== */
@@ -72,14 +68,16 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
-  gap: 2vh;
+  height: calc(100vh - 120px); /* ✅ fits entire content on one screen */
+  gap: 1.75vh;
+  overflow: hidden;
 }
 
 /* ==========  LOGO  ========== */
 .title-video {
   max-height: 20vh;
   margin-bottom: 0;
+  margin-top: 1.5rem; /* ✅ moves it slightly down from top banner */
   pointer-events: none;
 }
 
@@ -87,13 +85,13 @@ body {
 .container {
   width: 90vw;
   max-width: 550px;
-  padding: 1.75rem 2rem;
+  padding: 1.5rem 1.75rem;
   background: var(--container-bg);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
   align-items: center;
   text-align: center;
 }
@@ -110,8 +108,8 @@ input, textarea, button, .dropbtn {
 input { width: 100%; }
 textarea {
   width: 100%;
-  min-height: 18vh;
-  max-height: 25vh;
+  min-height: 16vh;
+  max-height: 22vh;
   resize: none;
 }
 ::placeholder {
@@ -211,15 +209,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   margin: 0;
 }
 
-#timer #colon {
-  font: inherit;
-  color: inherit;
-  line-height: 1;
-  display: inline-block;
-  width: 0.6ch;
-  transition: opacity 0.25s ease-in-out;
-}
-
 /* ==========  DISCLAIMER  ========== */
 .disclaimer {
   font-size: 0.65rem;
@@ -228,7 +217,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   text-align: center;
   width: 90vw;
   max-width: 550px;
-  margin-top: 2vh;
+  margin-top: 1vh; /* ✅ reduced spacing so it fits neatly */
 }
 
 /* ==========  CURSOR  ========== */
@@ -245,7 +234,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 
 /* ==========  RESPONSIVE  ========== */
 @media (max-width: 768px) {
-  *, *::before, *::after { cursor: auto !important; }
   .custom-cursor { display: none !important; }
 
   .container {
@@ -256,7 +244,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 
   * { font-size: 1rem; }
   #timer { font-size: 1.5rem; }
-  textarea { min-height: 20vh; }
+  textarea { min-height: 18vh; }
 
   .disclaimer {
     font-size: 0.6rem;
@@ -291,9 +279,9 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   max-width: 1200px;
   height: 64px;
   background: rgba(0,0,0,0.6);
-  color: #00ffcc;
+  color: #fff; /* ✅ white text */
   font-weight: 800;
-  border: 2px dashed rgba(0,255,204,0.3);
+  border: 2px dashed rgba(255,255,255,0.3);
   border-radius: 8px;
 }
 
@@ -313,9 +301,9 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   align-items: center;
   justify-content: center;
   background: rgba(0,0,0,0.6);
-  color: #00ffcc;
+  color: #fff; /* ✅ white text */
   font-weight: 800;
-  border: 2px dashed rgba(0,255,204,0.3);
+  border: 2px dashed rgba(255,255,255,0.3);
   border-radius: 10px;
 }
 .s2t-ad-left { left: 12px; }
@@ -336,9 +324,9 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   width: calc(100% - 24px);
   height: 46px;
   background: rgba(0,0,0,0.6);
-  color: #00ffcc;
+  color: #fff; /* ✅ white text */
   font-weight: 800;
-  border: 2px dashed rgba(0,255,204,0.3);
+  border: 2px dashed rgba(255,255,255,0.3);
   border-radius: 8px;
   display:flex;
   align-items:center;
@@ -349,7 +337,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 @media (min-width: 1024px) {
   .s2t-ad-top, .s2t-ad-sidebar { display: flex; }
   .s2t-ad-bottom-mobile { display: none; }
-  .center-wrapper { margin-top: 96px; }
+  .center-wrapper { margin-top: 100px; }
 }
 @media (max-width: 1023px) {
   .s2t-ad-top, .s2t-ad-sidebar { display: none; }
