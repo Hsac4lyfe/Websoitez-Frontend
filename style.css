@@ -33,10 +33,10 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: transparent !important; /* show video background */
+  background: transparent !important;
   color: var(--text-color);
-  pointer-events: auto; /* Ensure body is interactive by default */
-  cursor: auto; /* Default cursor for the body. Custom cursor will render ON TOP. */
+  pointer-events: auto;
+  cursor: none;
 }
 
 body {
@@ -75,8 +75,8 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   box-sizing: border-box;
-  cursor: none; /* Hide default cursor ONLY within the main content wrapper */
-  pointer-events: auto; /* Ensure center-wrapper is interactive */
+  cursor: none;
+  pointer-events: auto;
 }
 
 /* ==========  LOGO  ========== */
@@ -84,7 +84,7 @@ body {
   max-height: 20vh;
   margin-bottom: 0;
   margin-top: 0;
-  pointer-events: none; /* Logo video should not capture pointer events */
+  pointer-events: none;
 }
 
 /* ==========  MAIN CARD  ========== */
@@ -100,7 +100,7 @@ body {
   gap: 1rem;
   align-items: center;
   text-align: center;
-  pointer-events: auto; /* Ensure container is interactive */
+  pointer-events: auto;
 }
 
 /* ==========  FORM CONTROLS  ========== */
@@ -111,7 +111,8 @@ input, textarea, button, .dropbtn {
   background: var(--primary-bg);
   color: var(--text-color);
   transition: background 0.25s ease;
-  pointer-events: auto; /* Ensure these are interactive */
+  pointer-events: auto;
+  cursor: none;
 }
 input { width: 100%; }
 textarea {
@@ -132,7 +133,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 /* ==========  DROPDOWN  ========== */
 .dropdown { 
   position: relative; 
-  pointer-events: auto; /* Ensure dropdown parent is interactive */
+  pointer-events: auto;
 }
 .dropdown-content {
   display: none;
@@ -144,20 +145,19 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   z-index: 10;
   left: 0;
   right: auto;
-  pointer-events: auto; /* Ensure dropdown content is interactive */
+  pointer-events: auto;
 }
 .dropdown-content a {
   display: block;
   padding: 0.6rem 1rem;
   color: var(--text-color);
   text-decoration: none;
-  pointer-events: auto; /* Ensure dropdown links are interactive */
+  pointer-events: auto;
 }
 .dropdown-content a:hover { background: var(--hover-color); }
 .dropdown.show .dropdown-content { display: block; }
 
 /* ==========  BUTTONS  ========== */
-button { cursor: pointer; }
 button:hover:not(:disabled) { background: var(--hover-color); }
 button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 #copyBtn { background: var(--border-color); }
@@ -168,7 +168,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   gap: 1rem;
   width: 100%;
   justify-content: center;
-  pointer-events: auto; /* Ensure button group is interactive */
+  pointer-events: auto;
 }
 
 /* ==========  STATUS + TIMER  ========== */
@@ -179,7 +179,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   width: 100%;
   gap: 6px;
   margin-top: 0;
-  pointer-events: none; /* Status and timer are generally not interactive */
+  pointer-events: none;
 }
 
 /* ==========  PROGRESS  ========== */
@@ -191,7 +191,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   border-radius: 10px;
   overflow: hidden;
   margin: 0;
-  pointer-events: none; /* Progress bar is generally not interactive */
+  pointer-events: none;
 }
 
 #progress-bar {
@@ -239,23 +239,19 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   width: 90vw;
   max-width: 550px;
   margin-top: 1vh;
-  pointer-events: auto; /* Disclaimer text can be selected */
+  pointer-events: auto;
 }
 
 /* ==========  CURSOR  ========== */
 .custom-cursor {
   position: fixed;
-  width: 96px; /* Explicit width and height for the video */
-  height: 96px; 
-  pointer-events: none; /* Crucial: cursor video itself should NOT capture pointer events */
-  z-index: 99999; /* Highest z-index to ensure it's on top */
-  transform: translate(-50%, -50%); /* Centered on the actual mouse position */
-  opacity: 1; /* Explicitly set to 1 in CSS */
-  transition: none; /* Remove transition for instant appearance */
-  will-change: transform, opacity; /* Hint to browser for performance */
-  /* Added these to ensure video plays and loops */
-  object-fit: contain; /* Or 'cover' if you want it to fill the 96x96 area */
-  background-color: transparent; /* Ensure no background */
+  width: 96px;
+  height: 96px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  will-change: transform;
 }
 
 /* ==========  RESPONSIVE  ========== */
@@ -284,7 +280,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   box-sizing: border-box;
   font-family: system-ui, Arial, sans-serif;
   text-transform: uppercase;
-  pointer-events: auto; /* Ads should be clickable */
+  pointer-events: auto;
 }
 
 .s2t-ad-sidebar {
