@@ -35,8 +35,6 @@ html, body {
   overflow: hidden;
   background: transparent !important; /* show video background */
   color: var(--text-color);
-  /* The body should NOT have pointer-events: none; this was too aggressive.
-     Instead, we control the cursor property. */
   pointer-events: auto; /* Ensure body is interactive by default */
   cursor: auto; /* Default cursor for the body. Custom cursor will render ON TOP. */
 }
@@ -247,13 +245,17 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 /* ==========  CURSOR  ========== */
 .custom-cursor {
   position: fixed;
-  width: 96px; /* Ensure a size for the video */
-  height: 96px; /* Ensure a size for the video */
+  width: 96px; /* Explicit width and height for the video */
+  height: 96px; 
   pointer-events: none; /* Crucial: cursor video itself should NOT capture pointer events */
   z-index: 99999; /* Highest z-index to ensure it's on top */
   transform: translate(-50%, -50%); /* Centered on the actual mouse position */
-  transition: opacity 0.3s ease;
-  will-change: transform; /* Hint to browser for performance */
+  opacity: 1; /* Explicitly set to 1 in CSS */
+  transition: none; /* Remove transition for instant appearance */
+  will-change: transform, opacity; /* Hint to browser for performance */
+  /* Added these to ensure video plays and loops */
+  object-fit: contain; /* Or 'cover' if you want it to fill the 96x96 area */
+  background-color: transparent; /* Ensure no background */
 }
 
 /* ==========  RESPONSIVE  ========== */
@@ -344,5 +346,3 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   .s2t-ad-bottom-mobile { display: flex; }
   .center-wrapper { margin-bottom: 96px; }
 }
-
-
