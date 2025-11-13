@@ -245,12 +245,15 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 /* ==========  CURSOR  ========== */
 .custom-cursor {
   position: fixed;
-  width: 96px;
-  height: 96px;
+  width: 48px;          /* half-size so it fits on screen */
+  height: 48px;
+  top: 50%;             /* start dead-centre */
+  left: 50%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 99999;
-  transform: translate(-50%, -50%);
   opacity: 1;
+  border: 2px solid #0f0; /* bright green outline – delete after test */
   will-change: transform;
 }
 
@@ -342,3 +345,4 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   .s2t-ad-bottom-mobile { display: flex; }
   .center-wrapper { margin-bottom: 96px; }
 }
+
