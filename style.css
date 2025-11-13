@@ -247,8 +247,8 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 /* ==========  CURSOR  ========== */
 .custom-cursor {
   position: fixed;
-  width: 48px;
-  height: 48px;
+  width: 75px;
+  height: 75px;
   pointer-events: none; /* ESSENTIAL: Cursor itself should not block interaction */
   z-index: 99999; /* Ensure it's on top of everything */
   opacity: 1; /* Ensure visibility */
@@ -344,3 +344,4 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   .s2t-ad-bottom-mobile { display: flex; }
   .center-wrapper { margin-bottom: 96px; }
 }
+
