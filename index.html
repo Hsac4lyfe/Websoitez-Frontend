@@ -4,8 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Shorts2Text — Instantly transcribe and extract captions from Reels, TikToks, and YouTube Shorts." />
-  <!-- UPDATED Content-Security-Policy -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ZswfTY7H35rbv8WC7NXBoiC7WNu86vSzCDChNWwZZDM='; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' https://api-production-6812.up.railway.app;" />
+  <!-- UPDATED Content-Security-Policy - Added 'unsafe-hashes' and generic 'blob:' for script-src for robustness -->
+  <!-- Note: The 'sha256-ZswfTY7H35rbv8WC7NXBoiC7WNu86vSzCDChNWwZZDM=' hash should allow your specific inline script. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ZswfTY7H35rbv8WC7NXBoiC7WNu86vSzCDChNWwZZDM=' 'unsafe-hashes' blob:; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' https://api-production-6812.up.railway.app;" />
   <title>Shorts 2 Text</title>
 
   <link rel="stylesheet" href="style.css" />
@@ -86,8 +87,10 @@
   </div>
 
   <!-- ANIMATED CURSOR -->
+  <!-- Ensured ID is correct and sources are valid -->
   <video autoplay muted loop playsinline preload="auto" id="customCursor" class="custom-cursor">
     <source src="Cursor05.webm" type="video/webm">
+    <!-- Consider adding a fallback image source here, or ensuring the WEBM is robust -->
   </video>
 
   <script src="app.js"></script>
