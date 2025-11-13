@@ -252,7 +252,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   pointer-events: none; /* Crucial: cursor video itself should NOT capture pointer events */
   z-index: 99999; /* Highest z-index to ensure it's on top */
   transform: translate(-50%, -50%); /* Centered on the actual mouse position */
-  opacity: 1;
   transition: opacity 0.3s ease;
   will-change: transform; /* Hint to browser for performance */
 }
@@ -345,4 +344,5 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   .s2t-ad-bottom-mobile { display: flex; }
   .center-wrapper { margin-bottom: 96px; }
 }
+
 
