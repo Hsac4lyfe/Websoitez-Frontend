@@ -35,6 +35,8 @@ html, body {
   overflow: hidden;
   background: transparent !important;
   color: var(--text-color);
+  position: relative; /* Ensure z-index context */
+  pointer-events: none; /* Crucial: body and html should not capture pointer events, allowing elements within to define their own */
 }
 
 /* Hide default cursor for all elements */
@@ -42,13 +44,11 @@ html, body {
   cursor: none !important;
 }
 
-
 body {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  z-index: 1;
+  z-index: 1; /* Needs to be lower than cursor's z-index */
 }
 
 /* ==========  BACKGROUND  ========== */
@@ -67,7 +67,7 @@ body {
 /* ==========  WRAPPER  ========== */
 .center-wrapper {
   position: relative;
-  z-index: 2;
+  z-index: 2; /* Still above background, below cursor */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,6 +79,7 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   box-sizing: border-box;
+  pointer-events: none; /* Ensure main wrapper doesn't capture events, let children handle it */
 }
 
 /* ==========  LOGO  ========== */
@@ -86,7 +87,7 @@ body {
   max-height: 20vh;
   margin-bottom: 0;
   margin-top: 0;
-  pointer-events: none;
+  pointer-events: none; /* Logo is purely decorative */
 }
 
 /* ==========  MAIN CARD  ========== */
@@ -102,6 +103,7 @@ body {
   gap: 1rem;
   align-items: center;
   text-align: center;
+  pointer-events: auto; /* Container and its children are interactive */
 }
 
 /* ==========  FORM CONTROLS  ========== */
@@ -112,6 +114,7 @@ input, textarea, button, .dropbtn {
   background: var(--primary-bg);
   color: var(--text-color);
   transition: background 0.25s ease;
+  pointer-events: auto; /* Allow interaction with these elements */
 }
 input { width: 100%; }
 textarea {
@@ -132,6 +135,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 /* ==========  DROPDOWN  ========== */
 .dropdown { 
   position: relative; 
+  pointer-events: auto; /* Allow interaction with dropdown button */
 }
 .dropdown-content {
   display: none;
@@ -143,12 +147,14 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   z-index: 10;
   left: 0;
   right: auto;
+  pointer-events: auto; /* Allow interaction with dropdown items */
 }
 .dropdown-content a {
   display: block;
   padding: 0.6rem 1rem;
   color: var(--text-color);
   text-decoration: none;
+  pointer-events: auto; /* Allow interaction with dropdown links */
 }
 .dropdown-content a:hover { background: var(--hover-color); }
 .dropdown.show .dropdown-content { display: block; }
@@ -164,6 +170,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   gap: 1rem;
   width: 100%;
   justify-content: center;
+  pointer-events: auto; /* Allow interaction with buttons in group */
 }
 
 /* ==========  STATUS + TIMER  ========== */
@@ -234,6 +241,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   width: 90vw;
   max-width: 550px;
   margin-top: 1vh;
+  pointer-events: auto; /* Allow selection of text if desired */
 }
 
 /* ==========  CURSOR  ========== */
@@ -241,16 +249,11 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   position: fixed;
   width: 48px;
   height: 48px;
-  /* top and left are now managed by JS, but keeping fixed is crucial */
   pointer-events: none; /* ESSENTIAL: Cursor itself should not block interaction */
-  z-index: 99999;
+  z-index: 99999; /* Ensure it's on top of everything */
   opacity: 1; /* Ensure visibility */
-  /* border: 2px solid #0f0;  REMOVED: This was the green box */
+  /* transform: translate() will be set by JS */
   will-change: transform; /* Hint to browser for smoother animation */
-  /* Initial centering for when JS hasn't updated it yet, though JS will quickly override */
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%); 
 }
 
 /* ==========  RESPONSIVE  ========== */
@@ -279,6 +282,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   box-sizing: border-box;
   font-family: system-ui, Arial, sans-serif;
   text-transform: uppercase;
+  pointer-events: auto; /* Allow interaction with ads */
 }
 
 .s2t-ad-sidebar {
@@ -289,7 +293,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   display: none;
   flex-direction: column;
   gap: 18px;
-  z-index: 99998;
+  z-index: 99998; /* Below custom cursor */
 }
 .s2t-ad-sidebar .s2t-ad-box {
   width: 180px;
@@ -315,7 +319,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 99999;
+  z-index: 99998; /* Below custom cursor */
 }
 .s2t-ad-bottom-mobile .s2t-ad-box {
   width: calc(100% - 24px);
