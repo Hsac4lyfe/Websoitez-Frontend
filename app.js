@@ -242,8 +242,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (DOM.cursor) {
       DOM.cursor.style.opacity = '1';
-      // Ensure the video plays
-      DOM.cursor.play().catch(e => console.warn('Custom cursor video failed to play:', e));
+      // Attempt to play the video. Use a timeout as it might need a moment to be ready.
+      // And ensure it's muted for autoplay.
+      DOM.cursor.muted = true; 
+      DOM.cursor.play().catch(e => {
+        console.warn('Custom cursor video failed to play:', e);
+        // Fallback: If video can't play, hide custom cursor and show default
+        DOM.cursor.style.display = 'none';
+        document.body.style.cursor = 'auto'; 
+      });
     }
 
     let lastMove = 0;
@@ -258,15 +265,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Make sure interactive elements have proper pointer events
+    // Make sure interactive elements have proper pointer events and hover effects
     const interactiveElements = document.querySelectorAll('button, a, input, textarea');
     interactiveElements.forEach(el => {
-      el.style.pointerEvents = 'auto'; // Re-enable pointer-events for these
+      // These elements should already have pointer-events: auto from global CSS,
+      // but adding explicitly here ensures it for dynamically added elements if any.
+      el.style.pointerEvents = 'auto'; 
+
+      // On hover, we pause the custom cursor to stop its animation 
+      // and let the default text/pointer cursor show if the element demands it.
       el.addEventListener('mouseenter', () => {
-        if (DOM.cursor) DOM.cursor.pause(); // Pause custom cursor on hover
+        if (DOM.cursor) DOM.cursor.pause();
       });
       el.addEventListener('mouseleave', () => {
-        if (DOM.cursor) DOM.cursor.play().catch(() => {}); // Resume custom cursor
+        if (DOM.cursor) DOM.cursor.play().catch(() => {});
       });
     });
   }
