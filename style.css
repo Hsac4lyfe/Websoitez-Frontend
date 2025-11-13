@@ -25,6 +25,8 @@
   font-family: Papyrus, fantasy;
   font-weight: 700;
   font-size: 1.05rem;
+  /* Set pointer-events to auto by default, then override where needed */
+  pointer-events: auto; 
 }
 
 /* ==========  RESET + BASE  ========== */
@@ -35,6 +37,8 @@ html, body {
   overflow: hidden;
   background: transparent !important; /* show video background */
   color: var(--text-color);
+  /* Make body pointer-events none, then re-enable for interactive elements */
+  pointer-events: none; 
 }
 
 body {
@@ -43,7 +47,7 @@ body {
   align-items: center;
   position: relative;
   z-index: 1;
-  cursor: none !important; /* Hide native cursor to show custom one */
+  cursor: auto; /* Default cursor for body, custom cursor will overlay it */
 }
 
 /* ==========  BACKGROUND  ========== */
@@ -68,20 +72,22 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100vh; /* Adjust height to fill viewport, ads will push it if present */
+  height: 100vh;
   gap: 1.75vh;
   overflow: hidden;
-  padding-top: 20px; /* Give a little breathing room from the top */
-  padding-bottom: 20px; /* Give a little breathing room from the bottom */
-  box-sizing: border-box; /* Include padding in height calculation */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+  cursor: none; /* Hide default cursor ONLY within the main content wrapper */
+  pointer-events: auto; /* Re-enable pointer events for the main content */
 }
 
 /* ==========  LOGO  ========== */
 .title-video {
   max-height: 20vh;
   margin-bottom: 0;
-  margin-top: 0; /* Adjusted, as center-wrapper handles overall vertical alignment */
-  pointer-events: none;
+  margin-top: 0;
+  pointer-events: none; /* Logo video should not capture pointer events */
 }
 
 /* ==========  MAIN CARD  ========== */
@@ -97,6 +103,7 @@ body {
   gap: 1rem;
   align-items: center;
   text-align: center;
+  pointer-events: auto; /* Re-enable pointer events for the container */
 }
 
 /* ==========  FORM CONTROLS  ========== */
@@ -107,6 +114,7 @@ input, textarea, button, .dropbtn {
   background: var(--primary-bg);
   color: var(--text-color);
   transition: background 0.25s ease;
+  pointer-events: auto; /* Ensure these are interactive */
 }
 input { width: 100%; }
 textarea {
@@ -125,7 +133,10 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 }
 
 /* ==========  DROPDOWN  ========== */
-.dropdown { position: relative; }
+.dropdown { 
+  position: relative; 
+  pointer-events: auto; /* Ensure dropdown parent is interactive */
+}
 .dropdown-content {
   display: none;
   position: absolute;
@@ -134,14 +145,16 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   border-radius: var(--border-radius);
   min-width: 160px;
   z-index: 10;
-  left: 0; /* Align dropdown to the left of its button */
+  left: 0;
   right: auto;
+  pointer-events: auto; /* Ensure dropdown content is interactive */
 }
 .dropdown-content a {
   display: block;
   padding: 0.6rem 1rem;
   color: var(--text-color);
   text-decoration: none;
+  pointer-events: auto; /* Ensure dropdown links are interactive */
 }
 .dropdown-content a:hover { background: var(--hover-color); }
 .dropdown.show .dropdown-content { display: block; }
@@ -158,6 +171,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   gap: 1rem;
   width: 100%;
   justify-content: center;
+  pointer-events: auto; /* Ensure button group is interactive */
 }
 
 /* ==========  STATUS + TIMER  ========== */
@@ -168,6 +182,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   width: 100%;
   gap: 6px;
   margin-top: 0;
+  pointer-events: none; /* Status and timer are generally not interactive */
 }
 
 /* ==========  PROGRESS  ========== */
@@ -179,6 +194,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   border-radius: 10px;
   overflow: hidden;
   margin: 0;
+  pointer-events: none; /* Progress bar is generally not interactive */
 }
 
 #progress-bar {
@@ -192,6 +208,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   box-shadow: 0 0 8px var(--accent-color);
   border-radius: 10px;
   transition: width 0.3s ease;
+  pointer-events: none;
 }
 
 /* ==========  STATUS TEXT  ========== */
@@ -201,6 +218,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
   text-align: center;
   width: 100%;
+  pointer-events: none;
 }
 
 /* ==========  TIMER STYLE  ========== */
@@ -212,6 +230,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   text-shadow: 0 0 10px var(--accent-color);
   letter-spacing: 2px;
   margin: 0;
+  pointer-events: none;
 }
 
 /* ==========  DISCLAIMER  ========== */
@@ -223,6 +242,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   width: 90vw;
   max-width: 550px;
   margin-top: 1vh;
+  pointer-events: auto; /* Disclaimer text can be selected */
 }
 
 /* ==========  CURSOR  ========== */
@@ -230,9 +250,11 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   position: fixed;
   width: 96px;
   height: 96px;
-  pointer-events: none;
-  z-index: 9999; /* Ensure cursor is on top of everything */
-  transform: translate(-25px, -25px); /* Center the cursor video on the mouse position */
+  /* Crucial: cursor video itself should NOT capture pointer events, 
+     so mouse events can pass through to elements beneath it */
+  pointer-events: none; 
+  z-index: 99999; /* Even higher z-index to ensure it's on top */
+  transform: translate(-50%, -50%); /* Centered on the actual mouse position */
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -263,14 +285,13 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   box-sizing: border-box;
   font-family: system-ui, Arial, sans-serif;
   text-transform: uppercase;
+  pointer-events: auto; /* Ads should be clickable */
 }
-
-/* Removed .s2t-ad-top as requested */
 
 .s2t-ad-sidebar {
   position: fixed;
-  top: 50%; /* Center vertically */
-  transform: translateY(-50%); /* Adjust for its own height */
+  top: 50%;
+  transform: translateY(-50%);
   width: 180px;
   display: none;
   flex-direction: column;
@@ -320,7 +341,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 @media (min-width: 1024px) {
   .s2t-ad-sidebar { display: flex; }
   .s2t-ad-bottom-mobile { display: none; }
-  /* No need for center-wrapper margin-top, as top ad is gone */
 }
 @media (max-width: 1023px) {
   .s2t-ad-top, .s2t-ad-sidebar { display: none; }
