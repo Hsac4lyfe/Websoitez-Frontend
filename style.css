@@ -35,9 +35,14 @@ html, body {
   overflow: hidden;
   background: transparent !important;
   color: var(--text-color);
-  pointer-events: auto;
-  cursor: none;
+  /* cursor: none;  Removed from here as '*' rule handles it more broadly */
 }
+
+/* Hide default cursor for all elements */
+*, *::before, *::after {
+  cursor: none !important;
+}
+
 
 body {
   display: flex;
@@ -55,7 +60,7 @@ body {
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  pointer-events: none;
+  pointer-events: none; /* Background should not capture pointer events */
   filter: brightness(0.95);
   z-index: -1 !important;
 }
@@ -75,8 +80,7 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   box-sizing: border-box;
-  cursor: none;
-  pointer-events: auto;
+  /* pointer-events: none; is removed here or overridden by specific interactive elements */
 }
 
 /* ==========  LOGO  ========== */
@@ -100,7 +104,7 @@ body {
   gap: 1rem;
   align-items: center;
   text-align: center;
-  pointer-events: auto;
+  /* pointer-events: auto; is the default and fine here for the content */
 }
 
 /* ==========  FORM CONTROLS  ========== */
@@ -111,8 +115,8 @@ input, textarea, button, .dropbtn {
   background: var(--primary-bg);
   color: var(--text-color);
   transition: background 0.25s ease;
-  pointer-events: auto;
-  cursor: none;
+  /* cursor: none; is redundant here due to the global rule, but not harmful */
+  /* pointer-events: auto; is the default and fine for these interactive elements */
 }
 input { width: 100%; }
 textarea {
@@ -133,7 +137,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 /* ==========  DROPDOWN  ========== */
 .dropdown { 
   position: relative; 
-  pointer-events: auto;
 }
 .dropdown-content {
   display: none;
@@ -145,14 +148,13 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   z-index: 10;
   left: 0;
   right: auto;
-  pointer-events: auto;
+  /* pointer-events: auto; is the default and fine here for dropdown items */
 }
 .dropdown-content a {
   display: block;
   padding: 0.6rem 1rem;
   color: var(--text-color);
   text-decoration: none;
-  pointer-events: auto;
 }
 .dropdown-content a:hover { background: var(--hover-color); }
 .dropdown.show .dropdown-content { display: block; }
@@ -168,7 +170,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   gap: 1rem;
   width: 100%;
   justify-content: center;
-  pointer-events: auto;
 }
 
 /* ==========  STATUS + TIMER  ========== */
@@ -179,7 +180,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   width: 100%;
   gap: 6px;
   margin-top: 0;
-  pointer-events: none;
+  pointer-events: none; /* These elements are just displaying info, not interactive */
 }
 
 /* ==========  PROGRESS  ========== */
@@ -191,7 +192,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   border-radius: 10px;
   overflow: hidden;
   margin: 0;
-  pointer-events: none;
+  pointer-events: none; /* Not interactive */
 }
 
 #progress-bar {
@@ -205,7 +206,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   box-shadow: 0 0 8px var(--accent-color);
   border-radius: 10px;
   transition: width 0.3s ease;
-  pointer-events: none;
+  pointer-events: none; /* Not interactive */
 }
 
 /* ==========  STATUS TEXT  ========== */
@@ -215,7 +216,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
   text-align: center;
   width: 100%;
-  pointer-events: none;
+  pointer-events: none; /* Not interactive */
 }
 
 /* ==========  TIMER STYLE  ========== */
@@ -227,7 +228,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   text-shadow: 0 0 10px var(--accent-color);
   letter-spacing: 2px;
   margin: 0;
-  pointer-events: none;
+  pointer-events: none; /* Not interactive */
 }
 
 /* ==========  DISCLAIMER  ========== */
@@ -239,7 +240,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   width: 90vw;
   max-width: 550px;
   margin-top: 1vh;
-  pointer-events: auto;
+  /* pointer-events: auto; is the default and fine here */
 }
 
 /* ==========  CURSOR  ========== */
@@ -247,19 +248,20 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   position: fixed;
   width: 48px;          /* half-size so it fits on screen */
   height: 48px;
-  top: 50%;             /* start dead-centre */
+  /* Start dead-centre is handled by JS for tracking mouse, not initial CSS pos */
+  /* top: 50%;            
   left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+  transform: translate(-50%, -50%); */ 
+  pointer-events: none; /* ESSENTIAL: Cursor itself should not block interaction */
   z-index: 99999;
-  opacity: 1;
+  opacity: 1; /* Ensure visibility */
   border: 2px solid #0f0; /* bright green outline – delete after test */
   will-change: transform;
 }
 
 /* ==========  RESPONSIVE  ========== */
 @media (max-width: 768px) {
-  .custom-cursor { display: none !important; }
+  .custom-cursor { display: none !important; } /* This is good for mobile */
 
   .container {
     width: 95vw;
@@ -283,7 +285,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   box-sizing: border-box;
   font-family: system-ui, Arial, sans-serif;
   text-transform: uppercase;
-  pointer-events: auto;
+  /* pointer-events: auto; is the default and fine for ads */
 }
 
 .s2t-ad-sidebar {
@@ -345,4 +347,3 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   .s2t-ad-bottom-mobile { display: flex; }
   .center-wrapper { margin-bottom: 96px; }
 }
-
