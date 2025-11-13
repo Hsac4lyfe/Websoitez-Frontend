@@ -237,26 +237,51 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isTouchDevice) {
       if (DOM.cursor) DOM.cursor.style.display = 'none';
       document.body.style.cursor = 'auto'; // Ensure default cursor for touch devices
+      console.log('Touch device detected, custom cursor hidden.');
       return;
     }
 
     if (DOM.cursor) {
+      console.log('Custom cursor element found.');
       DOM.cursor.style.opacity = '1';
       DOM.cursor.muted = true;
-      DOM.cursor.addEventListener('canplaythrough', () => {
-        DOM.cursor.play().catch(e => {
-          console.warn('Custom cursor video failed to play after canplaythrough:', e);
+      DOM.cursor.loop = true; // Ensure it loops if the video is short
+      DOM.cursor.playsInline = true; // Essential for autoplay on some mobile browsers (though we hide on touch)
+      DOM.cursor.preload = 'auto'; // Ensure it tries to load quickly
+
+      const playCursorVideo = () => {
+        DOM.cursor.play().then(() => {
+          console.log('Custom cursor video started playing.');
+        }).catch(e => {
+          console.warn('Custom cursor video failed to play:', e);
           DOM.cursor.style.display = 'none';
           document.body.style.cursor = 'auto';
         });
-      }, { once: true });
-      if (DOM.cursor.readyState >= 4) {
-        DOM.cursor.play().catch(e => {
-          console.warn('Custom cursor video failed to play (already ready):', e);
-          DOM.cursor.style.display = 'none';
-          document.body.style.cursor = 'auto';
-        });
+      };
+
+      // Try to play immediately if ready
+      if (DOM.cursor.readyState >= 4) { // HAVE_ENOUGH_DATA
+        console.log('Custom cursor video already ready, attempting to play.');
+        playCursorVideo();
+      } else {
+        // Otherwise, wait for enough data to play
+        DOM.cursor.addEventListener('canplaythrough', playCursorVideo, { once: true });
+        console.log('Waiting for custom cursor video to be ready (canplaythrough).');
       }
+
+      // Add an error listener specifically for the video element
+      DOM.cursor.addEventListener('error', (event) => {
+          console.error('Error loading custom cursor video:', event);
+          console.error('Video src:', DOM.cursor.currentSrc);
+          console.error('Video network state:', DOM.cursor.networkState);
+          // Hide custom cursor and show default in case of error
+          DOM.cursor.style.display = 'none';
+          document.body.style.cursor = 'auto';
+      });
+      
+    } else {
+      console.warn('Custom cursor element (id="customCursor") not found in DOM.');
+      document.body.style.cursor = 'auto'; // Fallback to default if element is missing
     }
 
     let lastMove = 0;
@@ -264,8 +289,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const now = performance.now();
       if (now - lastMove >= 16) { // Cap updates at ~60fps
         if (DOM.cursor) {
-          // Use CSS transform for smoother movement
-          DOM.cursor.style.transform = `translate(${e.clientX - DOM.cursor.offsetWidth / 2}px, ${e.clientY - DOM.cursor.offsetHeight / 2}px)`;
+          // Use CSS transform: translate3d for smoother, GPU-accelerated animation
+          // e.clientX and e.clientY are relative to the viewport
+          DOM.cursor.style.transform = `translate3d(${e.clientX - DOM.cursor.offsetWidth / 2}px, ${e.clientY - DOM.cursor.offsetHeight / 2}px, 0)`;
         }
         lastMove = now;
       }
