@@ -241,16 +241,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (DOM.cursor) {
+      // Set opacity to 1 directly in JS after ensuring the element exists
       DOM.cursor.style.opacity = '1';
-      // Attempt to play the video. Use a timeout as it might need a moment to be ready.
-      // And ensure it's muted for autoplay.
-      DOM.cursor.muted = true; 
-      DOM.cursor.play().catch(e => {
-        console.warn('Custom cursor video failed to play:', e);
-        // Fallback: If video can't play, hide custom cursor and show default
-        DOM.cursor.style.display = 'none';
-        document.body.style.cursor = 'auto'; 
-      });
+      DOM.cursor.muted = true;
+      // Use canplaythrough to ensure video is ready before trying to play
+      DOM.cursor.addEventListener('canplaythrough', () => {
+        DOM.cursor.play().catch(e => {
+          console.warn('Custom cursor video failed to play after canplaythrough:', e);
+          DOM.cursor.style.display = 'none';
+          document.body.style.cursor = 'auto';
+        });
+      }, { once: true });
+      // If video is already ready (e.g., cached), manually trigger play
+      if (DOM.cursor.readyState >= 4) { // HAVE_ENOUGH_DATA
+        DOM.cursor.play().catch(e => {
+          console.warn('Custom cursor video failed to play (already ready):', e);
+          DOM.cursor.style.display = 'none';
+          document.body.style.cursor = 'auto';
+        });
+      }
     }
 
     let lastMove = 0;
@@ -265,15 +274,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Make sure interactive elements have proper pointer events and hover effects
     const interactiveElements = document.querySelectorAll('button, a, input, textarea');
     interactiveElements.forEach(el => {
-      // These elements should already have pointer-events: auto from global CSS,
-      // but adding explicitly here ensures it for dynamically added elements if any.
-      el.style.pointerEvents = 'auto'; 
-
-      // On hover, we pause the custom cursor to stop its animation 
-      // and let the default text/pointer cursor show if the element demands it.
       el.addEventListener('mouseenter', () => {
         if (DOM.cursor) DOM.cursor.pause();
       });
