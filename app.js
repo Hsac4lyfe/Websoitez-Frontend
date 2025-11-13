@@ -263,12 +263,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let lastMove = 0;
+    // Listen for mousemove on the entire document, which is not blocked by pointer-events: none on the custom cursor itself
     document.addEventListener('mousemove', e => {
       const now = performance.now();
       if (now - lastMove >= 16) { // Cap updates at ~60fps
         if (DOM.cursor) {
-          DOM.cursor.style.left = `${e.clientX}px`;
-          DOM.cursor.style.top = `${e.clientY}px`;
+          // Adjust position to center the cursor's video on the actual mouse pointer
+          // The CSS transform: translate(-50%, -50%) for centering is not needed if JS is setting top/left directly
+          // We apply an offset here to correctly center it since CSS transform is removed from .custom-cursor.
+          DOM.cursor.style.left = `${e.clientX - DOM.cursor.offsetWidth / 2}px`;
+          DOM.cursor.style.top = `${e.clientY - DOM.cursor.offsetHeight / 2}px`;
         }
         lastMove = now;
       }
