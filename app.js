@@ -241,10 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (DOM.cursor) {
-      // Set opacity to 1 directly in JS after ensuring the element exists
       DOM.cursor.style.opacity = '1';
       DOM.cursor.muted = true;
-      // Use canplaythrough to ensure video is ready before trying to play
       DOM.cursor.addEventListener('canplaythrough', () => {
         DOM.cursor.play().catch(e => {
           console.warn('Custom cursor video failed to play after canplaythrough:', e);
@@ -252,8 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
           document.body.style.cursor = 'auto';
         });
       }, { once: true });
-      // If video is already ready (e.g., cached), manually trigger play
-      if (DOM.cursor.readyState >= 4) { // HAVE_ENOUGH_DATA
+      if (DOM.cursor.readyState >= 4) {
         DOM.cursor.play().catch(e => {
           console.warn('Custom cursor video failed to play (already ready):', e);
           DOM.cursor.style.display = 'none';
@@ -263,16 +260,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let lastMove = 0;
-    // Listen for mousemove on the entire document, which is not blocked by pointer-events: none on the custom cursor itself
     document.addEventListener('mousemove', e => {
       const now = performance.now();
       if (now - lastMove >= 16) { // Cap updates at ~60fps
         if (DOM.cursor) {
-          // Adjust position to center the cursor's video on the actual mouse pointer
-          // The CSS transform: translate(-50%, -50%) for centering is not needed if JS is setting top/left directly
-          // We apply an offset here to correctly center it since CSS transform is removed from .custom-cursor.
-          DOM.cursor.style.left = `${e.clientX - DOM.cursor.offsetWidth / 2}px`;
-          DOM.cursor.style.top = `${e.clientY - DOM.cursor.offsetHeight / 2}px`;
+          // Use CSS transform for smoother movement
+          DOM.cursor.style.transform = `translate(${e.clientX - DOM.cursor.offsetWidth / 2}px, ${e.clientY - DOM.cursor.offsetHeight / 2}px)`;
         }
         lastMove = now;
       }
