@@ -35,7 +35,6 @@ html, body {
   overflow: hidden;
   background: transparent !important;
   color: var(--text-color);
-  /* cursor: none;  Removed from here as '*' rule handles it more broadly */
 }
 
 /* Hide default cursor for all elements */
@@ -80,7 +79,6 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   box-sizing: border-box;
-  /* pointer-events: none; is removed here or overridden by specific interactive elements */
 }
 
 /* ==========  LOGO  ========== */
@@ -104,7 +102,6 @@ body {
   gap: 1rem;
   align-items: center;
   text-align: center;
-  /* pointer-events: auto; is the default and fine here for the content */
 }
 
 /* ==========  FORM CONTROLS  ========== */
@@ -115,8 +112,6 @@ input, textarea, button, .dropbtn {
   background: var(--primary-bg);
   color: var(--text-color);
   transition: background 0.25s ease;
-  /* cursor: none; is redundant here due to the global rule, but not harmful */
-  /* pointer-events: auto; is the default and fine for these interactive elements */
 }
 input { width: 100%; }
 textarea {
@@ -148,7 +143,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
   z-index: 10;
   left: 0;
   right: auto;
-  /* pointer-events: auto; is the default and fine here for dropdown items */
 }
 .dropdown-content a {
   display: block;
@@ -240,23 +234,23 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   width: 90vw;
   max-width: 550px;
   margin-top: 1vh;
-  /* pointer-events: auto; is the default and fine here */
 }
 
 /* ==========  CURSOR  ========== */
 .custom-cursor {
   position: fixed;
-  width: 48px;          /* half-size so it fits on screen */
+  width: 48px;
   height: 48px;
-  /* Start dead-centre is handled by JS for tracking mouse, not initial CSS pos */
-  /* top: 50%;            
-  left: 50%;
-  transform: translate(-50%, -50%); */ 
+  /* top and left are now managed by JS, but keeping fixed is crucial */
   pointer-events: none; /* ESSENTIAL: Cursor itself should not block interaction */
   z-index: 99999;
   opacity: 1; /* Ensure visibility */
-  border: 2px solid #0f0; /* bright green outline – delete after test */
-  will-change: transform;
+  /* border: 2px solid #0f0;  REMOVED: This was the green box */
+  will-change: transform; /* Hint to browser for smoother animation */
+  /* Initial centering for when JS hasn't updated it yet, though JS will quickly override */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); 
 }
 
 /* ==========  RESPONSIVE  ========== */
@@ -285,7 +279,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   box-sizing: border-box;
   font-family: system-ui, Arial, sans-serif;
   text-transform: uppercase;
-  /* pointer-events: auto; is the default and fine for ads */
 }
 
 .s2t-ad-sidebar {
