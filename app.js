@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     timerEl: document.getElementById('timer'),
     barEl: document.getElementById('progress-bar'),
     copyBtn: document.getElementById('copyBtn'),
-    cursor: document.getElementById('customCursor'),
+    cursor: document.getElementById('customCursor'), // Make sure this ID matches HTML
     bgVideo: document.getElementById('bg-video'),
   };
 
@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== DROPDOWN LOGIC ===== */
   function handleDropdownToggle(e) {
     e.preventDefault();
-    // Only toggle dropdown if not transcribing
     if (!STATE.isTranscribing) { 
       DOM.dropdown.classList.toggle('show');
     }
@@ -75,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateInputAndButtonStates() {
     const urlIsValid = DOM.urlInput.value.trim().length > 0;
     DOM.transcribeBtn.disabled = !urlIsValid || STATE.isTranscribing;
-    DOM.dropdownBtn.disabled = STATE.isTranscribing; // Disable dropdown button during transcription
+    DOM.dropdownBtn.disabled = STATE.isTranscribing;
     DOM.urlInput.disabled = STATE.isTranscribing;
   }
 
@@ -236,20 +235,39 @@ document.addEventListener('DOMContentLoaded', () => {
   function setupCursor() {
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice) {
-      if (DOM.cursor) DOM.cursor.style.display = 'none'; // Hide cursor on touch devices
+      if (DOM.cursor) DOM.cursor.style.display = 'none';
+      document.body.style.cursor = 'auto'; // Ensure default cursor for touch devices
       return;
     }
-    if (DOM.cursor) DOM.cursor.style.opacity = '1';
+
+    if (DOM.cursor) {
+      DOM.cursor.style.opacity = '1';
+      // Ensure the video plays
+      DOM.cursor.play().catch(e => console.warn('Custom cursor video failed to play:', e));
+    }
+
     let lastMove = 0;
     document.addEventListener('mousemove', e => {
       const now = performance.now();
-      if (now - lastMove >= 16) {
+      if (now - lastMove >= 16) { // Cap updates at ~60fps
         if (DOM.cursor) {
           DOM.cursor.style.left = `${e.clientX}px`;
           DOM.cursor.style.top = `${e.clientY}px`;
         }
         lastMove = now;
       }
+    });
+
+    // Make sure interactive elements have proper pointer events
+    const interactiveElements = document.querySelectorAll('button, a, input, textarea');
+    interactiveElements.forEach(el => {
+      el.style.pointerEvents = 'auto'; // Re-enable pointer-events for these
+      el.addEventListener('mouseenter', () => {
+        if (DOM.cursor) DOM.cursor.pause(); // Pause custom cursor on hover
+      });
+      el.addEventListener('mouseleave', () => {
+        if (DOM.cursor) DOM.cursor.play().catch(() => {}); // Resume custom cursor
+      });
     });
   }
   
