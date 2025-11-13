@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== DROPDOWN LOGIC ===== */
   function handleDropdownToggle(e) {
     e.preventDefault();
-    if (!DOM.dropdownBtn.disabled) { 
+    // Only toggle dropdown if not transcribing
+    if (!STATE.isTranscribing) { 
       DOM.dropdown.classList.toggle('show');
     }
   }
@@ -72,8 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ===== UI STATE MANAGEMENT ===== */
   function updateInputAndButtonStates() {
-    DOM.transcribeBtn.disabled = !DOM.urlInput.value.trim() || STATE.isTranscribing;
-    DOM.dropdownBtn.disabled = STATE.isTranscribing;
+    const urlIsValid = DOM.urlInput.value.trim().length > 0;
+    DOM.transcribeBtn.disabled = !urlIsValid || STATE.isTranscribing;
+    DOM.dropdownBtn.disabled = STATE.isTranscribing; // Disable dropdown button during transcription
     DOM.urlInput.disabled = STATE.isTranscribing;
   }
 
@@ -116,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       colon.style.opacity = Math.floor(elapsed / 500) % 2 === 0 ? '1' : '0';
     }
     
-    DOM.timerEl.innerHTML = `${mm}<span id="colon" style="opacity:${colon.style.opacity};">:</span>${ss}`;
+    DOM.timerEl.innerHTML = `${mm}<span id="colon" style="opacity:${colon ? colon.style.opacity : '1'};">:</span>${ss}`;
     STATE.timerInterval = requestAnimationFrame(updateTimer);
   }
   
@@ -234,15 +236,18 @@ document.addEventListener('DOMContentLoaded', () => {
   function setupCursor() {
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice) {
+      if (DOM.cursor) DOM.cursor.style.display = 'none'; // Hide cursor on touch devices
       return;
     }
-    DOM.cursor.style.opacity = '1';
+    if (DOM.cursor) DOM.cursor.style.opacity = '1';
     let lastMove = 0;
     document.addEventListener('mousemove', e => {
       const now = performance.now();
       if (now - lastMove >= 16) {
-        DOM.cursor.style.left = `${e.clientX}px`;
-        DOM.cursor.style.top = `${e.clientY}px`;
+        if (DOM.cursor) {
+          DOM.cursor.style.left = `${e.clientX}px`;
+          DOM.cursor.style.top = `${e.clientY}px`;
+        }
         lastMove = now;
       }
     });
