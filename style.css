@@ -25,8 +25,6 @@
   font-family: Papyrus, fantasy;
   font-weight: 700;
   font-size: 1.05rem;
-  /* Set pointer-events to auto by default, then override where needed */
-  pointer-events: auto; 
 }
 
 /* ==========  RESET + BASE  ========== */
@@ -37,8 +35,10 @@ html, body {
   overflow: hidden;
   background: transparent !important; /* show video background */
   color: var(--text-color);
-  /* Make body pointer-events none, then re-enable for interactive elements */
-  pointer-events: none; 
+  /* The body should NOT have pointer-events: none; this was too aggressive.
+     Instead, we control the cursor property. */
+  pointer-events: auto; /* Ensure body is interactive by default */
+  cursor: auto; /* Default cursor for the body. Custom cursor will render ON TOP. */
 }
 
 body {
@@ -47,7 +47,6 @@ body {
   align-items: center;
   position: relative;
   z-index: 1;
-  cursor: auto; /* Default cursor for body, custom cursor will overlay it */
 }
 
 /* ==========  BACKGROUND  ========== */
@@ -79,7 +78,7 @@ body {
   padding-bottom: 20px;
   box-sizing: border-box;
   cursor: none; /* Hide default cursor ONLY within the main content wrapper */
-  pointer-events: auto; /* Re-enable pointer events for the main content */
+  pointer-events: auto; /* Ensure center-wrapper is interactive */
 }
 
 /* ==========  LOGO  ========== */
@@ -103,7 +102,7 @@ body {
   gap: 1rem;
   align-items: center;
   text-align: center;
-  pointer-events: auto; /* Re-enable pointer events for the container */
+  pointer-events: auto; /* Ensure container is interactive */
 }
 
 /* ==========  FORM CONTROLS  ========== */
@@ -248,15 +247,14 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 /* ==========  CURSOR  ========== */
 .custom-cursor {
   position: fixed;
-  width: 96px;
-  height: 96px;
-  /* Crucial: cursor video itself should NOT capture pointer events, 
-     so mouse events can pass through to elements beneath it */
-  pointer-events: none; 
-  z-index: 99999; /* Even higher z-index to ensure it's on top */
+  width: 96px; /* Ensure a size for the video */
+  height: 96px; /* Ensure a size for the video */
+  pointer-events: none; /* Crucial: cursor video itself should NOT capture pointer events */
+  z-index: 99999; /* Highest z-index to ensure it's on top */
   transform: translate(-50%, -50%); /* Centered on the actual mouse position */
   opacity: 0;
   transition: opacity 0.3s ease;
+  will-change: transform; /* Hint to browser for performance */
 }
 
 /* ==========  RESPONSIVE  ========== */
