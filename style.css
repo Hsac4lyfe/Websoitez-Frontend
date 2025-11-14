@@ -246,14 +246,15 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 
 /* ==========  CURSOR  ========== */
 #customCursor {
-    width: 75px;
-    height: 75px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    transform-origin: center center;
-    object-fit: cover; /* important for videos */
+  z-index: 999999 !important;
+  width: 75px;
+  height: 75px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transform-origin: center center;
+  object-fit: cover; /* important for videos */
 }
 
 /* ==========  RESPONSIVE  ========== */
@@ -344,5 +345,6 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   .s2t-ad-bottom-mobile { display: flex; }
   .center-wrapper { margin-bottom: 96px; }
 }
+
 
 
