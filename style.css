@@ -162,7 +162,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 /* ==========  BUTTONS  ========== */
 button:hover:not(:disabled) { background: var(--hover-color); }
 button:disabled { background: var(--disabled-color); cursor: not-allowed; }
-#copyBtn { background: var(--border-color); }
+#copyBtn { /* background: var(--border-color); */ } /* Modified: Removed specific background color */
 
 /* ==========  SIDE-BY-SIDE BUTTON GROUP  ========== */
 .button-group.side {
@@ -232,6 +232,12 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   pointer-events: none; /* Not interactive */
 }
 
+/* New: Make the colon in the timer larger */
+#timer #colon {
+  font-size: 2.2rem; /* Adjust this value as needed */
+  vertical-align: middle; /* Helps align it better with the numbers */
+}
+
 /* ==========  DISCLAIMER  ========== */
 .disclaimer {
   font-size: 0.65rem;
@@ -269,6 +275,9 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 
   * { font-size: 1rem; }
   #timer { font-size: 1.5rem; }
+  #timer #colon { /* Adjust for smaller screens if needed */
+    font-size: 1.8rem; 
+  }
   textarea { min-height: 18vh; }
 
   .disclaimer {
@@ -345,6 +354,3 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   .s2t-ad-bottom-mobile { display: flex; }
   .center-wrapper { margin-bottom: 96px; }
 }
-
-
-
