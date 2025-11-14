@@ -237,7 +237,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   font-size: 2.2rem; /* Adjust this value as needed, keep it consistent with previous */
   vertical-align: middle; /* Helps align it better with the numbers */
   position: relative; /* Enable relative positioning */
-  top: -2px; /* Move it up by 2 pixels. Adjust this value (e.g., -1px, -3px) if needed */
+  top: -7px; /* Move it up by 2 pixels. Adjust this value (e.g., -1px, -3px) if needed */
 }
 
 /* ==========  DISCLAIMER  ========== */
@@ -356,4 +356,5 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   .s2t-ad-bottom-mobile { display: flex; }
   .center-wrapper { margin-bottom: 96px; }
 }
+
 
