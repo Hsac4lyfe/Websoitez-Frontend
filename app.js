@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (DOM.cursor) {
           // Use CSS transform: translate3d for smoother, GPU-accelerated animation
           // e.clientX and e.clientY are relative to the viewport
-          DOM.cursor.style.transform = `translate3d(${e.clientX - DOM.cursor.offsetWidth / 2}px, ${e.clientY - DOM.cursor.offsetHeight / 2}px, 0)`;
+          DOM.cursor.style.transform = `translate3d(${e.clientX - DOM.cursor.offsetWidth / 2+10}px, ${e.clientY - DOM.cursor.offsetHeight / 2+10}px, 0)`;
         }
         lastMove = now;
       }
@@ -321,3 +321,4 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
 
 });
+
