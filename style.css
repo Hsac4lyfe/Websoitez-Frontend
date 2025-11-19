@@ -357,4 +357,9 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   .center-wrapper { margin-bottom: 96px; }
 }
 
+.s2t-ad-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 
