@@ -115,7 +115,7 @@
       e.preventDefault();
       const body = JSON.stringify({ message: msg.value.trim() });
       try {
-        const res = await fetch('/advertise', { method:'POST', headers:{'Content-Type':'application/json'}, body });
+        const res = await fetch('https://api-production-6812.up.railway.app/advertise', { method:'POST', headers:{'Content-Type':'application/json'}, body });
         if (!res.ok) throw new Error('Network error');
         alert('Message sent! We’ll get back to you soon.');
         msg.value = ''; cnt.textContent = '0';
