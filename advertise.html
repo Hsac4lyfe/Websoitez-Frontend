@@ -89,45 +89,51 @@
   </video>
 
   <!-- CURSOR + BACKGROUND + COUNTER + LOCAL THANKS -->
-    <script>
-    /* ----------  background, cursor, counter (unchanged)  ---------- */
-      const bgv = document.getElementById('bg-video');
-      window.addEventListener('load', () => bgv.play().catch(()=>{}));
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') bgv.play().catch(()=>{});
+  <script>
+    /* ----------  background video  ---------- */
+    const bgv = document.getElementById('bg-video');
+    window.addEventListener('load', () => bgv.play().catch(()=>{}));
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') bgv.play().catch(()=>{});
+    });
+
+    /* ----------  custom cursor  ---------- */
+    const cursor = document.getElementById('customCursor');
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch || !cursor) {
+      document.body.style.cursor = 'auto';
+      if(cursor) cursor.style.display = 'none';
+    } else {
+      cursor.style.opacity = '1';
+      let last = 0;
+      document.addEventListener('mousemove', e => {
+        const now = performance.now();
+        if (now - last >= 16) {
+          cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
+          last = now;
+        }
       });
-
-      const cursor = document.getElementById('customCursor');
-      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      if (isTouch || !cursor) {
-        document.body.style.cursor = 'auto'; if(cursor) cursor.style.display = 'none';
-      } else {
-        cursor.style.opacity = '1';
-        let last = 0;
-        document.addEventListener('mousemove', e => {
-          const now = performance.now();
-          if (now - last >= 16) { cursor.style.transform = `translate3d(${e.clientX-10}px,${e.clientY-10}px,0)`; last = now; }
-        });
-        document.querySelectorAll('button, textarea, a').forEach(el => {
-          el.addEventListener('mouseenter', () => cursor.pause());
-          el.addEventListener('mouseleave', () => cursor.play().catch(()=>{}));
-        });
-      }
-
-      const ta = document.querySelector('textarea[name="message"]');
-      const cnt = document.querySelector('#count');
-      ta.addEventListener('input', () => cnt.textContent = ta.value.length);
-
-      /* ----------  stop redirect + local thank-you  ---------- */
-      const form = document.getElementById('adForm');
-      const ty = document.getElementById('thankYou');
-      form.addEventListener('submit', async e => {
-        e.preventDefault();                       // stop browser redirect
-        const body = new FormData(form);
-        await fetch(form.action, { method: 'POST', body });
-        form.style.display = 'none';
-        ty.style.display = 'block';
+      document.querySelectorAll('button, textarea, a').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.pause());
+        el.addEventListener('mouseleave', () => cursor.play().catch(()=>{}));
       });
+    }
+
+    /* ----------  character counter  ---------- */
+    const ta = document.querySelector('textarea[name="message"]');
+    const cnt = document.querySelector('#count');
+    ta.addEventListener('input', () => cnt.textContent = ta.value.length);
+
+    /* ----------  stop redirect + local thank-you  ---------- */
+    const form   = document.getElementById('adForm');
+    const thank  = document.getElementById('thankYou');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();                       // stop browser redirect
+      const body = new FormData(form);
+      await fetch(form.action, { method: 'POST', body });
+      form.style.display   = 'none';
+      thank.style.display  = 'block';
+    });
   </script>
 </body>
 </html>
