@@ -78,8 +78,38 @@
     <source src="cursor05.webm" type="video/webm">
   </video>
 
-  <!-- character counter only -->
+  <!-- CURSOR + BACKGROUND + COUNTER -->
   <script>
+    /* ----------  background video  ---------- */
+    const bgv = document.getElementById('bg-video');
+    window.addEventListener('load', () => bgv.play().catch(()=>{}));
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') bgv.play().catch(()=>{});
+    });
+
+    /* ----------  custom cursor  ---------- */
+    const cursor = document.getElementById('customCursor');
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch || !cursor) {
+      document.body.style.cursor = 'auto';
+      if(cursor) cursor.style.display = 'none';
+    } else {
+      cursor.style.opacity = '1';
+      let last = 0;
+      document.addEventListener('mousemove', e => {
+        const now = performance.now();
+        if (now - last >= 16) {
+          cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
+          last = now;
+        }
+      });
+      document.querySelectorAll('button, textarea, a').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.pause());
+        el.addEventListener('mouseleave', () => cursor.play().catch(()=>{}));
+      });
+    }
+
+    /* ----------  character counter  ---------- */
     const ta = document.querySelector('textarea[name="message"]');
     const cnt = document.querySelector('#count');
     ta.addEventListener('input', () => cnt.textContent = ta.value.length);
