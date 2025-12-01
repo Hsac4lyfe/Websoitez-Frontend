@@ -43,6 +43,15 @@
       height: 100vh;
       overflow: hidden;
     }
+    /* on-page thank-you box */
+    #successMsg {
+      display: none;
+      color: #0f0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -59,41 +68,40 @@
     <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
   </video>
 
-  <!-- FORM CARD – exact Web3Forms template -->
-  <form action="https://api.web3forms.com/submit" method="POST" class="ad-form">
+  <!-- FORM CARD -->
+  <form action="https://api.web3forms.com/submit" method="POST" class="ad-form" id="adForm">
     <h2>Interested in ad space?</h2>
 
     <!-- access key -->
     <input type="hidden" name="access_key" value="02a64816-48b6-42c5-99e6-3d218773251f">
-
-    <!-- optional: sender name -->
-    <input type="hidden" name="name" value="Visitor">
+    <input type="hidden" name="subject" value="New Ad-Space Inquiry" />
+    <input type="hidden" name="from_name" value="Shorts2Text Ad Page" />
 
     <!-- message -->
     <textarea name="message" maxlength="500" required placeholder="Write your message here…"></textarea>
     <div class="counter"><span id="count">0</span> / 500</div>
 
-    <!-- Web3Forms hidden fields -->
-    <input type="hidden" name="subject" value="New Ad-Space Inquiry" />
-    <input type="hidden" name="redirect" value="https://websoitez-frontend.vercel.app/thanks.html" />
-    <input type="hidden" name="from_name" value="Shorts2Text Ad Page" />
-
     <button type="submit">Send</button>
   </form>
+
+  <!-- on-page thank-you (hidden until send) -->
+  <div id="successMsg">✓ Message sent – please wait for a reply within the day!</div>
 
   <!-- CUSTOM CURSOR -->
   <video autoplay muted loop playsinline preload="auto" id="customCursor" class="custom-cursor">
     <source src="cursor05.webm" type="video/webm">
   </video>
 
-  <!-- CURSOR + BACKGROUND + COUNTER -->
+  <!-- CURSOR + BACKGROUND + COUNTER + LOCAL THANKS -->
   <script>
+    /* ----------  background video  ---------- */
     const bgv = document.getElementById('bg-video');
     window.addEventListener('load', () => bgv.play().catch(()=>{}));
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') bgv.play().catch(()=>{});
     });
 
+    /* ----------  custom cursor  ---------- */
     const cursor = document.getElementById('customCursor');
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouch || !cursor) {
@@ -115,9 +123,21 @@
       });
     }
 
+    /* ----------  character counter  ---------- */
     const ta = document.querySelector('textarea[name="message"]');
     const cnt = document.querySelector('#count');
     ta.addEventListener('input', () => cnt.textContent = ta.value.length);
+
+    /* ----------  stop redirect + local thank-you  ---------- */
+    const form   = document.getElementById('adForm');
+    const thank  = document.getElementById('successMsg');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();                       // stop browser redirect
+      const body = new FormData(form);
+      await fetch(form.action, { method: 'POST', body });
+      form.style.display   = 'none';
+      thank.style.display  = 'block';
+    });
   </script>
 </body>
 </html>
