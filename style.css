@@ -36,7 +36,7 @@ html, body {
   background: transparent !important;
   color: var(--text-color);
   position: relative; /* Ensure z-index context */
-  pointer-events: none; /* Crucial: body and html should not capture pointer events, allowing elements within to define their own */
+  pointer-events: auto; /* Crucial: body and html should not capture pointer events, allowing elements within to define their own */
 }
 
 /* Hide default cursor for all elements */
@@ -79,7 +79,7 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   box-sizing: border-box;
-  pointer-events: none; /* Ensure main wrapper doesn't capture events, let children handle it */
+  pointer-events: auto; /* Ensure main wrapper doesn't capture events, let children handle it */
 }
 
 /* ==========  LOGO  ========== */
@@ -87,7 +87,7 @@ body {
   max-height: 20vh;
   margin-bottom: 0;
   margin-top: 0;
-  pointer-events: none; /* Logo is purely decorative */
+  pointer-events: auto !important;
 }
 
 /* ==========  MAIN CARD  ========== */
@@ -362,4 +362,5 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   color: inherit;
   display: block;
 }
+
 
