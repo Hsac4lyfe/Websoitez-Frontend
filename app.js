@@ -140,14 +140,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (transcript !== null) {
         DOM.resultEl.value = transcript;
-        DOM.statusEl.innerText = '✅ Transcription complete!';
+        DOM.statusEl.innerText = 'Transcription complete!';
         DOM.barEl.style.width = '100%';
       } else {
         throw new Error('Timed out waiting for the result.');
       }
     } catch (err) {
       console.error(err);
-      DOM.statusEl.innerText = `❌ Oops! Something went wrong. Please try again.`;
+      DOM.statusEl.innerText = `Oops! Something went wrong. Please try again.`;
     } finally {
       stopTimer();
       setUIState(false); 
@@ -321,6 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
 
 });
+
 
 
 
