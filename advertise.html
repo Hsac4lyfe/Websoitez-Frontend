@@ -35,13 +35,15 @@
       font-size: .75rem;
       color: #aaa;
     }
-    /* centre everything */
+    /* centre everything + stack vertically */
     body {
       display: flex;
+      flex-direction: column;   /* logo on top, card below */
       justify-content: center;
       align-items: center;
       height: 100vh;
       overflow: hidden;
+      gap: 2vh;                 /* breathing room between logo and card */
     }
     /* on-page thank-you box */
     #successMsg {
@@ -56,19 +58,13 @@
 </head>
 <body>
 
-  <!-- BACKGROUND -->
-  <video autoplay muted loop playsinline preload="auto" id="bg-video">
-    <source src="JellyDarkMode12.webm" type="video/webm">
-    <source src="JellyDarkMode12.mp4" type="video/mp4">
-  </video>
-
-  <!-- LOGO -->
+  <!-- LOGO – now above the card -->
   <video autoplay muted loop playsinline preload="auto" class="title-video" aria-hidden="true">
     <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
     <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
   </video>
 
-  <!-- FORM CARD -->
+  <!-- FORM CARD – centred below logo -->
   <form action="https://api.web3forms.com/submit" method="POST" class="ad-form" id="adForm">
     <h2>Interested in ad space?</h2>
 
@@ -94,14 +90,12 @@
 
   <!-- CURSOR + BACKGROUND + COUNTER + LOCAL THANKS -->
   <script>
-    /* ----------  background video  ---------- */
     const bgv = document.getElementById('bg-video');
     window.addEventListener('load', () => bgv.play().catch(()=>{}));
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') bgv.play().catch(()=>{});
     });
 
-    /* ----------  custom cursor  ---------- */
     const cursor = document.getElementById('customCursor');
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouch || !cursor) {
@@ -123,7 +117,6 @@
       });
     }
 
-    /* ----------  character counter  ---------- */
     const ta = document.querySelector('textarea[name="message"]');
     const cnt = document.querySelector('#count');
     ta.addEventListener('input', () => cnt.textContent = ta.value.length);
@@ -132,7 +125,7 @@
     const form   = document.getElementById('adForm');
     const thank  = document.getElementById('successMsg');
     form.addEventListener('submit', async e => {
-      e.preventDefault();                       // stop browser redirect
+      e.preventDefault();
       const body = new FormData(form);
       await fetch(form.action, { method: 'POST', body });
       form.style.display   = 'none';
