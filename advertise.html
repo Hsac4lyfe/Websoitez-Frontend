@@ -21,14 +21,13 @@
     .ad-form h2 {
       margin: 0 0 .5rem;
       text-align: center;
-      font-size: 2rem;
+      font-size: 1.4rem;   /* bigger heading */
     }
     .ad-form textarea {
       width: 100%;
       min-height: 180px;
       resize: vertical;
-      padding: 0.75rem 0.75rem;
-      text-align: left;
+      padding: 0.75rem;    /* equal left/right padding */
       box-sizing: border-box;
     }
     .ad-form button {
@@ -42,12 +41,12 @@
     /* centre everything + stack vertically */
     body {
       display: flex;
-      flex-direction: column;   /* logo on top, card below */
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       overflow: hidden;
-      gap: 2vh;                 /* breathing room between logo and card */
+      gap: 2vh;
     }
     /* on-page thank-you box */
     #successMsg {
@@ -68,11 +67,13 @@
     <source src="JellyDarkMode12.mp4" type="video/mp4">
   </video>
 
-  <!-- LOGO – now above the card -->
-  <video autoplay muted loop playsinline preload="auto" class="title-video" aria-hidden="true">
-    <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
-    <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
-  </video>
+  <!-- LOGO – now above the card and clickable -->
+  <a href="https://websoitez-frontend.vercel.app" aria-label="Back to home">
+    <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo">
+      <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
+      <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
+    </video>
+  </a>
 
   <!-- FORM CARD – centred below logo -->
   <form action="https://api.web3forms.com/submit" method="POST" class="ad-form" id="adForm">
@@ -128,7 +129,7 @@
     }
 
     const ta = document.querySelector('textarea[name="message"]');
-    const cnt = document.getElementById('#count');
+    const cnt = document.querySelector('#count');
     ta.addEventListener('input', () => cnt.textContent = ta.value.length);
 
     /* ----------  stop redirect + local thank-you  ---------- */
