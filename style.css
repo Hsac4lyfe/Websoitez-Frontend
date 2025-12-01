@@ -21,7 +21,7 @@
 }
 
 /* ==========  GLOBAL FONT  ========== */
-body {
+* {
   font-family: Papyrus, fantasy;
   font-weight: 700;
   font-size: 1.05rem;
@@ -241,8 +241,9 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 }
 
 /* ==========  DISCLAIMER  ========== */
-.disclaimer {
+.disclaimer, .disclaimer * {
   font-family: Arial, sans-serif !important;
+  font-weight: normal !important;
   font-size: 0.65rem;
   line-height: 1.3;
   color: #aaa;
@@ -363,6 +364,7 @@ button:disabled { background: var(--disabled-color); cursor: not-allowed; }
   color: inherit;
   display: block;
 }
+
 
 
 
