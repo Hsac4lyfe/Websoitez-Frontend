@@ -58,6 +58,12 @@
 </head>
 <body>
 
+  <!-- BACKGROUND (same as index.html) -->
+  <video autoplay muted loop playsinline preload="auto" id="bg-video">
+    <source src="JellyDarkMode12.webm" type="video/webm">
+    <source src="JellyDarkMode12.mp4" type="video/mp4">
+  </video>
+
   <!-- LOGO – now above the card -->
   <video autoplay muted loop playsinline preload="auto" class="title-video" aria-hidden="true">
     <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
@@ -118,7 +124,7 @@
     }
 
     const ta = document.querySelector('textarea[name="message"]');
-    const cnt = document.querySelector('#count');
+    const cnt = document.getElementById('#count');
     ta.addEventListener('input', () => cnt.textContent = ta.value.length);
 
     /* ----------  stop redirect + local thank-you  ---------- */
