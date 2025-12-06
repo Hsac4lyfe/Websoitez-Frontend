@@ -121,8 +121,16 @@
   </video>
 
   <script src="app.js"></script>
+  <script>
+  // wipe inputs + state on any reload, back, or forward
+    window.addEventListener('pageshow',()=>{
+      document.querySelectorAll('input, textarea').forEach(el=>el.value='');
+      history.replaceState(null,'',location.pathname);
+    });
+  </script>
 </body>
 </html>
+
 
 
 
