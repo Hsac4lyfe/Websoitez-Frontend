@@ -36,7 +36,7 @@ html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: transparent !important;
+    background: #000 !important;
     color: var(--text-color);
     position: relative;
     pointer-events: auto;
@@ -403,6 +403,7 @@ button:disabled {
     color: inherit;
     display: block;
 }
+
 
 
 
