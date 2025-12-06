@@ -105,15 +105,18 @@
   <!-- APP -->
   <script src="app.js"></script>
 
-  <!-- HARD REFRESH / BACK / FORWARD WIPE -->
-  <script>
-    // clear every input/textarea on any reload, back, or forward
-    window.addEventListener('pageshow', () => {
-      document.querySelectorAll('input, textarea').forEach(el => el.value = '');
-      history.replaceState(null, '', location.pathname);
-    });
-    // extra: tell browser not to restore form state
-    window.onbeforeunload = () => true;
-  </script>
+<!-- HARD REFRESH / BACK / FORWARD WIPE -->
+<script>
+  window.addEventListener('pageshow', () => {
+    document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+    history.replaceState(null, '', location.pathname);
+  });
+  window.onbeforeunload = () => true;
+
+  // FORCE RELOAD ON BACK/FORWARD
+  if (performance.navigation.type === 2) {
+    location.reload(true);
+  }
+</script>
 </body>
 </html>
