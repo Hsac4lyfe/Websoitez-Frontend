@@ -88,7 +88,7 @@ body {
 
 .container {
     width: clamp(300px, 85vw, 550px);
-    padding: clamp(0.8rem, 1vw, 1.5rem);
+    padding: clamp(0.8rem, 1.5vw, 1.5rem);
     background: var(--container-bg);
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
@@ -403,6 +403,7 @@ button:disabled {
     color: inherit;
     display: block;
 }
+
 
 
 
