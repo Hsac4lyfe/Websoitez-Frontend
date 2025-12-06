@@ -260,7 +260,7 @@ button:disabled {
     width: 90vw;
     max-width: 550px;
     margin-top: 1vh;
-    margin-bottom: 3vh;
+    margin-bottom: 10vh;
     pointer-events: auto;
 }
 
@@ -403,3 +403,4 @@ button:disabled {
     color: inherit;
     display: block;
 }
+
