@@ -1,370 +1,405 @@
-/* ==========  VARIABLES  ========== */
+/*  Shorts2Text – full responsive refresh  */
 :root {
-  --primary-bg: #1e1e1e;
-  --secondary-bg: #2b2b2b;
-  --container-bg: rgba(42, 42, 42, 0.85);
-  --text-color: #e0e0e0;
-  --border-color: #444;
-  --accent-color: #ffffff;
-  --disabled-color: #555;
-  --hover-color: #575757;
-  --border-radius: 8px;
+    --primary-bg: #1e1e1e;
+    --secondary-bg: #2b2b2b;
+    --container-bg: rgba(42, 42, 42, 0.85);
+    --text-color: #e0e0e0;
+    --border-color: #444;
+    --accent-color: #ffffff;
+    --disabled-color: #555;
+    --hover-color: #575757;
+    --border-radius: 8px;
 }
 
-/* ==========  LOCAL DIGITAL FONT  ========== */
 @font-face {
-  font-family: 'DigitalPlay';
-  src: url('digitalplay.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'DigitalPlay';
+    src: url('digitalplay.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
 }
 
-/* ==========  GLOBAL FONT  ========== */
+/* Global font */
 * {
-  font-family: Papyrus, fantasy;
-  font-weight: 700;
-  font-size: 1.05rem;
+    font-family: Papyrus, fantasy;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: none !important;
 }
 
-/* ==========  RESET + BASE  ========== */
+html {
+    font-size: clamp(12px, 1.2vw, 18px);
+}
+
 html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: transparent !important;
-  color: var(--text-color);
-  position: relative; /* Ensure z-index context */
-  pointer-events: auto; /* Crucial: body and html should not capture pointer events, allowing elements within to define their own */
-}
-
-/* Hide default cursor for all elements */
-*, *::before, *::after {
-  cursor: none !important;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: transparent !important;
+    color: var(--text-color);
+    position: relative;
+    pointer-events: auto;
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1; /* Needs to be lower than cursor's z-index */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    overflow-x: hidden;
 }
 
-/* ==========  BACKGROUND  ========== */
 #bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  pointer-events: none; /* Background should not capture pointer events */
-  filter: brightness(0.95);
-  z-index: -1 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    pointer-events: none;
+    filter: brightness(0.95);
+    z-index: -1 !important;
 }
 
-/* ==========  WRAPPER  ========== */
 .center-wrapper {
-  position: relative;
-  z-index: 2; /* Still above background, below cursor */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-  gap: 1.75vh;
-  overflow: hidden;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  box-sizing: border-box;
-  pointer-events: auto; /* Ensure main wrapper doesn't capture events, let children handle it */
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    gap: 1.75vh;
+    overflow: hidden;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    box-sizing: border-box;
+    pointer-events: auto;
 }
 
-/* ==========  LOGO  ========== */
 .title-video {
-  max-height: 20vh;
-  margin-bottom: 0;
-  margin-top: 0;
-  pointer-events: auto !important;
+    max-height: clamp(80px, 15vh, 20vh);
+    margin-bottom: 0;
+    margin-top: 3vh;
+    pointer-events: auto !important;
 }
 
-/* ==========  MAIN CARD  ========== */
 .container {
-  width: 90vw;
-  max-width: 550px;
-  padding: 1.5rem 1.75rem;
-  background: var(--container-bg);
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-  text-align: center;
-  pointer-events: auto; /* Container and its children are interactive */
+    width: clamp(300px, 85vw, 550px);
+    padding: clamp(1rem, 3vw, 1.75rem);
+    background: var(--container-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+    pointer-events: auto;
 }
 
-/* ==========  FORM CONTROLS  ========== */
-input, textarea, button, .dropbtn {
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
-  background: var(--primary-bg);
-  color: var(--text-color);
-  transition: background 0.25s ease;
-  pointer-events: auto; /* Allow interaction with these elements */
+input,
+textarea,
+button,
+.dropbtn {
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    background: var(--primary-bg);
+    color: var(--text-color);
+    transition: background 0.25s ease;
+    pointer-events: auto;
 }
-input { width: 100%; }
+
+input {
+    width: 100%;
+}
+
 textarea {
-  width: 100%;
-  min-height: 16vh;
-  max-height: 22vh;
-  resize: none;
+    width: 100%;
+    min-height: 16vh;
+    max-height: 22vh;
+    resize: none;
 }
+
 ::placeholder {
-  font-family: Papyrus, fantasy;
+    font-family: Papyrus, fantasy;
 }
 
-button:focus-visible, input:focus-visible, textarea:focus-visible {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 2px;
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
-/* ==========  DROPDOWN  ========== */
-.dropdown { 
-  position: relative; 
-  pointer-events: auto; /* Allow interaction with dropdown button */
+.dropdown {
+    position: relative;
+    pointer-events: auto;
 }
+
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background: var(--secondary-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  min-width: 160px;
-  z-index: 10;
-  left: 0;
-  right: auto;
-  pointer-events: auto; /* Allow interaction with dropdown items */
+    display: none;
+    position: absolute;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    min-width: 160px;
+    z-index: 10;
+    left: 0;
+    right: auto;
+    pointer-events: auto;
 }
+
 .dropdown-content a {
-  display: block;
-  padding: 0.6rem 1rem;
-  color: var(--text-color);
-  text-decoration: none;
-  pointer-events: auto; /* Allow interaction with dropdown links */
+    display: block;
+    padding: 0.6rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    pointer-events: auto;
 }
-.dropdown-content a:hover { background: var(--hover-color); }
-.dropdown.show .dropdown-content { display: block; }
 
-/* ==========  BUTTONS  ========== */
-button:hover:not(:disabled) { background: var(--hover-color); }
-button:disabled { background: var(--disabled-color); cursor: not-allowed; }
-#copyBtn { /* background: var(--border-color); */ } /* Modified: Removed specific background color */
+.dropdown-content a:hover {
+    background: var(--hover-color);
+}
 
-/* ==========  SIDE-BY-SIDE BUTTON GROUP  ========== */
+.dropdown.show .dropdown-content {
+    display: block;
+}
+
+button:hover:not(:disabled) {
+    background: var(--hover-color);
+}
+
+button:disabled {
+    background: var(--disabled-color);
+    cursor: not-allowed;
+}
+
 .button-group.side {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-  justify-content: center;
-  pointer-events: auto; /* Allow interaction with buttons in group */
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+    pointer-events: auto;
 }
 
-/* ==========  STATUS + TIMER  ========== */
 .status-timer-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: 6px;
-  margin-top: 0;
-  pointer-events: none; /* These elements are just displaying info, not interactive */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+    margin-top: 0;
+    pointer-events: none;
 }
 
-/* ==========  PROGRESS  ========== */
 #progress-container {
-  position: relative;
-  width: 100%;
-  height: 20px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 0;
-  pointer-events: none; /* Not interactive */
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0;
+    pointer-events: none;
 }
 
 #progress-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0%;
-  background-color: var(--accent-color);
-  backdrop-filter: blur(4px);
-  box-shadow: 0 0 8px var(--accent-color);
-  border-radius: 10px;
-  transition: width 0.3s ease;
-  pointer-events: none; /* Not interactive */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent-color);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 8px var(--accent-color);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    pointer-events: none;
 }
 
-/* ==========  STATUS TEXT  ========== */
 #status {
-  color: var(--text-color);
-  font-weight: 700;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-  text-align: center;
-  width: 100%;
-  pointer-events: none; /* Not interactive */
+    color: var(--text-color);
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    text-align: center;
+    width: 100%;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    pointer-events: none;
 }
 
-/* ==========  TIMER STYLE  ========== */
 #timer {
-  font-family: 'DigitalPlay', monospace;
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: var(--accent-color);
-  text-shadow: 0 0 10px var(--accent-color);
-  letter-spacing: 2px;
-  margin: 0;
-  pointer-events: none; /* Not interactive */
+    font-family: 'DigitalPlay', monospace;
+    font-weight: 700;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    color: var(--accent-color);
+    text-shadow: 0 0 10px var(--accent-color);
+    letter-spacing: 2px;
+    margin: 0;
+    pointer-events: none;
 }
 
-/* Make the colon in the timer larger and adjust its vertical position */
 #timer #colon {
-  font-size: 2.2rem; /* Adjust this value as needed, keep it consistent with previous */
-  vertical-align: middle; /* Helps align it better with the numbers */
-  position: relative; /* Enable relative positioning */
-  top: -7px; /* Move it up by 2 pixels. Adjust this value (e.g., -1px, -3px) if needed */
+    font-size: 2.2rem;
+    vertical-align: middle;
+    position: relative;
+    top: -7px;
 }
 
-/* ==========  DISCLAIMER  ========== */
-.disclaimer, .disclaimer * {
-  font-family: Arial, sans-serif !important;
-  font-weight: normal !important;
-  font-size: 0.65rem;
-  line-height: 1.3;
-  color: #aaa;
-  text-align: center;
-  width: 90vw;
-  max-width: 550px;
-  margin-top: 1vh;
-  pointer-events: auto; /* Allow selection of text if desired */
+.disclaimer,
+.disclaimer * {
+    font-family: Arial, sans-serif !important;
+    font-weight: normal !important;
+    font-size: 0.65rem;
+    line-height: 1.3;
+    color: #aaa;
+    text-align: center;
+    width: 90vw;
+    max-width: 550px;
+    margin-top: 1vh;
+    margin-bottom: 3vh;
+    pointer-events: auto;
 }
 
-/* ==========  CURSOR  ========== */
 #customCursor {
-  z-index: 999999 !important;
-  width: 75px;
-  height: 75px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  transform-origin: center center;
-  object-fit: cover; /* important for videos */
+    z-index: 999999 !important;
+    width: 75px;
+    height: 75px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transform-origin: center center;
+    object-fit: cover;
 }
 
-/* ==========  RESPONSIVE  ========== */
+/* Mobile fixes */
 @media (max-width: 768px) {
-  .custom-cursor { display: none !important; } /* This is good for mobile */
+    .custom-cursor {
+        display: none !important;
+    }
 
-  .container {
-    width: 95vw;
-    padding: 1.25rem;
-    gap: 1rem;
-  }
+    .container {
+        width: 95vw;
+        padding: 1.25rem;
+        gap: 1rem;
+    }
 
-  * { font-size: 1rem; }
-  #timer { font-size: 1.5rem; }
-  #timer #colon { /* Adjust for smaller screens if needed */
-    font-size: 1.8rem; 
-  }
-  textarea { min-height: 18vh; }
+    * {
+        font-size: 1rem;
+    }
 
-  .disclaimer {
-    font-size: 0.6rem;
-    margin-top: 1.5vh;
-  }
+    #timer {
+        font-size: 1.5rem;
+    }
+
+    #timer #colon {
+        font-size: 1.8rem;
+    }
+
+    textarea {
+        min-height: 18vh;
+    }
+
+    .disclaimer {
+        font-size: 0.6rem;
+        margin-top: 1.5vh;
+    }
 }
 
-/* ==========  AD PLACEHOLDERS  ========== */
+/* ----------  ADS  ---------- */
+
 .s2t-ad-placeholder,
 .s2t-ad-placeholder * {
-  box-sizing: border-box;
-  font-family: system-ui, Arial, sans-serif;
-  text-transform: uppercase;
-  pointer-events: auto; /* Allow interaction with ads */
+    box-sizing: border-box;
+    font-family: system-ui, Arial, sans-serif;
+    text-transform: uppercase;
+    pointer-events: auto;
 }
 
 .s2t-ad-sidebar {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 180px;
-  display: none;
-  flex-direction: column;
-  gap: 18px;
-  z-index: 99998; /* Below custom cursor */
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 180px;
+    display: none;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 99998;
 }
+
 .s2t-ad-sidebar .s2t-ad-box {
-  width: 180px;
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  font-weight: 800;
-  border: 2px dashed rgba(255,255,255,0.3);
-  border-radius: 10px;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-weight: 800;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
 }
-.s2t-ad-left { left: 12px; }
-.s2t-ad-right { right: 12px; }
+
+.s2t-ad-left {
+    left: 12px;
+}
+
+.s2t-ad-right {
+    right: 12px;
+}
 
 .s2t-ad-bottom-mobile {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 64px;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 99998; /* Below custom cursor */
-}
-.s2t-ad-bottom-mobile .s2t-ad-box {
-  width: calc(100% - 24px);
-  height: 46px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  font-weight: 800;
-  border: 2px dashed rgba(255,255,255,0.3);
-  border-radius: 8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99998;
 }
 
-/* Desktop & mobile visibility */
-@media (min-width: 1024px) {
-  .s2t-ad-sidebar { display: flex; }
-  .s2t-ad-bottom-mobile { display: none; }
+.s2t-ad-bottom-mobile .s2t-ad-box {
+    width: calc(100% - 24px);
+    height: 46px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-weight: 800;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+@media (min-width: 1024px) {
+    .s2t-ad-sidebar {
+        display: flex;
+    }
+    .s2t-ad-bottom-mobile {
+        display: none;
+    }
+}
+
 @media (max-width: 1023px) {
-  .s2t-ad-top, .s2t-ad-sidebar { display: none; }
-  .s2t-ad-bottom-mobile { display: flex; }
-  .center-wrapper { margin-bottom: 96px; }
+    .s2t-ad-sidebar {
+        display: none;
+    }
+    .s2t-ad-bottom-mobile {
+        display: flex;
+    }
+    .center-wrapper {
+        margin-bottom: 96px;
+    }
 }
 
 .s2t-ad-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
-
-
-
-
