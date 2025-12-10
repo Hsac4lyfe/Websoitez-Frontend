@@ -4,11 +4,22 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Advertise with Us – Shorts2Text</title>
+
+  <!-- ⑨ favicons light + dark -->
+  <link rel="icon" href="favicon.ico">
+  <link rel="icon" href="favicon-dark.ico" media="(prefers-color-scheme: dark)">
+
+  <!-- ⑧ preload hero videos -->
+  <link rel="preload" href="Shorts2Text02Pixelated02.webm" as="video">
+  <link rel="preload" href="cursor05.webm" as="video">
+
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* same glass-morphism card we use on main page */
+    /* ④ glassier card */
     .ad-form {
-      background: var(--container-bg);
+      background: rgba(42, 42, 42, 0.55);
+      backdrop-filter: blur(12px) saturate(120%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       padding: 2rem;
       border-radius: 12px;
       width: 90%;
@@ -21,24 +32,28 @@
     .ad-form h2 {
       margin: 0 0 .5rem;
       text-align: center;
-      font-size: 1.4rem;   /* bigger heading */
+      font-size: 1.4rem;
     }
     .ad-form textarea {
       width: 100%;
       min-height: 180px;
       resize: vertical;
-      padding: 0.75rem;    /* equal left/right padding */
+      padding: 0.75rem;
       box-sizing: border-box;
     }
     .ad-form button {
       align-self: flex-end;
+    }
+    /* ③ micro-press on button */
+    .ad-form button:active {
+      transform: scale(0.97);
+      transition: transform 0.08s ease;
     }
     .ad-form .counter {
       text-align: right;
       font-size: .75rem;
       color: #aaa;
     }
-    /* centre everything + stack vertically */
     body {
       display: flex;
       flex-direction: column;
@@ -47,8 +62,8 @@
       height: 100vh;
       overflow: hidden;
       gap: 2vh;
+      background: #000 !important; /* black until video loads */
     }
-    /* on-page thank-you box */
     #successMsg {
       display: none;
       color: #0f0;
@@ -57,64 +72,62 @@
       text-align: center;
       margin-top: 1rem;
     }
-    a.title-video { 
-      position: relative; 
+    a.title-video {
+      position: relative;
       z-index: 99999;
       pointer-events: auto;
       cursor: pointer;
     }
   </style>
 </head>
-<body>
 
-  <!-- BACKGROUND (same as index.html) -->
+<body>
+  <!-- BACKGROUND -->
   <video autoplay muted loop playsinline preload="auto" id="bg-video">
     <source src="JellyDarkMode12.webm" type="video/webm">
     <source src="JellyDarkMode12.mp4" type="video/mp4">
   </video>
 
-  <!-- LOGO – now above the card and clickable -->
+  <!-- HOME LINK + LOGO -->
   <a href="https://websoitez-frontend.vercel.app" aria-label="Back to home">
-    <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo">
+    <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo"
+       oncontextmenu="return false" style="-webkit-touch-callout:none;-webkit-user-select:none;">
       <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
       <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
     </video>
   </a>
 
-  <!-- FORM CARD – centred below logo -->
+  <!-- FORM -->
   <form action="https://api.web3forms.com/submit" method="POST" class="ad-form" id="adForm">
     <h2>Interested in ad space?</h2>
-
-    <!-- access key -->
     <input type="hidden" name="access_key" value="02a64816-48b6-42c5-99e6-3d218773251f">
-    <input type="hidden" name="subject" value="New Ad-Space Inquiry" />
-    <input type="hidden" name="from_name" value="Shorts2Text Ad Page" />
-
-    <!-- message -->
-    <textarea name="message" maxlength="500" required placeholder="Write your message here…"></textarea>
+    <input type="hidden" name="subject" value="New Ad-Space Inquiry">
+    <input type="hidden" name="from_name" value="Shorts2Text Ad Page">
+    <textarea name="message" maxlength="500" required placeholder="Write your message here…" autocomplete="off"></textarea>
     <div class="counter"><span id="count">0</span> / 500</div>
-
     <button type="submit">Send</button>
   </form>
 
-  <!-- on-page thank-you (hidden until send) -->
+  <!-- THANK-YOU MSG -->
   <div id="successMsg">✓ Message sent – please wait for a reply within the day!</div>
 
-  <!-- CUSTOM CURSOR -->
+  <!-- CURSOR -->
   <video autoplay muted loop playsinline preload="auto" id="customCursor" class="custom-cursor">
     <source src="cursor05.webm" type="video/webm">
   </video>
 
-  <!-- CURSOR + BACKGROUND + COUNTER + LOCAL THANKS -->
+  <!-- SCRIPTS -->
   <script>
+    /* background video */
     const bgv = document.getElementById('bg-video');
     window.addEventListener('load', () => bgv.play().catch(()=>{}));
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') bgv.play().catch(()=>{});
     });
 
+    /* cursor + soft-fade */
     const cursor = document.getElementById('customCursor');
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
     if (isTouch || !cursor) {
       document.body.style.cursor = 'auto';
       if(cursor) cursor.style.display = 'none';
@@ -129,25 +142,29 @@
         }
       });
       document.querySelectorAll('button, textarea, a').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.pause());
-        el.addEventListener('mouseleave', () => cursor.play().catch(()=>{}));
+        el.addEventListener('mouseenter', () => cursor.classList.add('paused'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('paused'));
       });
     }
 
+    /* textarea counter */
     const ta = document.querySelector('textarea[name="message"]');
     const cnt = document.querySelector('#count');
     ta.addEventListener('input', () => cnt.textContent = ta.value.length);
 
-    /* ----------  stop redirect + local thank-you  ---------- */
-    const form   = document.getElementById('adForm');
-    const thank  = document.getElementById('successMsg');
+    /* local thank-you + no redirect */
+    const form = document.getElementById('adForm');
+    const thank = document.getElementById('successMsg');
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const body = new FormData(form);
       await fetch(form.action, { method: 'POST', body });
-      form.style.display   = 'none';
-      thank.style.display  = 'block';
+      form.style.display = 'none';
+      thank.style.display = 'block';
     });
+
+    /* hard-refresh on back/forward */
+    if (performance.navigation.type === 2) location.reload(true);
   </script>
 </body>
 </html>
