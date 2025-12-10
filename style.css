@@ -412,12 +412,6 @@ button:disabled {
   animation: fadeIn 0.6s ease-out both;
 }
 
-}
-.ad-form {
-  animation: fadeIn 0.6s ease-out both;
-  /* … keep every existing .ad-form rule … */
-}
-
 /* ③  micro-press on buttons */
 button:active {
   transform: scale(0.97);
@@ -438,4 +432,14 @@ button:active {
 #customCursor.paused {
   opacity: 0.35;
 }
+
+/* ===== POLISH LAYERS ===== */
+/* ⑦ cursor soft-fade */
+#customCursor {
+  transition: opacity 0.2s ease;
+}
+#customCursor.paused {
+  opacity: 0.35;
+}
+
 
