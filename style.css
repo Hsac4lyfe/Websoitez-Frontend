@@ -411,3 +411,24 @@ button:disabled {
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
+
+/* ③  micro-press on buttons */
+button:active {
+  transform: scale(0.97);
+  transition: transform 0.08s ease;
+}
+
+/* ④  glassier card */
+.container {
+  background: rgba(42, 42, 42, 0.55);          /* ← was 0.85 */
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ⑦  soft-fade cursor */
+#customCursor {
+  transition: opacity 0.2s ease;
+}
+#customCursor.paused {
+  opacity: 0.35;
+}
