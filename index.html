@@ -5,9 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Shorts2Text — Instantly transcribe and extract captions from Reels, TikToks, and YouTube Shorts." />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ZswfTY7H35rbv8WC7NXBoiC7WNu86vSzCDChNWwZZDM=' 'unsafe-hashes' blob:; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' https://api-production-6812.up.railway.app;" />
+
+  <!-- ⑨ favicons light + dark -->
+  <link rel="icon" href="favicon.ico">
+  <link rel="icon" href="favicon-dark.ico" media="(prefers-color-scheme: dark)">
+
+  <!-- ⑧ preload hero videos -->
+  <link rel="preload" href="Shorts2Text02Pixelated02.webm" as="video">
+  <link rel="preload" href="cursor05.webm" as="video">
+
   <title>Shorts 2 Text</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.ico" />
   <meta name="theme-color" content="#000000" />
 </head>
 
@@ -18,50 +26,31 @@
     <source src="JellyDarkMode12.webm" type="video/webm">
   </video>
 
-  <!-- LEFT ADS (desktop) -->
+  <!-- ADS (unchanged) -->
   <div class="s2t-ad-placeholder s2t-ad-sidebar s2t-ad-left" aria-hidden="true">
-    <a href="/advertise.html" class="s2t-ad-link">
-      <div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div>
-    </a>
-    <a href="/advertise.html" class="s2t-ad-link">
-      <div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div>
-    </a>
-    <a href="/advertise.html" class="s2t-ad-link">
-      <div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div>
-    </a>
+    <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
+    <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
+    <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
   </div>
-
-  <!-- RIGHT ADS (desktop) -->
   <div class="s2t-ad-placeholder s2t-ad-sidebar s2t-ad-right" aria-hidden="true">
-    <a href="/advertise.html" class="s2t-ad-link">
-      <div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div>
-    </a>
-    <a href="/advertise.html" class="s2t-ad-link">
-      <div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div>
-    </a>
-    <a href="/advertise.html" class="s2t-ad-link">
-      <div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div>
-    </a>
+    <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
+    <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
+    <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
   </div>
-
-  <!-- MOBILE BOTTOM AD -->
   <div class="s2t-ad-placeholder s2t-ad-bottom-mobile" aria-hidden="true">
-    <a href="/advertise.html" class="s2t-ad-link">
-      <div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div>
-    </a>
+    <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
   </div>
 
-  <!-- MAIN WRAPPER -->
+  <!-- MAIN -->
   <div class="center-wrapper">
-    <!-- LOGO -->
-    <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo">
-      <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
+    <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo"
+       oncontextmenu="return false" style="-webkit-touch-callout:none;-webkit-user-select:none;">
       <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
+      <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
     </video>
 
-    <!-- CARD -->
     <div class="container">
-      <input id="url" placeholder="Paste Reel / TikTok / YouTube link here" aria-label="Video link input" type="url" autocomplete="off" />
+      <input id="url" placeholder="Paste Reel / TikTok / YouTube link here" aria-label="Video link input" type="url" autocomplete="off">
       <div class="button-group side">
         <div class="dropdown">
           <button id="dropdownBtn" class="dropbtn" aria-haspopup="true" aria-expanded="false">Plain Text ▼</button>
@@ -89,12 +78,7 @@
       </div>
     </div>
 
-    <p class="disclaimer">
-      By using this service you confirm that you have the right to download and
-      transcribe the linked content. Respect copyright, platform terms-of-service,
-      and local laws; we assume no liability for misuse or any consequences that
-      may arise from your actions.
-    </p>
+    <p class="disclaimer">By using this service you confirm that you have the right to download and transcribe the linked content. Respect copyright, platform terms-of-service, and local laws; we assume no liability for misuse or any consequences that may arise from your actions.</p>
   </div>
 
   <!-- CURSOR -->
@@ -102,21 +86,16 @@
     <source src="cursor05.webm" type="video/webm">
   </video>
 
-  <!-- APP -->
   <script src="app.js"></script>
 
-<!-- HARD REFRESH / BACK / FORWARD WIPE -->
-<script>
-  window.addEventListener('pageshow', () => {
-    document.querySelectorAll('input, textarea').forEach(el => el.value = '');
-    history.replaceState(null, '', location.pathname);
-  });
-  window.onbeforeunload = () => true;
-
-  // FORCE RELOAD ON BACK/FORWARD
-  if (performance.navigation.type === 2) {
-    location.reload(true);
-  }
-</script>
+  <!-- wipe + hard-reload helpers -->
+  <script>
+    window.addEventListener('pageshow', () => {
+      document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+      history.replaceState(null, '', location.pathname);
+    });
+    window.onbeforeunload = () => true;
+    if (performance.navigation.type === 2) location.reload(true);
+  </script>
 </body>
 </html>
