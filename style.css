@@ -317,6 +317,7 @@ button:disabled {
     box-sizing: border-box;
     font-family: system-ui, Arial, sans-serif;
     text-transform: uppercase;
+    text-align: center;
     pointer-events: auto;
 }
 
@@ -441,5 +442,6 @@ button:active {
 #customCursor.paused {
   opacity: 0.35;
 }
+
 
 
