@@ -61,6 +61,17 @@
       font-size: .75rem;
       color: #aaa;
     }
+
+    .ad-form input[type="email"] {
+      width: 100%;
+      padding: 0.35rem 0.6rem;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-color);
+      background: var(--primary-bg);
+      color: var(--text-color);
+      margin-bottom: 0.75rem;
+    }
+    
     body {
       display: flex;
       flex-direction: column;
@@ -110,6 +121,7 @@
     <input type="hidden" name="access_key" value="02a64816-48b6-42c5-99e6-3d218773251f">
     <input type="hidden" name="subject" value="New Ad-Space Inquiry">
     <input type="hidden" name="from_name" value="Shorts2Text Ad Page">
+    <input type="email" name="from_email" placeholder="Your email address" required autocomplete="email" />
     <textarea name="message" maxlength="500" required placeholder="Write your message here…" autocomplete="off"></textarea>
     <div class="counter"><span id="count">0</span> / 500</div>
     <button type="submit">Send</button>
