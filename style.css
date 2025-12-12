@@ -256,7 +256,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 }
 #customCursor.paused { opacity: 0.35; }
 
-/* ----------  ADS  ---------- */
+/* ----------  RESIZABLE ADS  ---------- */
 .s2t-ad-placeholder,
 .s2t-ad-placeholder * {
     box-sizing: border-box;
@@ -270,16 +270,16 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    width: 180px;
+    width: clamp(120px, 10vw, 180px);            /* ← shrinks with window */
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: clamp(10px, 1.2vh, 18px);
     z-index: 99998;
 }
 
 .s2t-ad-sidebar .s2t-ad-box {
-    width: 180px;
-    height: 180px;
+    width: 100%;
+    aspect-ratio: 1 / 1;                          /* keeps square */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -288,17 +288,18 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     font-weight: 800;
     border: 2px dashed rgba(255, 255, 255, 0.3);
     border-radius: 10px;
+    font-size: clamp(0.65rem, 0.8vw, 0.9rem);   /* text shrinks too */
 }
 
-.s2t-ad-left { left: 12px; }
-.s2t-ad-right { right: 12px; }
+.s2t-ad-left  { left: clamp(8px, 0.8vw, 12px); }
+.s2t-ad-right { right: clamp(8px, 0.8vw, 12px); }
 
 .s2t-ad-bottom-mobile {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 64px;
+    height: clamp(50px, 8vh, 64px);
     display: none;
     align-items: center;
     justify-content: center;
@@ -306,8 +307,8 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 }
 
 .s2t-ad-bottom-mobile .s2t-ad-box {
-    width: calc(100% - 24px);
-    height: 46px;
+    width: clamp(280px, 90vw, 500px);
+    height: clamp(40px, 6vh, 46px);
     background: rgba(0, 0, 0, 0.6);
     color: #fff;
     font-weight: 800;
@@ -316,14 +317,15 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
 }
 
 /* ===== TRUE MOBILE DETECTION ===== */
 @media (pointer: coarse) {
-  .s2t-ad-sidebar       { display: none !important; }
-  .s2t-ad-bottom-mobile { display: flex !important; }
-  .custom-cursor        { display: none !important; }
-  body                  { cursor: auto !important; }
+    .s2t-ad-sidebar       { display: none !important; }
+    .s2t-ad-bottom-mobile { display: flex !important; }
+    .custom-cursor        { display: none !important; }
+    body                  { cursor: auto !important; }
 }
 
 .s2t-ad-link {
@@ -335,7 +337,4 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
-}
-.container {
-  animation: fadeIn 0.6s ease-out both;
 }
