@@ -2,7 +2,7 @@
 :root {
     --primary-bg: #1e1e1e;
     --secondary-bg: #2b2b2b;
-    --container-bg: rgba(42, 42, 42, 0.85);
+    --container-bg: rgba(42, 42, 42, 0.55);
     --text-color: #e0e0e0;
     --border-color: #444;
     --accent-color: #ffffff;
@@ -19,7 +19,6 @@
     font-display: swap;
 }
 
-/* Global font */
 * {
     font-family: Papyrus, fantasy;
     font-weight: 700;
@@ -80,10 +79,12 @@ body {
 }
 
 .title-video {
-    max-height: clamp(80px, 15vh, 20vh);
+    max-height: clamp(100px, 20vh, 30vh);
     margin-bottom: 0;
     margin-top: 3vh;
     pointer-events: auto !important;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .container {
@@ -98,12 +99,10 @@ body {
     align-items: center;
     text-align: center;
     pointer-events: auto;
+    animation: fadeIn 0.6s ease-out both;
 }
 
-input,
-textarea,
-button,
-.dropbtn {
+input, textarea, button, .dropbtn {
     padding: 0.35rem 0.6rem;
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
@@ -113,10 +112,7 @@ button,
     pointer-events: auto;
 }
 
-input {
-    width: 100%;
-}
-
+input { width: 100%; }
 textarea {
     width: 100%;
     min-height: 10vh;
@@ -124,22 +120,14 @@ textarea {
     resize: none;
 }
 
-::placeholder {
-    font-family: Papyrus, fantasy;
-}
+::placeholder { font-family: Papyrus, fantasy; }
 
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
+button:focus-visible, input:focus-visible, textarea:focus-visible {
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
 }
 
-.dropdown {
-    position: relative;
-    pointer-events: auto;
-}
-
+.dropdown { position: relative; pointer-events: auto; }
 .dropdown-content {
     display: none;
     position: absolute;
@@ -152,7 +140,6 @@ textarea:focus-visible {
     right: auto;
     pointer-events: auto;
 }
-
 .dropdown-content a {
     display: block;
     padding: 0.6rem 1rem;
@@ -160,23 +147,14 @@ textarea:focus-visible {
     text-decoration: none;
     pointer-events: auto;
 }
+.dropdown-content a:hover { background: var(--hover-color); }
+.dropdown.show .dropdown-content { display: block; }
 
-.dropdown-content a:hover {
-    background: var(--hover-color);
-}
+button:hover:not(:disabled) { background: var(--hover-color); }
+button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 
-.dropdown.show .dropdown-content {
-    display: block;
-}
-
-button:hover:not(:disabled) {
-    background: var(--hover-color);
-}
-
-button:disabled {
-    background: var(--disabled-color);
-    cursor: not-allowed;
-}
+/* ③ micro-press */
+button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 
 .button-group.side {
     display: flex;
@@ -274,44 +252,11 @@ button:disabled {
     pointer-events: none;
     transform-origin: center center;
     object-fit: cover;
+    transition: opacity 0.2s ease;
 }
-
-/* Mobile fixes */
-@media (max-width: 768px) {
-    .custom-cursor {
-        display: none !important;
-    }
-
-    .container {
-        width: 95vw;
-        padding: 1.25rem;
-        gap: 1rem;
-    }
-
-    * {
-        font-size: 1rem;
-    }
-
-    #timer {
-        font-size: 1.5rem;
-    }
-
-    #timer #colon {
-        font-size: 1.8rem;
-    }
-
-    textarea {
-        min-height: 18vh;
-    }
-
-    .disclaimer {
-        font-size: 0.6rem;
-        margin-top: 1.5vh;
-    }
-}
+#customCursor.paused { opacity: 0.35; }
 
 /* ----------  ADS  ---------- */
-
 .s2t-ad-placeholder,
 .s2t-ad-placeholder * {
     box-sizing: border-box;
@@ -326,7 +271,7 @@ button:disabled {
     top: 50%;
     transform: translateY(-50%);
     width: 180px;
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 18px;
     z-index: 99998;
@@ -345,13 +290,8 @@ button:disabled {
     border-radius: 10px;
 }
 
-.s2t-ad-left {
-    left: 12px;
-}
-
-.s2t-ad-right {
-    right: 12px;
-}
+.s2t-ad-left { left: 12px; }
+.s2t-ad-right { right: 12px; }
 
 .s2t-ad-bottom-mobile {
     position: fixed;
@@ -378,25 +318,12 @@ button:disabled {
     justify-content: center;
 }
 
-@media (min-width: 1024px) {
-    .s2t-ad-sidebar {
-        display: flex;
-    }
-    .s2t-ad-bottom-mobile {
-        display: none;
-    }
-}
-
-@media (max-width: 1023px) {
-    .s2t-ad-sidebar {
-        display: none;
-    }
-    .s2t-ad-bottom-mobile {
-        display: flex;
-    }
-    .center-wrapper {
-        margin-bottom: 96px;
-    }
+/* ===== TRUE MOBILE DETECTION ===== */
+@media (pointer: coarse) {
+  .s2t-ad-sidebar       { display: none !important; }
+  .s2t-ad-bottom-mobile { display: flex !important; }
+  .custom-cursor        { display: none !important; }
+  body                  { cursor: auto !important; }
 }
 
 .s2t-ad-link {
@@ -412,36 +339,3 @@ button:disabled {
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
-
-/* ③  micro-press on buttons */
-button:active {
-  transform: scale(0.97);
-  transition: transform 0.08s ease;
-}
-
-/* ④  glassier card */
-.container {
-  background: rgba(42, 42, 42, 0.55);          /* ← was 0.85 */
-  backdrop-filter: blur(12px) saturate(120%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* ⑦  soft-fade cursor */
-#customCursor {
-  transition: opacity 0.2s ease;
-}
-#customCursor.paused {
-  opacity: 0.35;
-}
-
-/* ===== POLISH LAYERS ===== */
-/* ⑦ cursor soft-fade */
-#customCursor {
-  transition: opacity 0.2s ease;
-}
-#customCursor.paused {
-  opacity: 0.35;
-}
-
-
-
