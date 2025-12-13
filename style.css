@@ -12,9 +12,10 @@
 }
 
 @font-face {
-    font-family: 'DigitalPlay';
-    src: url('digitalplay.otf') format('opentype');
-    font-weight: 700;
+    font-family: 'Papyrus';
+    src: url('papyrus.woff2') format('woff2'),
+         url('papyrus.ttf')   format('truetype');
+    font-weight: 400 700;
     font-style: normal;
     font-display: swap;
 }
@@ -102,14 +103,22 @@ body {
     animation: fadeIn 0.6s ease-out both;
 }
 
-input, textarea, button, .dropbtn {
-    padding: 0.35rem 0.6rem;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--border-color);
-    background: var(--primary-bg);
-    color: var(--text-color);
-    transition: background 0.25s ease;
-    pointer-events: auto;
+/* every interactive / visible text → Papyrus */
+input, textarea, button, .dropbtn,
+#status, #timer, #dropdownBtn,
+.dropdown-content a,
+.s2t-ad-box {
+    font-family: 'Papyrus', fantasy;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+/* disclaimer stays Arial */
+.disclaimer,
+.disclaimer * {
+    font-family: Arial, sans-serif !important;
+    font-weight: normal !important;
+    font-size: 0.65rem;
 }
 
 input { width: 100%; }
@@ -322,6 +331,11 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 
 /* ===== TRUE MOBILE DETECTION ===== */
 @media (pointer: coarse) {
+    input, textarea, button, .dropbtn,
+    #status, #timer, #dropdownBtn,
+    .dropdown-content a,
+    .s2t-ad-box {
+        font-size: 0.95rem;
     .s2t-ad-sidebar       { display: none !important; }
     .s2t-ad-bottom-mobile { display: flex !important; }
     .custom-cursor        { display: none !important; }
@@ -338,3 +352,4 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
