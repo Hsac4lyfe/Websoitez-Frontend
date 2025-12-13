@@ -11,7 +11,7 @@
     --border-radius: 8px;
 }
 
-/*  digital-bomb timer  */
+/*  fonts  */
 @font-face {
     font-family: 'DigitalPlay';
     src: url('digitalplay.woff2') format('woff2'),
@@ -20,17 +20,14 @@
     font-style: normal;
     font-display: swap;
 }
-
-/*  Papyrus TTF only  */
 @font-face {
     font-family: 'Papyrus';
-    src: url('Papyrus.ttf') format('truetype');   /* ← TTF first */
+    src: url('Papyrus.ttf') format('truetype');
     font-weight: 400 700;
     font-style: normal;
     font-display: swap;
 }
 
-/*  cursor hidden globally  */
 * {
     font-family: 'Papyrus', fantasy;
     font-weight: 700;
@@ -127,7 +124,6 @@ body {
     image-rendering: -webkit-optimize-contrast;
 }
 
-/*  glassier card  */
 .container {
     width: clamp(200px, 85vw, 550px);
     padding: clamp(1rem, 0.8vw, 1.2rem);
@@ -351,19 +347,16 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     font-size: clamp(0.7rem, 1.5vw, 0.9rem);
 }
 
-/* ===== TRUE MOBILE DETECTION ===== */
+/* =====  MOBILE : smaller centred ad card  ===== */
 @media (pointer: coarse) {
-    .s2t-ad-sidebar       { display: none !important; }
-    .s2t-ad-bottom-mobile { display: flex !important; }
-    .custom-cursor        { display: none !important; }
-    body                  { cursor: auto !important; }
-    #timer #colon {
-        top: -2px;          /* much closer to numbers */
-        font-size: 1.6rem;  /* slightly smaller */
-  .ad-form {
-    width: 40vw;
-    max-width: 250px;          /* any width you like */
-    margin: 0 auto;            /* centre horizontally */
+  #timer #colon {
+    top: -2px;
+    font-size: 1.6rem;
+  }
+  body .ad-form {                /* higher specificity */
+    width: 90vw;
+    max-width: 420px;
+    margin: 0 auto;
   }
 }
 
@@ -380,9 +373,3 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
-
-
-
-
-
-
