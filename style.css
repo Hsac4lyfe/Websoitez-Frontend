@@ -11,6 +11,7 @@
     --border-radius: 8px;
 }
 
+/* ① load Papyrus once */
 @font-face {
     font-family: 'Papyrus';
     src: url('papyrus.woff2') format('woff2'),
@@ -20,11 +21,22 @@
     font-display: swap;
 }
 
-* {
-    font-family: Papyrus, fantasy;
+/* ② every visible text → Papyrus (except disclaimer) */
+input, textarea, button, .dropbtn,
+#status, #timer, #dropdownBtn,
+.dropdown-content a,
+.s2t-ad-box {
+    font-family: 'Papyrus', fantasy;
     font-weight: 700;
     font-size: 1.05rem;
-    cursor: none !important;
+}
+
+/* ③ disclaimer stays Arial */
+.disclaimer,
+.disclaimer * {
+    font-family: Arial, sans-serif !important;
+    font-weight: normal !important;
+    font-size: 0.65rem;
 }
 
 html {
@@ -103,22 +115,14 @@ body {
     animation: fadeIn 0.6s ease-out both;
 }
 
-/* every interactive / visible text → Papyrus */
-input, textarea, button, .dropbtn,
-#status, #timer, #dropdownBtn,
-.dropdown-content a,
-.s2t-ad-box {
-    font-family: 'Papyrus', fantasy;
-    font-weight: 700;
-    font-size: 1.05rem;
-}
-
-/* disclaimer stays Arial */
-.disclaimer,
-.disclaimer * {
-    font-family: Arial, sans-serif !important;
-    font-weight: normal !important;
-    font-size: 0.65rem;
+input, textarea, button, .dropbtn {
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    background: var(--primary-bg);
+    color: var(--text-color);
+    transition: background 0.25s ease;
+    pointer-events: auto;
 }
 
 input { width: 100%; }
@@ -129,7 +133,7 @@ textarea {
     resize: none;
 }
 
-::placeholder { font-family: Papyrus, fantasy; }
+::placeholder { font-family: 'Papyrus', fantasy; }
 
 button:focus-visible, input:focus-visible, textarea:focus-visible {
     outline: 2px solid var(--accent-color);
@@ -162,7 +166,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 button:hover:not(:disabled) { background: var(--hover-color); }
 button:disabled { background: var(--disabled-color); cursor: not-allowed; }
 
-/* ③ micro-press */
 button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 
 .button-group.side {
@@ -269,7 +272,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 .s2t-ad-placeholder,
 .s2t-ad-placeholder * {
     box-sizing: border-box;
-    font-family: system-ui, Arial, sans-serif;
+    font-family: 'Papyrus', fantasy;
     text-transform: uppercase;
     text-align: center;
     pointer-events: auto;
@@ -279,7 +282,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    width: clamp(120px, 10vw, 180px);            /* ← shrinks with window */
+    width: clamp(120px, 10vw, 180px);
     display: flex;
     flex-direction: column;
     gap: clamp(10px, 1.2vh, 18px);
@@ -288,7 +291,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 
 .s2t-ad-sidebar .s2t-ad-box {
     width: 100%;
-    aspect-ratio: 1 / 1;                          /* keeps square */
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -297,7 +300,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     font-weight: 800;
     border: 2px dashed rgba(255, 255, 255, 0.3);
     border-radius: 10px;
-    font-size: clamp(0.65rem, 0.8vw, 0.9rem);   /* text shrinks too */
+    font-size: clamp(0.65rem, 0.8vw, 0.9rem);
 }
 
 .s2t-ad-left  { left: clamp(8px, 0.8vw, 12px); }
@@ -331,11 +334,6 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 
 /* ===== TRUE MOBILE DETECTION ===== */
 @media (pointer: coarse) {
-    input, textarea, button, .dropbtn,
-    #status, #timer, #dropdownBtn,
-    .dropdown-content a,
-    .s2t-ad-box {
-        font-size: 0.95rem;
     .s2t-ad-sidebar       { display: none !important; }
     .s2t-ad-bottom-mobile { display: flex !important; }
     .custom-cursor        { display: none !important; }
@@ -352,4 +350,6 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
+.container {
+  animation: fadeIn 0.6s ease-out both;
+}
