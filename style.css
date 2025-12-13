@@ -34,7 +34,7 @@
 * {
     font-family: 'Papyrus', fantasy;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     cursor: none !important;
 }
 
@@ -375,4 +375,5 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
+
 
