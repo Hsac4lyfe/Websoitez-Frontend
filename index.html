@@ -97,11 +97,7 @@
       document.querySelectorAll('input, textarea').forEach(el => el.value = '');
       history.replaceState(null, '', location.pathname);
     });
-    window.onbeforeunload = () => true;
-    if (performance.navigation.type === 2) location.reload(true);
-
-    //  REMOVED  window.onbeforeunload = () => true;
-
+    
     if (performance.navigation.type === 2) location.reload(true);
 
     const vids = document.querySelectorAll('video');
@@ -112,6 +108,7 @@
   
 </body>
 </html>
+
 
 
 
