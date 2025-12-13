@@ -100,6 +100,14 @@
     window.onbeforeunload = () => true;
     if (performance.navigation.type === 2) location.reload(true);
 
+    window.addEventListener('pageshow', () => {
+      document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+      history.replaceState(null, '', location.pathname);
+    });
+    //  REMOVED  window.onbeforeunload = () => true;
+
+    if (performance.navigation.type === 2) location.reload(true);
+
     const vids = document.querySelectorAll('video');
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') vids.forEach(v => v.play().catch(()=>{}));
@@ -108,5 +116,6 @@
   
 </body>
 </html>
+
 
 
