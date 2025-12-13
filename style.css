@@ -353,6 +353,11 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     top: -2px;
     font-size: 1.6rem;
   }
+  body .ad-form {
+    width: 90vw;
+    max-width: 420px;
+    margin: 0 auto;
+  }
 }
 
 .s2t-ad-link {
@@ -368,4 +373,3 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
-
