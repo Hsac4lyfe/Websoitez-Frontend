@@ -11,7 +11,17 @@
     --border-radius: 8px;
 }
 
-/*  fonts  */
+/* ①  Papyrus.otf first (WOFF2 kept for zero-break fallback) */
+@font-face {
+    font-family: 'Papyrus';
+    src: url('papyrus.otf') format('opentype'),
+         url('papyrus.woff2') format('woff2');
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/*  Digital-bomb timer  */
 @font-face {
     font-family: 'DigitalPlay';
     src: url('digitalplay.woff2') format('woff2'),
@@ -20,21 +30,13 @@
     font-style: normal;
     font-display: swap;
 }
-@font-face {
-    font-family: 'Papyrus';
-    src: url('papyrus.woff2') format('woff2'),
-         url('papyrus.ttf')   format('truetype');
-    font-weight: 400 700;
-    font-style: normal;
-    font-display: swap;
-}
 
-/*  GLOBAL CURSOR HIDE  */
+/* ②  cursor hidden globally */
 * {
     font-family: 'Papyrus', fantasy;
     font-weight: 700;
     font-size: 1.25rem;
-    cursor: none !important;        /* ← restored  */
+    cursor: none !important;
 }
 
 #timer {
@@ -126,10 +128,13 @@ body {
     image-rendering: -webkit-optimize-contrast;
 }
 
+/* ④  glassier card (re-asserted) */
 .container {
     width: clamp(200px, 85vw, 550px);
     padding: clamp(1rem, 0.8vw, 1.2rem);
-    background: var(--container-bg);
+    background: rgba(42, 42, 42, 0.55);
+    backdrop-filter: blur(12px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     display: flex;
