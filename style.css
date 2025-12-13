@@ -11,7 +11,7 @@
     --border-radius: 8px;
 }
 
-/* ①  digital-bomb timer font */
+/*  fonts  */
 @font-face {
     font-family: 'DigitalPlay';
     src: url('digitalplay.woff2') format('woff2'),
@@ -20,8 +20,6 @@
     font-style: normal;
     font-display: swap;
 }
-
-/* ②  Papyrus for everything else */
 @font-face {
     font-family: 'Papyrus';
     src: url('papyrus.woff2') format('woff2'),
@@ -31,17 +29,14 @@
     font-display: swap;
 }
 
-/* ③  assign fonts */
-input, textarea, button, .dropbtn,
-#status, #dropdownBtn,
-.dropdown-content a,
-.s2t-ad-box {
+/*  GLOBAL CURSOR HIDE  */
+* {
     font-family: 'Papyrus', fantasy;
     font-weight: 700;
-    font-size: 1.25rem;   /* +2 pts bigger */
+    font-size: 1.25rem;
+    cursor: none !important;        /* ← restored  */
 }
 
-/* ④  timer stays DigitalPlay */
 #timer {
     font-family: 'DigitalPlay', monospace;
     font-weight: 700;
@@ -53,7 +48,6 @@ input, textarea, button, .dropbtn,
     pointer-events: none;
 }
 
-/* ⑤  disclaimer stays Arial */
 .disclaimer,
 .disclaimer * {
     font-family: Arial, sans-serif !important;
@@ -69,7 +63,6 @@ input, textarea, button, .dropbtn,
     pointer-events: auto;
 }
 
-/* ⑥  global base */
 html {
     font-size: clamp(12px, 1.2vw, 18px);
 }
@@ -122,7 +115,6 @@ body {
     pointer-events: auto;
 }
 
-/* ⑦  sharper + bigger logo */
 .title-video {
     max-height: clamp(110px, 22vh, 32vh);
     margin-bottom: 0;
