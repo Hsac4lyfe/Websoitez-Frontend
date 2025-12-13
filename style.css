@@ -11,17 +11,7 @@
     --border-radius: 8px;
 }
 
-/* ①  Papyrus.otf first (WOFF2 kept for zero-break fallback) */
-@font-face {
-    font-family: 'Papyrus';
-    src: url('papyrus.otf') format('opentype'),
-         url('papyrus.woff2') format('woff2');
-    font-weight: 400 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-/*  Digital-bomb timer  */
+/*  digital-bomb timer  */
 @font-face {
     font-family: 'DigitalPlay';
     src: url('digitalplay.woff2') format('woff2'),
@@ -31,7 +21,16 @@
     font-display: swap;
 }
 
-/* ②  cursor hidden globally */
+/*  Papyrus TTF only  */
+@font-face {
+    font-family: 'Papyrus';
+    src: url('Papyrus.ttf') format('truetype');   /* ← TTF first */
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/*  cursor hidden globally  */
 * {
     font-family: 'Papyrus', fantasy;
     font-weight: 700;
@@ -128,7 +127,7 @@ body {
     image-rendering: -webkit-optimize-contrast;
 }
 
-/* ④  glassier card (re-asserted) */
+/*  glassier card  */
 .container {
     width: clamp(200px, 85vw, 550px);
     padding: clamp(1rem, 0.8vw, 1.2rem);
