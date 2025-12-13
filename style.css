@@ -357,6 +357,9 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     .s2t-ad-bottom-mobile { display: flex !important; }
     .custom-cursor        { display: none !important; }
     body                  { cursor: auto !important; }
+    #timer #colon {
+        top: -2px;          /* much closer to numbers */
+        font-size: 1.6rem;  /* slightly smaller */
 }
 
 .s2t-ad-link {
@@ -372,3 +375,4 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
+
