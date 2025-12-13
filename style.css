@@ -11,10 +11,10 @@
     --border-radius: 8px;
 }
 
-/* ①  Papyrus.otf first (WOFF2 kept for zero-break fallback) */
+/* ①  Papyrus.ttf first (WOFF2 kept for zero-break fallback) */
 @font-face {
     font-family: 'Papyrus';
-    src: url('papyrus.otf') format('opentype'),
+    src: url('papyrus.ttf') format('opentype'),
          url('papyrus.woff2') format('woff2');
     font-weight: 400 700;
     font-style: normal;
@@ -25,7 +25,7 @@
 @font-face {
     font-family: 'DigitalPlay';
     src: url('digitalplay.woff2') format('woff2'),
-         url('digitalplay.otf')  format('opentype');
+         url('digitalplay.ttf')  format('opentype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -373,3 +373,4 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
+
