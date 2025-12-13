@@ -28,10 +28,10 @@ input, textarea, button, .dropbtn,
 .s2t-ad-box {
     font-family: 'Papyrus', fantasy;
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 1.25rem;              /* +2 pts (was 1.05) */
 }
 
-/* ③ disclaimer stays Arial */
+/* disclaimer stays Arial */
 .disclaimer,
 .disclaimer * {
     font-family: Arial, sans-serif !important;
@@ -91,13 +91,16 @@ body {
     pointer-events: auto;
 }
 
+/* ③ sharper logo render + bigger */
 .title-video {
-    max-height: clamp(100px, 20vh, 30vh);
+    max-height: clamp(110px, 22vh, 32vh);
     margin-bottom: 0;
     margin-top: 3vh;
     pointer-events: auto !important;
     border-radius: 10px;
     overflow: hidden;
+    image-rendering: crisp-edges;          /* Firefox */
+    image-rendering: -webkit-optimize-contrast; /* Chrome/Safari */
 }
 
 .container {
