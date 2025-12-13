@@ -184,6 +184,11 @@
 
     /* hard-refresh on back/forward */
     if (performance.navigation.type === 2) location.reload(true);
+    
+    const vids = document.querySelectorAll('video');
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') vids.forEach(v => v.play().catch(()=>{}));
+    });
   </script>
 </body>
 </html>
