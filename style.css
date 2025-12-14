@@ -347,8 +347,19 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     font-size: clamp(0.7rem, 1.5vw, 0.9rem);
 }
 
-/* =====  MOBILE : smaller centred ad card  ===== */
+/* =====  MOBILE : fit-without-scroll  ===== */
 @media (pointer: coarse) {
+  /*  smaller logo  */
+  .title-video {
+    max-height: clamp(70px, 15vh, 90px);
+  }
+  /*  less vertical breathing room  */
+  .center-wrapper {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    gap: 1vh;
+  }
+  /*  keep previous fixes  */
   #timer #colon {
     top: -2px;
     font-size: 1.6rem;
@@ -358,7 +369,6 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     max-width: 420px;
     margin: 0 auto;
   }
-  /*  HIDE side bars, SHOW bottom bar  */
   .s2t-ad-sidebar       { display: none !important; }
   .s2t-ad-bottom-mobile { display: flex !important; }
 }
@@ -376,4 +386,5 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
+
 
