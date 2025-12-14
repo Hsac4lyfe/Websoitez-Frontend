@@ -358,6 +358,9 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     max-width: 420px;
     margin: 0 auto;
   }
+  /*  HIDE side bars, SHOW bottom bar  */
+  .s2t-ad-sidebar       { display: none !important; }
+  .s2t-ad-bottom-mobile { display: flex !important; }
 }
 
 .s2t-ad-link {
@@ -373,3 +376,4 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
+
