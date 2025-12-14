@@ -24,24 +24,30 @@
 
     /* ④ glassier card + ③ micro-press button */
     .ad-form {
-      animation: fadeIn 0.6s ease-out both;   /* <-- fade-in */
+      animation: fadeIn 0.6s ease-out both;
       background: rgba(42, 42, 42, 0.55);
       backdrop-filter: blur(12px) saturate(120%);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 2rem;
+      padding: clamp(1rem, 0.8vw, 1.2rem);
       border-radius: 12px;
-      width: 90%;
-      max-width: 500px;
+      /*  SAME  as  .container  */
+      width: clamp(300px, 85vw, 550px);
+      max-width: 550px;
+      margin: 0 auto;              /* centre on mobile */
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.5rem;
+      align-items: center;
+      text-align: center;
       pointer-events: auto;
     }
+
     .ad-form h2 {
       margin: 0 0 .5rem;
       text-align: center;
       font-size: 1.4rem;
     }
+
     .ad-form textarea {
       width: 100%;
       min-height: 180px;
@@ -49,13 +55,16 @@
       padding: 0.75rem;
       box-sizing: border-box;
     }
+
     .ad-form button {
       align-self: flex-end;
     }
+
     .ad-form button:active {                 /* ③ micro-press */
       transform: scale(0.97);
       transition: transform 0.08s ease;
     }
+
     .ad-form .counter {
       text-align: right;
       font-size: .75rem;
@@ -71,7 +80,7 @@
       color: var(--text-color);
       margin-bottom: 0.75rem;
     }
-    
+
     body {
       display: flex;
       flex-direction: column;
@@ -80,8 +89,9 @@
       height: 100vh;
       overflow: hidden;
       gap: 2vh;
-      background: #000 !important; /* black until video loads */
+      background: #000 !important;
     }
+
     #successMsg {
       display: none;
       color: #0f0;
@@ -90,11 +100,20 @@
       text-align: center;
       margin-top: 1rem;
     }
+
     a.title-video {
       position: relative;
       z-index: 99999;
       pointer-events: auto;
       cursor: pointer;
+    }
+
+    /* colon fix – phones only */
+    @media (pointer: coarse) {
+      #timer #colon {
+        top: -2px;
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
@@ -184,11 +203,6 @@
 
     /* hard-refresh on back/forward */
     if (performance.navigation.type === 2) location.reload(true);
-    
-    const vids = document.querySelectorAll('video');
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') vids.forEach(v => v.play().catch(()=>{}));
-    });
   </script>
 </body>
 </html>
