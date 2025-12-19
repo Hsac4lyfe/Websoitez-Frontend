@@ -53,10 +53,7 @@
     </video>
 
     <div class="container">
-      <!-- LEFT: transcription box -->
-      <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result" autocomplete="off"></textarea>
-
-      <!-- RIGHT: everything else -->
+      <!-- LEFT: controls -->
       <div class="right-stack">
         <input id="url" placeholder="Paste Reel / TikTok / YouTube link here" aria-label="Video link input" type="url" autocomplete="off">
 
@@ -83,8 +80,11 @@
         <div class="button-group">
           <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>
         </div>
-      </div><!-- /right-stack -->
-    </div><!-- /container -->
+      </div>
+
+      <!-- RIGHT: transcription box -->
+      <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result" autocomplete="off"></textarea>
+    </div>
 
     <p class="disclaimer">By using this service you confirm that you have the right to download and transcribe the linked content. Respect copyright, platform terms-of-service, and local laws; we assume no liability for misuse or any consequences that may arise from your actions.</p>
   </div>
