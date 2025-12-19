@@ -257,21 +257,6 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     top: -7px;
 }
 
-.disclaimer,
-.disclaimer * {
-    font-family: Arial, sans-serif !important;
-    font-weight: normal !important;
-    font-size: 0.65rem;
-    line-height: 1.3;
-    color: #aaa;
-    text-align: center;
-    width: 90vw;
-    max-width: 550px;
-    margin-top: 1vh;
-    margin-bottom: 10vh;
-    pointer-events: auto;
-}
-
 #customCursor {
     z-index: 999999 !important;
     width: 75px;
@@ -394,5 +379,39 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
   animation: fadeIn 0.6s ease-out both;
 }
 
+/* ----------  two-column layout ---------- */
+.main-grid{
+  display:flex;
+  gap:1.2rem;
+  width:clamp(300px, 90vw, 1200px); /* allow more breathing room */
+  margin:0 auto;
+  align-items:flex-start;           /* top-align the two panels */
+}
 
+.left-panel{
+  flex:0 0 360px;                   /* fixed narrow column */
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+}
 
+.right-panel{
+  flex:1 1 0;                       /* take all remaining space */
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+}
+
+/* keep the textarea tall and readable */
+.right-panel textarea{
+  min-height:45vh;
+  max-height:65vh;
+  resize:vertical;
+}
+
+/* mobile: stack again */
+@media (pointer: coarse){
+  .main-grid{flex-direction:column;}
+  .left-panel{flex:1 1 auto;width:100%;}
+  .right-panel{flex:1 1 auto;width:100%;}
+}
