@@ -209,6 +209,12 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     justify-content: center;
     pointer-events: auto;
 }
+
+/* center the Copy button inside the left column */
+.right-stack .button-group:last-of-type {
+    display: flex;
+    justify-content: center;
+}
 .status-timer-group {
     display: flex;
     flex-direction: column;
@@ -362,6 +368,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     transition: opacity 0.2s ease;
 }
 #customCursor.paused { opacity: 0.35; }
+
 
 
 
