@@ -94,6 +94,9 @@ body {
     pointer-events: none;
     filter: brightness(0.95);
     z-index: -1 !important;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .center-wrapper {
