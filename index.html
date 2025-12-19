@@ -46,50 +46,43 @@
 
   <!-- MAIN -->
   <div class="center-wrapper">
-    <!-- logo stays centered at the very top -->
     <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo"
        oncontextmenu="return false" style="-webkit-touch-callout:none;-webkit-user-select:none;">
       <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
       <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
     </video>
 
-    <!-- new two-column layout -->
-    <div class="main-grid">
-      <!-- LEFT: everything that used to be inside .container -->
-      <div class="left-panel">
-        <input id="url" placeholder="Paste Reel / TikTok / YouTube link here" aria-label="Video link input" type="url" autocomplete="off">
+    <div class="container">
+      <input id="url" placeholder="Paste Reel / TikTok / YouTube link here" aria-label="Video link input" type="url" autocomplete="off">
 
-        <div class="button-group side">
-          <div class="dropdown">
-            <button id="dropdownBtn" class="dropbtn" aria-haspopup="true" aria-expanded="false">Plain Text ▼</button>
-            <div class="dropdown-content" id="dropdownMenu">
-              <a href="#" data-value="plain">Plain Text</a>
-              <a href="#" data-value="timestamps">With Timestamps</a>
-            </div>
+      <div class="button-group side">
+        <div class="dropdown">
+          <button id="dropdownBtn" class="dropbtn" aria-haspopup="true" aria-expanded="false">Plain Text ▼</button>
+          <div class="dropdown-content" id="dropdownMenu">
+            <a href="#" data-value="plain">Plain Text</a>
+            <a href="#" data-value="timestamps">With Timestamps</a>
           </div>
-          <button id="transcribeBtn" disabled>Transcribe</button>
         </div>
-
-        <div class="status-timer-group">
-          <span id="status">Enter a link to begin</span>
-          <p id="timer" aria-live="polite">00<span id="colon">:</span>00</p>
-        </div>
-
-        <div id="progress-container">
-          <div id="progress-bar"></div>
-        </div>
+        <button id="transcribeBtn" disabled>Transcribe</button>
       </div>
 
-      <!-- RIGHT: the transcription textarea -->
-      <div class="right-panel">
-        <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result" autocomplete="off"></textarea>
-        <div class="button-group">
-          <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>
-        </div>
+      <div class="status-timer-group">
+        <span id="status">Enter a link to begin</span>
+        <p id="timer" aria-live="polite">00<span id="colon">:</span>00</p>
+      </div>
+
+      <div id="progress-container">
+        <div id="progress-bar"></div>
+      </div>
+
+      <!-- TRANSCRIPTION BOX MOVED LAST -->
+      <textarea id="result" readonly placeholder="Your transcription will appear here..." aria-label="Transcription result" autocomplete="off"></textarea>
+
+      <div class="button-group">
+        <button id="copyBtn" aria-label="Copy transcription to clipboard">Copy</button>
       </div>
     </div>
 
-    <!-- disclaimer stays centered under the grid -->
     <p class="disclaimer">By using this service you confirm that you have the right to download and transcribe the linked content. Respect copyright, platform terms-of-service, and local laws; we assume no liability for misuse or any consequences that may arise from your actions.</p>
   </div>
 
