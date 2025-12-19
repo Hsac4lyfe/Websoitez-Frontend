@@ -378,3 +378,28 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 .container {
   animation: fadeIn 0.6s ease-out both;
 }
+
+/* ----------  inside-container left/right split ---------- */
+.container{                      /* same outer size */
+  flex-direction:row !important; /* override old column */
+  gap:0.75rem;
+  align-items:stretch;           /* equal height columns */
+}
+#result{                        /* LEFT */
+  flex:1 1 0;                    /* eat available width */
+  min-height:22vh;
+  max-height:35vh;
+}
+.right-stack{                   /* RIGHT */
+  flex:0 0 52%;                  /* fixed narrow side */
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+}
+
+/* mobile: stack again */
+@media (pointer: coarse){
+  .container{flex-direction:column !important;}
+  #result{width:100%;flex:1 1 auto;}
+  .right-stack{width:100%;flex:1 1 auto;}
+}
