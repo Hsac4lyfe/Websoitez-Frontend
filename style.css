@@ -375,4 +375,8 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     transition: opacity 0.2s ease;
 }
 #customCursor.paused { opacity: 0.35; }
+#transcribeBtn.is-pending {
+    background: #e74c3c;   /* red  */
+    color: #ffffff;        /* white text */
+}
 
