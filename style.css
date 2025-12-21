@@ -172,7 +172,7 @@ textarea { width: 100%; }
 
 button:focus-visible, input:focus-visible, textarea:focus-visible {
     outline: 2px solid var(--accent-color);
-    outline-offset: 2px;
+    outline-offset: -2px;   /* keep outline inside */
 }
 
 .dropdown { position: relative; pointer-events: auto; }
@@ -207,14 +207,19 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     gap: 1rem;
     width: 100%;
     justify-content: center;
-    pointer-events: auto;
+}
+.button-group.side button,
+.button-group.side .dropbtn {
+    flex: 1 1 0;          /* equal width, no stretch */
+    white-space: nowrap;  /* single-line text */
 }
 
-/* center the Copy button inside the left column */
+/* centre the Copy button in left column */
 .right-stack .button-group:last-of-type {
     display: flex;
     justify-content: center;
 }
+
 .status-timer-group {
     display: flex;
     flex-direction: column;
@@ -255,6 +260,8 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     width: 100%;
     font-size: clamp(0.8rem, 2.5vw, 1rem);
     pointer-events: none;
+    white-space: normal;
+    word-break: break-word;
 }
 #timer #colon {
     font-size: 2.2rem;
@@ -368,31 +375,3 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     transition: opacity 0.2s ease;
 }
 #customCursor.paused { opacity: 0.35; }
-
-/* freeze button widths */
-.button-group.side {
-    display: flex;
-    gap: 1rem;
-    width: 100%;
-    justify-content: center;
-}
-.button-group.side button,
-.button-group.side .dropbtn {
-    flex: 1 1 0;          /* both buttons same width, never grow/shrink */
-    white-space: nowrap;  /* keep text on one line */
-}
-
-/* let status text wrap so it doesn’t blow the column */
-#status {
-    white-space: normal;
-    word-break: break-word;
-}
-/* keep buttons same pixel width even when focused */
-.button-group.side button:focus-visible,
-.button-group.side .dropbtn:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: -2px;   /* draw inside the border instead of outside */
-}
-
-
-
