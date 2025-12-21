@@ -1,7 +1,6 @@
-/*  Shorts2Text – complete rewrite with red-transcribing indicator  */
 document.addEventListener('DOMContentLoaded', () => {
   const CONFIG = {
-    API_BASE_URL: 'https://api-production-6812.up.railway.app',
+    API_BASE_URL: 'https://api-production-6812.up.railway.app ',
     POLLING_INTERVAL: 1500,
     MAX_POLLING_ATTEMPTS: 240,
   };
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     startTime: 0,
   };
 
-  /* ----------  init  ---------- */
   function init() {
     setupEventListeners();
     updateInputAndButtonStates();
@@ -36,54 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
     setupBackgroundVideo();
   }
 
-  /* ----------  ui helpers  ---------- */
-  function setUIState(transcribing) {
-    STATE.isTranscribing = transcribing;
-    DOM.transcribeBtn.textContent = transcribing ? 'Transcribing' : 'Transcribe';
-    DOM.transcribeBtn.classList.toggle('is-pending', transcribing); // red switch
-    updateInputAndButtonStates();
+  function setupEventListeners() {
+    DOM.dropdownBtn.addEventListener('click', handleDropdownToggle);
+    DOM.dropdownMenu.addEventListener('click', handleFormatSelect);
+    window.addEventListener('click', closeDropdown);
+    DOM.urlInput.addEventListener('input', updateInputAndButtonStates);
+    DOM.transcribeBtn.addEventListener('click', transcribe);
+    DOM.copyBtn.addEventListener('click', copyTextToClipboard);
   }
 
-  function updateInputAndButtonStates() {
-    const ok = DOM.urlInput.value.trim().length > 0;
-    DOM.transcribeBtn.disabled = !ok || STATE.isTranscribing;
-    DOM.dropdownBtn.disabled = STATE.isTranscribing;
-    DOM.urlInput.disabled = STATE.isTranscribing;
-  }
-
-  function resetUI() {
-    DOM.resultEl.value = '';
-    DOM.barEl.style.width = '0%';
-    DOM.statusEl.innerText = 'Warming up the servers…';
-    DOM.timerEl.innerHTML = '00<span id="colon">:</span>00';
-  }
-
-  /* ----------  timer  ---------- */
-  function startTimer() {
-    STATE.startTime = performance.now();
-    STATE.timerInterval = requestAnimationFrame(updateTimer);
-  }
-
-  function stopTimer() {
-    if (STATE.timerInterval) cancelAnimationFrame(STATE.timerInterval);
-    STATE.timerInterval = null;
-    const colon = DOM.timerEl.querySelector('#colon');
-    if (colon) colon.style.opacity = '1';
-  }
-
-  function updateTimer() {
-    const elapsed = performance.now() - STATE.startTime;
-    const totalSec = Math.floor(elapsed / 1000);
-    const mm = String(Math.floor(totalSec / 60)).padStart(2, '0');
-    const ss = String(totalSec % 60).padStart(2, '0');
-    const colon = DOM.timerEl.querySelector('#colon');
-    const blink = Math.floor(elapsed / 500) % 2 ? '1' : '0';
-    if (colon) colon.style.opacity = blink;
-    DOM.timerEl.innerHTML = `${mm}<span id="colon" style="opacity:${blink};">:</span>${ss}`;
-    STATE.timerInterval = requestAnimationFrame(updateTimer);
-  }
-
-  /* ----------  dropdown  ---------- */
   function handleDropdownToggle(e) {
     e.preventDefault();
     if (!STATE.isTranscribing) DOM.dropdown.classList.toggle('show');
@@ -103,7 +62,50 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!DOM.dropdown.contains(e.target)) DOM.dropdown.classList.remove('show');
   }
 
-  /* ----------  transcription flow  ---------- */
+  function updateInputAndButtonStates() {
+    const urlValid = DOM.urlInput.value.trim().length > 0;
+    DOM.transcribeBtn.disabled = !urlValid || STATE.isTranscribing;
+    DOM.dropdownBtn.disabled = STATE.isTranscribing;
+    DOM.urlInput.disabled = STATE.isTranscribing;
+  }
+
+  function setUIState(transcribing) {
+    STATE.isTranscribing = transcribing;
+    DOM.transcribeBtn.textContent = transcribing ? 'Transcribing' : 'Transcribe';
+    updateInputAndButtonStates();
+  }
+
+  function resetUI() {
+    DOM.resultEl.value = '';
+    DOM.barEl.style.width = '0%';
+    DOM.statusEl.innerText = 'Warming up the servers…';
+    DOM.timerEl.innerHTML = '00<span id="colon">:</span>00';
+  }
+
+  function startTimer() {
+    STATE.startTime = performance.now();
+    STATE.timerInterval = requestAnimationFrame(updateTimer);
+  }
+
+  function stopTimer() {
+    if (STATE.timerInterval) cancelAnimationFrame(STATE.timerInterval);
+    STATE.timerInterval = null;
+    const colon = DOM.timerEl.querySelector('#colon');
+    if (colon) colon.style.opacity = '1';
+  }
+
+  function updateTimer() {
+    const elapsed = performance.now() - STATE.startTime;
+    const totalSec = Math.floor(elapsed / 1000);
+    const mm = String(Math.floor(totalSec / 60)).padStart(2, '0');
+    const ss = String(totalSec % 60).padStart(2, '0');
+    const colon = DOM.timerEl.querySelector('#colon');
+    const blinkOpacity = Math.floor(elapsed / 500) % 2 ? '1' : '0';
+    if (colon) colon.style.opacity = blinkOpacity;
+    DOM.timerEl.innerHTML = `${mm}<span id="colon" style="opacity:${blinkOpacity};">:</span>${ss}`;
+    STATE.timerInterval = requestAnimationFrame(updateTimer);
+  }
+
   async function transcribe() {
     const url = DOM.urlInput.value.trim();
     if (!url) { alert('Please paste a valid link first!'); return; }
@@ -170,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /* ----------  clipboard  ---------- */
   function copyTextToClipboard() {
     if (!DOM.resultEl.value) return;
     navigator.clipboard.writeText(DOM.resultEl.value).then(() => {
@@ -180,20 +181,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }).catch(console.error);
   }
 
-  /* ----------  cursor & background  ---------- */
   function setupCursor() {
-    const isTouch = window.matchMedia('(pointer: coarse)').matches;
-    if (isTouch || !DOM.cursor) {
-      document.body.style.cursor = 'auto';
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouchDevice) {
       if (DOM.cursor) DOM.cursor.style.display = 'none';
+      document.body.style.cursor = 'auto';
+      console.log('Touch device detected, custom cursor hidden.');
       return;
     }
+    if (!DOM.cursor) { console.warn('Cursor element missing'); return; }
     DOM.cursor.style.opacity = '1';
-    ['muted', 'loop', 'playsInline', 'preload'].forEach(p => DOM.cursor[p] = true);
-    const play = () => DOM.cursor.play().catch(() => {
+    DOM.cursor.muted = true;
+    DOM.cursor.loop = true;
+    DOM.cursor.playsInline = true;
+    DOM.cursor.preload = 'auto';
+    const play = () => DOM.cursor.play().then(() => console.log('cursor playing')).catch(() => {
       DOM.cursor.style.display = 'none'; document.body.style.cursor = 'auto';
     });
-    DOM.cursor.readyState >= 4 ? play() : DOM.cursor.addEventListener('canplaythrough', play, { once: true });
+    if (DOM.cursor.readyState >= 4) play();
+    else DOM.cursor.addEventListener('canplaythrough', play, { once: true });
     DOM.cursor.addEventListener('error', () => { DOM.cursor.style.display = 'none'; document.body.style.cursor = 'auto'; });
     let last = 0;
     document.addEventListener('mousemove', e => {
@@ -203,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         last = now;
       }
     });
+    // ⑦ soft-fade instead of direct pause/play
     document.querySelectorAll('button, a, input, textarea').forEach(el => {
       el.addEventListener('mouseenter', () => DOM.cursor.classList.add('paused'));
       el.addEventListener('mouseleave', () => DOM.cursor.classList.remove('paused'));
@@ -212,13 +219,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function setupBackgroundVideo() {
     if (!DOM.bgVideo) return;
     DOM.bgVideo.muted = true;
-    const play = () => DOM.bgVideo.play().catch(() => {});
-    window.addEventListener('load', play);
+    const playVideo = () => DOM.bgVideo.play().catch(() => {});
+    window.addEventListener('load', playVideo);
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') play();
+      if (document.visibilityState === 'visible') playVideo();
     });
   }
 
-  /* ----------  boot  ---------- */
   init();
 });
