@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setUIState(transcribing) {
     STATE.isTranscribing = transcribing;
-    DOM.transcribeBtn.textContent = transcribing ? 'Transcribing…' : 'Transcribe';
+    DOM.transcribeBtn.textContent = transcribing ? 'Transcribing' : 'Transcribe';
     updateInputAndButtonStates();
   }
 
@@ -228,3 +228,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   init();
 });
+
