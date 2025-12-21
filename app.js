@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.transcribeBtn.disabled = !urlValid || STATE.isTranscribing;
     DOM.dropdownBtn.disabled = STATE.isTranscribing;
     DOM.urlInput.disabled = STATE.isTranscribing;
+    DOM.transcribeBtn.classList.toggle('is-pending', transcribing);
   }
 
   function setUIState(transcribing) {
@@ -228,3 +229,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   init();
 });
+
