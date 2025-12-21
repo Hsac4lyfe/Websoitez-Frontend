@@ -229,4 +229,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   init();
 });
+const cursor = document.getElementById("customCursor");
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.transform = `translate(
+    ${e.clientX - cursor.offsetWidth / 2}px,
+    ${e.clientY - cursor.offsetHeight / 2}px
+  )`;
+});
+document.addEventListener("mouseleave", () => {
+  cursor.style.opacity = "0";
+});
+
+document.addEventListener("mouseenter", () => {
+  cursor.style.opacity = "1";
+});
+
 
