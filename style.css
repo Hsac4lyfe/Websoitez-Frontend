@@ -369,6 +369,24 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 }
 #customCursor.paused { opacity: 0.35; }
 
+/* freeze button widths */
+.button-group.side {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+}
+.button-group.side button,
+.button-group.side .dropbtn {
+    flex: 1 1 0;          /* both buttons same width, never grow/shrink */
+    white-space: nowrap;  /* keep text on one line */
+}
+
+/* let status text wrap so it doesn’t blow the column */
+#status {
+    white-space: normal;
+    word-break: break-word;
+}
 
 
 
