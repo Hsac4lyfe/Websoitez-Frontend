@@ -387,6 +387,12 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     white-space: normal;
     word-break: break-word;
 }
+/* keep buttons same pixel width even when focused */
+.button-group.side button:focus-visible,
+.button-group.side .dropbtn:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: -2px;   /* draw inside the border instead of outside */
+}
 
 
 
