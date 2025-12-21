@@ -380,5 +380,9 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     background: #e74c3c;   /* red  */
     color: #ffffff;        /* white text */
 }
+#customCursor {
+    transform: translate(-100px, -100px);
+}
+
 
 
