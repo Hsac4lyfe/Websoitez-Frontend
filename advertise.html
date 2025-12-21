@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Advertise with Us – Shorts2Text</title>
 
-  <!-- ⑨ favicons light + dark -->
+  <!-- favicons light + dark -->
   <link rel="icon" href="favicon.ico">
   <link rel="icon" href="favicon-dark.ico" media="(prefers-color-scheme: dark)">
 
-  <!-- ⑧ preload hero videos -->
+  <!-- preload hero videos -->
   <link rel="preload" href="Shorts2Text02Pixelated02.webm" as="video">
   <link rel="preload" href="cursor05.webm" as="video">
 
@@ -22,7 +22,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ④ glassier card + ③ micro-press button */
+    /* glassier card + micro-press button */
     .ad-form {
       animation: fadeIn 0.6s ease-out both;
       background: rgba(42, 42, 42, 0.55);
@@ -30,10 +30,9 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       padding: clamp(1rem, 0.8vw, 1.2rem);
       border-radius: 12px;
-      /*  SAME  as  .container  */
       width: clamp(300px, 85vw, 550px);
       max-width: 550px;
-      margin: 0 auto;              /* centre on mobile */
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
@@ -60,7 +59,7 @@
       align-self: flex-end;
     }
 
-    .ad-form button:active {                 /* ③ micro-press */
+    .ad-form button:active {
       transform: scale(0.97);
       transition: transform 0.08s ease;
     }
@@ -88,7 +87,6 @@
       align-items: center;
       height: 100vh;
       overflow: hidden;
-      /* gap: 2vh; */     /* REMOVE or set to 0 */
       background: #000 !important;
     }
 
@@ -119,7 +117,7 @@
 </head>
 
 <body>
-  <!-- =====  AD-BOXES  (same as index.html)  ===== -->
+  <!-- AD-BOXES (same as index.html) -->
   <div class="s2t-ad-placeholder s2t-ad-sidebar s2t-ad-left" aria-hidden="true">
     <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
     <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
@@ -135,41 +133,44 @@
   <div class="s2t-ad-placeholder s2t-ad-bottom-mobile" aria-hidden="true">
     <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
   </div>
-  
+
   <!-- BACKGROUND -->
   <video autoplay muted loop playsinline preload="auto" id="bg-video">
     <source src="JellyDarkMode12.webm" type="video/webm">
     <source src="JellyDarkMode12.mp4" type="video/mp4">
   </video>
 
-  <!-- HOME LINK + LOGO -->
-  <a href="https://websoitez-frontend.vercel.app" aria-label="Back to home">
-    <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo"
-       oncontextmenu="return false" style="-webkit-touch-callout:none;-webkit-user-select:none;">
-      <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
-      <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
+  <!-- CENTRED WRAPPER (keeps logo position identical to index.html) -->
+  <div class="center-wrapper">
+    <!-- HOME LINK + LOGO -->
+    <a href="https://websoitez-frontend.vercel.app" aria-label="Back to home">
+      <video autoplay muted loop playsinline preload="auto" class="title-video" aria-label="Shorts2Text animated logo"
+         oncontextmenu="return false" style="-webkit-touch-callout:none;-webkit-user-select:none;">
+        <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
+        <source src="Shorts2Text02Pixelated02.mov" type="video/quicktime">
+      </video>
+    </a>
+
+    <!-- FORM -->
+    <form action="https://api.web3forms.com/submit" method="POST" class="ad-form" id="adForm">
+      <h2>Interested in ad space?</h2>
+      <input type="hidden" name="access_key" value="02a64816-48b6-42c5-99e6-3d218773251f">
+      <input type="hidden" name="subject" value="New Ad-Space Inquiry">
+      <input type="hidden" name="from_name" value="Shorts2Text Ad Page">
+      <input type="email" name="from_email" placeholder="Your email address" required autocomplete="email" />
+      <textarea name="message" maxlength="500" required placeholder="Write your message here…" autocomplete="off"></textarea>
+      <div class="counter"><span id="count">0</span> / 500</div>
+      <button type="submit">Send</button>
+    </form>
+
+    <!-- THANK-YOU MSG -->
+    <div id="successMsg">✓ Message sent – please wait for a reply within the day!</div>
+
+    <!-- CURSOR -->
+    <video autoplay muted loop playsinline preload="auto" id="customCursor" class="custom-cursor">
+      <source src="cursor05.webm" type="video/webm">
     </video>
-  </a>
-
-  <!-- FORM -->
-  <form action="https://api.web3forms.com/submit" method="POST" class="ad-form" id="adForm">
-    <h2>Interested in ad space?</h2>
-    <input type="hidden" name="access_key" value="02a64816-48b6-42c5-99e6-3d218773251f">
-    <input type="hidden" name="subject" value="New Ad-Space Inquiry">
-    <input type="hidden" name="from_name" value="Shorts2Text Ad Page">
-    <input type="email" name="from_email" placeholder="Your email address" required autocomplete="email" />
-    <textarea name="message" maxlength="500" required placeholder="Write your message here…" autocomplete="off"></textarea>
-    <div class="counter"><span id="count">0</span> / 500</div>
-    <button type="submit">Send</button>
-  </form>
-
-  <!-- THANK-YOU MSG -->
-  <div id="successMsg">✓ Message sent – please wait for a reply within the day!</div>
-
-  <!-- CURSOR -->
-  <video autoplay muted loop playsinline preload="auto" id="customCursor" class="custom-cursor">
-    <source src="cursor05.webm" type="video/webm">
-  </video>
+  </div>
 
   <!-- SCRIPTS -->
   <script>
