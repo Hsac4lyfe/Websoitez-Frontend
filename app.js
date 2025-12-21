@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const now = performance.now();
       if (now - last > 16) {
         DOM.cursor.style.transform =
-          `translate3d(${e.clientX - 37}px, ${e.clientY - 37}px, 0)`;
+          `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
         last = now;
       }
     });
@@ -234,3 +234,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
