@@ -79,9 +79,7 @@ html, body {
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;        /* ⬅ simplest + safest */
     z-index: 1;
     overflow-x: hidden;
 }
@@ -395,6 +393,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
