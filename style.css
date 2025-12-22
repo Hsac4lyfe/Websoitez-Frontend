@@ -112,7 +112,8 @@ body {
     height: 100vh;
     min-height: 100vh;             /* ⬅ allow growth */
     gap: 1.75vh;
-    overflow: auto;
+    overflow: hidden;
+    overflow-y: auto;
     padding-top: calc(var(--logo-top) + var(--logo-height) + 3vh);
     padding-bottom: 5vh;
     box-sizing: border-box;
@@ -394,6 +395,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
