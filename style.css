@@ -9,6 +9,8 @@
     --disabled-color: #555;
     --hover-color: #575757;
     --border-radius: 8px;
+    --logo-height: clamp(110px, 22vh, 32vh);
+    --logo-top: 5vh;
 }
 
 /*  fonts  */
@@ -105,20 +107,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
     height: 100vh;
+    min-height: 100vh;             /* ⬅ allow growth */
     gap: 1.75vh;
-    overflow: hidden;
+    overflow: auto;
     padding-top: calc(var(--logo-top) + var(--logo-height) + 3vh);
     padding-bottom: 5vh;
     box-sizing: border-box;
     pointer-events: auto;
-}
-
-:root {
-  --logo-height: clamp(110px, 22vh, 32vh);
-  --logo-top: 5vh;
 }
 
 .title-video {
@@ -396,6 +394,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
