@@ -98,7 +98,6 @@ body {
     transform: translateZ(0);
     backface-visibility: hidden;
 }
-
 .center-wrapper {
     position: relative;
     z-index: 2;
@@ -117,12 +116,12 @@ body {
     box-sizing: border-box;
     pointer-events: auto;
 }
-
 .title-video {
-  position: relative; /* Brings it back into the flow */
-  display: block;
-  margin: 0 auto 2vh auto; /* Centers it and adds a gap below */
+  position: relative;        /* Changed from fixed to relative */
+  display: block;            /* Ensures it behaves like a box */
+  margin: 0 auto 2vh auto;   /* Centers it and adds a small gap below */
   max-height: clamp(110px, 22vh, 32vh);
+  width: fit-content;        /* Keeps the link area tight to the video */
   pointer-events: auto;
   border-radius: 10px;
   overflow: hidden;
@@ -130,7 +129,6 @@ body {
   image-rendering: crisp-edges;
   image-rendering: -webkit-optimize-contrast;
 }
-
 .container {
     width: clamp(200px, 85vw, 550px);
     padding: clamp(1rem, 0.8vw, 1.2rem);
@@ -387,6 +385,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
