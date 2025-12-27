@@ -352,23 +352,68 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 }
 
 /* ----------  mobile roll-back  ---------- */
+/* ----------  mobile roll-back  ---------- */
 @media (pointer: coarse) {
-  .title-video { max-height: clamp(70px, 15vh, 90px); }
-  .center-wrapper {
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    gap: 0.8vh;
+  .title-video { 
+    max-height: clamp(65px, 12vh, 85px) !important; 
+    flex-shrink: 0 !important;   /* Fix: Prevents logo from being squashed */
+    margin: 0 auto !important;
   }
-  .disclaimer { margin-bottom: 2vh; }
-  #timer #colon { top: -2px; font-size: 1.6rem; }
-  body .ad-form { width: 90vw; max-width: 420px; margin: 0 auto; }
-  .s2t-ad-sidebar { display: none !important; }
-  .s2t-ad-bottom-mobile { display: flex !important; }
+
+  .center-wrapper {
+    padding-top: 4vh !important;
+    padding-bottom: 4vh !important;
+    gap: 3vh !important;         /* Fix: Adds clear breathing room between logo and box */
+    justify-content: flex-start !important; /* Fix: Prevents items from squashing into the center */
+    overflow-y: auto !important; /* Fix: Allows scrolling if the phone screen is short */
+    height: auto !important;
+    min-height: 100vh !important;
+  }
+
+  .disclaimer { 
+    margin-bottom: 2vh; 
+    flex-shrink: 0; 
+  }
+
+  #timer #colon { 
+    top: -2px; 
+    font-size: 1.6rem; 
+  }
+
+  /* Ensures both the index box and the advertise form behave the same on mobile */
+  .container, 
+  body .ad-form { 
+    width: 90vw !important; 
+    max-width: 420px; 
+    margin: 0 auto; 
+    flex-shrink: 0 !important; 
+  }
+
+  .s2t-ad-sidebar { 
+    display: none !important; 
+  }
+
+  .s2t-ad-bottom-mobile { 
+    display: flex !important; 
+  }
 
   /* inside-container stack */
-  .container { flex-direction: column !important; }
-  #result { width: 100%; flex: 1 1 auto; }
-  .right-stack { width: 100%; flex: 1 1 auto; }
+  .container { 
+    flex-direction: column !important; 
+    align-items: center !important;
+  }
+
+  #result { 
+    width: 100% !important; 
+    height: 25vh !important; 
+    min-height: 160px !important;
+    flex: 1 1 auto; 
+  }
+
+  .right-stack { 
+    width: 100% !important; 
+    flex: 1 1 auto; 
+  }
 }
 
 /* ----------  micro-animations  ---------- */
@@ -400,6 +445,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
