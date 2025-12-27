@@ -119,22 +119,16 @@ body {
 }
 
 .title-video {
-  position: fixed;
-  top: 5vh;
-  left: 50%;
-  transform: translateX(-50%);
-
+  position: relative; /* Brings it back into the flow */
+  display: block;
+  margin: 0 auto 2vh auto; /* Centers it and adds a gap below */
   max-height: clamp(110px, 22vh, 32vh);
-  margin: 0;
-
   pointer-events: auto;
   border-radius: 10px;
   overflow: hidden;
-
+  z-index: 10;
   image-rendering: crisp-edges;
   image-rendering: -webkit-optimize-contrast;
-
-  z-index: 10;
 }
 
 .container {
@@ -393,6 +387,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
