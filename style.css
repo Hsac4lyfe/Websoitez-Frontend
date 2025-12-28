@@ -355,7 +355,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
   .title-video { 
     /* 1. Force a size and make it a solid block so nothing slides under it */
     display: block !important;
-    max-height: clamp(65px, 12vh, 85px) !important; 
+    max-height: clamp(100px, 12vh, 120px) !important; 
     width: auto !important;
     flex-shrink: 0 !important;
     margin: 0 auto !important;
@@ -377,7 +377,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     padding-bottom: 2vh !important; /* Extra room at bottom for mobile ads */
     gap: 1vh !important;            /* Physical gap between logo and box */
     height: auto !important;
-    min-height: 40vh !important;
+    min-height: 20vh !important;
     overflow-y: auto !important;    /* Allow scrolling if content is long */
   }
 
@@ -434,6 +434,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
