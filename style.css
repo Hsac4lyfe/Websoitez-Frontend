@@ -353,18 +353,21 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 /* ----------  mobile roll-back (FULL VERSION)  ---------- */
 @media (pointer: coarse), (max-width: 768px) {
   .title-video { 
-    /* 1. Force a size and make it a solid block so nothing slides under it */
     display: block !important;
-    max-height: clamp(65px, 100vh, 85px) !important; 
-    width: auto !important;
-    flex-shrink: 0 !important;
-    margin: 0 auto !important;
-
-    /* 2. Force it to the FRONT layer for mobile browsers */
+    
+    /* 1. We control the WIDTH instead of height to prevent cutting */
+    width: 70vw !important;       /* Take up 70% of the screen width */
+    max-width: 280px !important;  /* But never get wider than 280px */
+    height: auto !important;      /* Let the height adjust naturally to show the whole logo */
+    
+    /* 2. Protection logic */
+    flex-shrink: 0 !important;    /* Prevents the container below from squishing the logo */
+    margin: 0 auto !important;    /* Centers it */
+    
+    /* 3. Layer logic (prevents the 'behind the box' issue) */
     position: relative !important;
-    z-index: 9999 !important; /* Higher than anything else */
-    transform: translateZ(10px) !important; /* Forces GPU to put this on top */
-    -webkit-transform: translateZ(10px) !important;
+    z-index: 999 !important;
+    transform: translateZ(0); 
   }
 
   .center-wrapper {
