@@ -362,7 +362,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     justify-content: flex-start !important;
     
     height: auto !important;        /* IMPORTANT: "auto" lets it grow */
-    min-height: 100vh !important;   /* But it's at least one screen tall */
+    min-height: 50vh !important;   /* But it's at least one screen tall */
     
     padding-top: 20px !important;   /* Fixed pixels are safer on mobile than % */
     padding-bottom: 60px !important;
@@ -436,6 +436,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
