@@ -351,62 +351,60 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     display: block;
 }
 /* ----------  mobile roll-back (FULL VERSION)  ---------- */
-/* ----------  FULL MOBILE AUTO-ADJUST VERSION  ---------- */
 @media (pointer: coarse), (max-width: 768px) {
-  
-  /* 1. The "Wrapper" - Tells the page to grow as long as needed */
+  .title-video { 
+    /* 1. Force a size and make it a solid block so nothing slides under it */
+    display: block !important;
+    max-height: clamp(65px, 12vh, 85px) !important; 
+    width: auto !important;
+    flex-shrink: 0 !important;
+    margin: 0 auto !important;
+
+    /* 2. Force it to the FRONT layer for mobile browsers */
+    position: relative !important;
+    z-index: 9999 !important; /* Higher than anything else */
+    transform: translateZ(10px) !important; /* Forces GPU to put this on top */
+    -webkit-transform: translateZ(10px) !important;
+  }
+
   .center-wrapper {
+    /* 3. Ensure the vertical flow is strict */
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    
-    height: auto !important;        /* IMPORTANT: "auto" lets it grow */
-    min-height: 50vh !important;   /* But it's at least one screen tall */
-    
-    padding-top: 20px !important;   /* Fixed pixels are safer on mobile than % */
-    padding-bottom: 60px !important;
-    gap: 15px !important;           /* Small, fixed gap to prevent overlap */
-    overflow-y: auto !important;    /* Forces a scrollbar if content is long */
+    padding-top: 4vh !important;
+    padding-bottom: 8vh !important; /* Extra room at bottom for mobile ads */
+    gap: 4vh !important;            /* Physical gap between logo and box */
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;    /* Allow scrolling if content is long */
   }
 
-  /* 2. The Logo - Shrinks it and protects its space */
-  .title-video { 
-    max-height: 75px !important;    /* Fixed height is more stable for mobile */
-    width: auto !important;
-    flex-shrink: 0 !important;      /* PROTECTS LOGO: Box below cannot overlap it */
-    margin: 0 auto !important;
-    position: relative !important;
-    z-index: 10 !important;
-  }
-
-  /* 3. The Boxes (Index Container and Ad Form) */
+  /* 4. Ensure the container box stays below the logo layer */
   .container, 
   body .ad-form { 
-    width: 94vw !important; 
-    max-width: 400px; 
-    height: auto !important;        /* Lets the box height be decided by content */
-    flex-shrink: 0 !important;      /* Prevents the box from squashing */
+    position: relative !important;
+    z-index: 1 !important; /* Lower than logo */
+    width: 90vw !important; 
+    max-width: 420px; 
     margin: 0 auto !important; 
-    padding: 15px !important;
+    flex-shrink: 0 !important; 
+    /* Prevent backdrop-filter from creating a layer conflict */
+    transform: translateZ(0); 
   }
 
-  /* 4. The Transcription Box (Index only) */
-  #result { 
-    width: 100% !important; 
-    height: auto !important;        /* Removes the fixed VH height */
-    min-height: 120px !important;   /* Just enough to see text */
-    flex: 0 0 auto !important;      /* Stops it from trying to fill the screen */
-  }
-
-  /* 5. Clean up other mobile elements */
-  .right-stack { width: 100% !important; }
-  .container { flex-direction: column !important; }
+  /* The rest of your mobile logic */
+  .disclaimer { margin-bottom: 2vh; flex-shrink: 0; }
+  #timer #colon { top: -2px; font-size: 1.6rem; }
   .s2t-ad-sidebar { display: none !important; }
   .s2t-ad-bottom-mobile { display: flex !important; }
-  .disclaimer { width: 90% !important; margin-top: 15px; }
-}
 
+  /* Transcription box height fix */
+  .container { flex-direction: column !important; }
+  #result { width: 100% !important; height: 25vh !important; min-height: 160px !important; }
+  .right-stack { width: 100% !important; }
+}
 /* ----------  micro-animations  ---------- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
