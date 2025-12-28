@@ -374,7 +374,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     align-items: center !important;
     justify-content: flex-start !important;
     padding-top: 4vh !important;
-    padding-bottom: 8vh !important; /* Extra room at bottom for mobile ads */
+    padding-bottom: 0vh !important; /* Extra room at bottom for mobile ads */
     gap: 4vh !important;            /* Physical gap between logo and box */
     height: auto !important;
     min-height: 100vh !important;
@@ -434,6 +434,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
