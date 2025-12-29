@@ -146,7 +146,7 @@
       <input type="hidden" name="access_key" value="02a64816-48b6-42c5-99e6-3d218773251f">
       <input type="hidden" name="subject" value="New Ad-Space Inquiry">
       <input type="hidden" name="from_name" value="Shorts2Text Ad Page">
-      <input type="email" name="from_email" placeholder="Your email address" required autocomplete="email" />
+      <input type="email" name="from_email" id="emailInput" placeholder="Your email address" required autocomplete="email" />
       <textarea name="message" maxlength="500" required placeholder="Write your message here…" autocomplete="off"></textarea>
       <div class="counter"><span id="count">0</span> / 500</div>
       <button type="submit">Send</button>
@@ -197,19 +197,38 @@
     const cnt = document.querySelector('#count');
     ta.addEventListener('input', () => cnt.textContent = ta.value.length);
 
-    /* local thank-you + no redirect */
+    /* --- REPLACE THE FORM SUBMIT SECTION IN advertise.html --- */
     const form = document.getElementById('adForm');
     const thank = document.getElementById('successMsg');
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      const body = new FormData(form);
-      await fetch(form.action, { method: 'POST', body });
-      form.style.display = 'none';
-      thank.style.display = 'block';
-    });
 
-    /* hard-refresh on back/forward */
-    if (performance.navigation.type === 2) location.reload(true);
+    form.addEventListener('submit', async e => {
+       // 1. Check if the browser thinks the form is valid (fields filled, etc.)
+      if (!form.checkValidity()) {
+      // If not valid, the browser will automatically show the "Required" bubble.
+        return; 
+      }
+
+    // 2. If it is valid, proceed with sending the message
+      e.preventDefault();
+  
+    // Change button text to show it's working
+      const btn = form.querySelector('button');
+      const originalText = btn.textContent;
+      btn.textContent = "Sending...";
+      btn.disabled = true;
+
+      const body = new FormData(form);
+  
+      try {
+        await fetch(form.action, { method: 'POST', body });
+        form.style.display = 'none';
+        thank.style.display = 'block';
+      } catch (err) {
+        alert("Connection error. Please try again.");
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>
