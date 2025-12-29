@@ -171,6 +171,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    align-items: center;    /* Added: Centers the items horizontally */
 }
 
 input, textarea, button, .dropbtn {
@@ -183,6 +184,10 @@ input, textarea, button, .dropbtn {
     pointer-events: auto;
 }
 input { width: 90%; }
+input#url { 
+    width: 100%; 
+    box-sizing: border-box; 
+}
 textarea { width: 100%; }
 
 ::placeholder { font-family: 'Papyrus', fantasy; }
@@ -369,7 +374,6 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     z-index: 999 !important;
     transform: translateZ(0); 
   }
-
   .center-wrapper {
     /* 3. Ensure the vertical flow is strict */
     display: flex !important;
@@ -408,6 +412,17 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
   #result { width: 100% !important; height: 25vh !important; min-height: 160px !important; }
   .right-stack { width: 100% !important; }
 }
+  #url {
+    width: 100% !important;   /* Force it to fill the container width */
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+  }
+
+  .button-group.side {
+    width: 100% !important;   /* Buttons will now match the URL box width */
+    display: flex;
+    gap: 1rem;
+  }
 /* ----------  micro-animations  ---------- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
@@ -437,6 +452,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
