@@ -46,15 +46,17 @@
       text-align: center;
       font-size: 1.4rem;
     }
-
     .ad-form textarea {
-      width: 100%;
+      width: 100% !important;   /* Fill the container */
+      box-sizing: border-box;   /* Keeps padding inside the 100% */
       min-height: 180px;
       resize: vertical;
-      padding: 0.75rem;
-      box-sizing: border-box;
+      padding: 0.75rem;         /* Matches the email input */
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-color);
+      background: var(--primary-bg);
+      color: var(--text-color);
     }
-
     .ad-form button {
       align-self: flex-end;
     }
@@ -69,10 +71,10 @@
       font-size: .75rem;
       color: #aaa;
     }
-
     .ad-form input[type="email"] {
-      width: 100%;
-      padding: 0.35rem 0.6rem;
+      width: 100% !important;   /* Fill the container */
+      box-sizing: border-box;   /* CRITICAL: Keeps padding inside the 100% */
+      padding: 0.75rem;         /* Match the textarea's padding for a clean look */
       border-radius: var(--border-radius);
       border: 1px solid var(--border-color);
       background: var(--primary-bg);
