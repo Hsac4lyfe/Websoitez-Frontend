@@ -213,14 +213,14 @@
     form.addEventListener('submit', async e => {
        // 1. Check if the browser thinks the form is valid (fields filled, etc.)
       if (!form.checkValidity()) {
-      // If not valid, the browser will automatically show the "Required" bubble.
+        // If not valid, the browser will automatically show the "Required" bubble.
         return; 
       }
 
-    // 2. If it is valid, proceed with sending the message
+      // 2. If it is valid, proceed with sending the message
       e.preventDefault();
   
-    // Change button text to show it's working
+      // Change button text to show it's working
       const btn = form.querySelector('button');
       const originalText = btn.textContent;
       btn.textContent = "Sending...";
