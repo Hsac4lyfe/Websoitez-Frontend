@@ -238,8 +238,13 @@
       <!-- The Red Tooltip -->
       <span class="custom-tooltip" id="emailTooltip">Please fill out this field.</span>
     </div>
-      <textarea name="message" maxlength="500" required placeholder="Write your message here…" autocomplete="off"></textarea>
-      <div class="counter"><span id="count">0</span> / 500</div>
+    <!-- REPLACE the textarea section in advertise.html with this -->
+    <div class="input-group">
+      <textarea name="message" id="messageInput" maxlength="500" required placeholder="Write your message here…" autocomplete="off"></textarea>
+      <!-- The Red Tooltip for the Message -->
+      <span class="custom-tooltip" id="messageTooltip">Please fill out this field.</span>
+    </div>
+    <div class="counter"><span id="count">0</span> / 500</div>
       <button type="submit">Send</button>
     </form>
     <!-- THANK-YOU MSG -->
@@ -287,24 +292,38 @@
     const cnt = document.querySelector('#count');
     ta.addEventListener('input', () => cnt.textContent = ta.value.length);
     
-    /* --- REPLACE THE SUBMIT LOGIC IN advertise.html --- */
+    /* --- UPDATED SUBMIT LOGIC FOR BOTH FIELDS --- */
     const form = document.getElementById('adForm');
     const emailInput = document.getElementById('emailInput');
     const emailTooltip = document.getElementById('emailTooltip');
+    const messageInput = document.getElementById('messageInput'); // Added
+    const messageTooltip = document.getElementById('messageTooltip'); // Added
     const thank = document.getElementById('successMsg');
     
-    // 1. Listen for the "Invalid" event (when user clicks send and box is empty)
+    // 1. Handle Email Validation
     emailInput.addEventListener('invalid', (e) => {
-      e.preventDefault(); // STOP the native browser bubble
+      e.preventDefault(); 
       emailTooltip.classList.add('show');
     });
     
-    // 2. Hide the bubble as soon as the user starts typing again
     emailInput.addEventListener('input', () => {
       if (emailInput.value.length > 0) {
         emailTooltip.classList.remove('show');
-        form.classList.remove('was-submitted');
       }
+    });
+
+    // 2. Handle Message Validation (Added this section)
+    messageInput.addEventListener('invalid', (e) => {
+      e.preventDefault(); 
+      messageTooltip.classList.add('show');
+    });
+    
+    messageInput.addEventListener('input', () => {
+      if (messageInput.value.length > 0) {
+        messageTooltip.classList.remove('show');
+      }
+      // Keep your existing character counter logic
+      document.getElementById('count').textContent = messageInput.value.length;
     });
     
     // 3. The Submit Logic
