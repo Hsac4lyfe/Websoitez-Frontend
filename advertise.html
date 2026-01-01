@@ -135,6 +135,54 @@
         font-size: 1.6rem;
       }
     }
+    /* --- ADD TO advertise.html <style> --- */
+    
+    .input-group {
+      position: relative; /* Container for the bubble */
+      width: 100%;
+    }
+    
+    .custom-tooltip {
+      display: none; /* Hidden by default */
+      position: absolute;
+      bottom: 110%; /* Sits above the textbox */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ff4c4c;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: 'Papyrus', fantasy !important;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      pointer-events: none;
+    }
+    
+    /* The little triangle at the bottom of the bubble */
+    .custom-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #ff4c4c transparent transparent transparent;
+    }
+    
+    /* Animation for the bubble */
+    @keyframes shake {
+      0%, 100% { transform: translateX(-50%); }
+      25% { transform: translateX(-52%); }
+      75% { transform: translateX(-48%); }
+    }
+    
+    .custom-tooltip.show {
+      display: block;
+      animation: fadeIn 0.3s ease, shake 0.2s ease 3;
+    }
   </style>
 </head>
 
@@ -178,15 +226,18 @@
       <input type="hidden" name="access_key" value="02a64816-48b6-42c5-99e6-3d218773251f">
       <input type="hidden" name="subject" value="New Ad-Space Inquiry">
       <input type="hidden" name="from_name" value="Shorts2Text Ad Page">
+    <div class="input-group">
       <input type="email" 
              name="from_email" 
              id="emailInput" 
              placeholder="Your email address" 
              required 
              autocomplete="off" 
-             data-bwignore 
-             data-lpignore="true" 
-             data-1p-ignore />
+             data-bwignore />
+             
+      <!-- The Red Tooltip -->
+      <span class="custom-tooltip" id="emailTooltip">Please fill out this field.</span>
+    </div>
       <textarea name="message" maxlength="500" required placeholder="Write your message here…" autocomplete="off"></textarea>
       <div class="counter"><span id="count">0</span> / 500</div>
       <button type="submit">Send</button>
@@ -235,35 +286,43 @@
     const ta = document.querySelector('textarea[name="message"]');
     const cnt = document.querySelector('#count');
     ta.addEventListener('input', () => cnt.textContent = ta.value.length);
-
-
-    /* local thank-you + no redirect + validation trigger */
+    
+    /* --- REPLACE THE SUBMIT LOGIC IN advertise.html --- */
     const form = document.getElementById('adForm');
+    const emailInput = document.getElementById('emailInput');
+    const emailTooltip = document.getElementById('emailTooltip');
     const thank = document.getElementById('successMsg');
-
-    form.addEventListener('submit', async e => {
-      // Add the class that triggers the red glow CSS
-      form.classList.add('was-submitted');
-
-      // Check if form is valid (shows the browser's popup bubble)
-      if (!form.reportValidity()) {
-        e.preventDefault();
-        return;
+    
+    // 1. Listen for the "Invalid" event (when user clicks send and box is empty)
+    emailInput.addEventListener('invalid', (e) => {
+      e.preventDefault(); // STOP the native browser bubble
+      emailTooltip.classList.add('show');
+    });
+    
+    // 2. Hide the bubble as soon as the user starts typing again
+    emailInput.addEventListener('input', () => {
+      if (emailInput.value.length > 0) {
+        emailTooltip.classList.remove('show');
+        form.classList.remove('was-submitted');
       }
-
+    });
+    
+    // 3. The Submit Logic
+    form.addEventListener('submit', async e => {
       e.preventDefault();
-      
+      form.classList.add('was-submitted');
+    
       const btn = form.querySelector('button');
       btn.textContent = "Sending...";
       btn.disabled = true;
-
+    
       const body = new FormData(form);
       try {
         await fetch(form.action, { method: 'POST', body });
         form.style.display = 'none';
         thank.style.display = 'block';
       } catch (err) {
-        alert("Could not send. Please check your connection.");
+        alert("Could not send. Check your connection.");
         btn.textContent = "Send";
         btn.disabled = false;
       }
