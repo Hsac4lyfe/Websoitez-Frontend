@@ -178,7 +178,15 @@
       <input type="hidden" name="access_key" value="02a64816-48b6-42c5-99e6-3d218773251f">
       <input type="hidden" name="subject" value="New Ad-Space Inquiry">
       <input type="hidden" name="from_name" value="Shorts2Text Ad Page">
-      <input type="email" name="from_email" id="emailInput" placeholder="Your email address" required autocomplete="email" />
+      <input type="email" 
+             name="from_email" 
+             id="emailInput" 
+             placeholder="Your email address" 
+             required 
+             autocomplete="off" 
+             data-bwignore 
+             data-lpignore="true" 
+             data-1p-ignore />
       <textarea name="message" maxlength="500" required placeholder="Write your message here…" autocomplete="off"></textarea>
       <div class="counter"><span id="count">0</span> / 500</div>
       <button type="submit">Send</button>
