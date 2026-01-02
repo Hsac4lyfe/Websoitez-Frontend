@@ -453,15 +453,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
-/* Forces Safari to never render a white box behind videos */
-video {
-    background-color: transparent !important;
-    -webkit-mask-image: -webkit-radial-gradient(white, black); /* Fixes rounded corner bugs in Safari */
-}
 
-#bg-video {
-    background-color: #000 !important; /* The background video should have a black base */
-}
 
 
 
