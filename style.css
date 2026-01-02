@@ -115,20 +115,25 @@ body {
     will-change: transform;  /* Optimization for smooth rendering */
 }
 .title-video {
-  /* Positioning (The "Same Spot" logic) */
-  position: relative;
-  display: block;
-  margin: 0;                 /* We use 0 because the Parent Wrapper centers it */
-  max-height: clamp(110px, 22vh, 32vh);
-  width: fit-content;
-  z-index: 10;
-
-  /* Visuals (The "How it looks" logic - KEEP THESE) */
-  pointer-events: auto;      /* Makes sure you can click the link */
-  border-radius: 10px;       /* Keeps the corners rounded */
-  overflow: hidden;          /* Crops the video to the rounded corners */
-  image-rendering: crisp-edges;                /* Keeps pixels sharp */
-  image-rendering: -webkit-optimize-contrast;  /* Keeps pixels sharp on Safari/Chrome */
+    /* Positioning (The "Same Spot" logic) */
+    position: relative;
+    display: block;
+    margin: 0;                 /* We use 0 because the Parent Wrapper centers it */
+    max-height: clamp(110px, 22vh, 32vh);
+    width: fit-content;
+    z-index: 10;
+    
+    /* Visuals (The "How it looks" logic - KEEP THESE) */
+    pointer-events: auto;      /* Makes sure you can click the link */
+    border-radius: 10px;       /* Keeps the corners rounded */
+    overflow: hidden;          /* Crops the video to the rounded corners */
+    image-rendering: crisp-edges;                /* Keeps pixels sharp */
+    image-rendering: -webkit-optimize-contrast;  /* Keeps pixels sharp on Safari/Chrome */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.title-video:hover {
+    transform: scale(1.05); /* Slight pop out */
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
 }
 
 #bg-video {
@@ -194,9 +199,12 @@ textarea { width: 100%; }
 ::placeholder { font-family: 'Papyrus', fantasy; }
 
 button:focus-visible, input:focus-visible, textarea:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: -2px;   /* keep outline inside */
-}
+    outline: none !important;
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.15); /* Soft white glow */
+    background: rgba(50, 50, 50, 0.8) !important;
+    transition: all 0.3s ease;
+    }
 
 .dropdown { position: relative; pointer-events: auto; }
 .dropdown-content {
@@ -399,7 +407,12 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     margin: 0 auto !important; 
     flex-shrink: 0 !important; 
     /* Prevent backdrop-filter from creating a layer conflict */
-    transform: translateZ(0); 
+    transform: translateZ(0);
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+    backdrop-filter: blur(20px) saturate(160%); /* Increased blur */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Sharper border */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
   }
 
   /* The rest of your mobile logic */
@@ -473,6 +486,26 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 video::-webkit-media-controls-start-playback-button {
     display: none !important;
     -webkit-appearance: none;
+}
+/* Custom Scrollbar for Chrome/Safari/Edge */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
 
