@@ -152,6 +152,13 @@ document.addEventListener('DOMContentLoaded', () => {
       stopTimer();
       setUIState(false);
     }
+    // Add a simple fade-in effect via JS
+      DOM.resultEl.style.opacity = '0';
+      DOM.resultEl.value = transcript;
+      setTimeout(() => {
+        DOM.resultEl.style.transition = 'opacity 1s ease';
+        DOM.resultEl.style.opacity = '1';
+      }, 100);
   }
 
   async function startTranscription(url) {
@@ -235,6 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
 
 
 
