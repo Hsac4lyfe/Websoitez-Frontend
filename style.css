@@ -469,6 +469,12 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     gap: 2.5vh !important; /* Only Safari gets the slightly larger gap */
   }
 }
+/* Hides the Safari 'Play' button overlay */
+video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+}
+
 
 
 
