@@ -143,45 +143,70 @@
     }
     
     .custom-tooltip {
-      display: none; /* Hidden by default */
+      display: none;
       position: absolute;
-      bottom: 110%; /* Sits above the textbox */
-      left: 50%;
-      transform: translateX(-50%);
+      /* Position to the right */
+      left: 102%; 
+      top: 50%;
+      transform: translateY(-50%);
+      
       background-color: #ff4c4c;
       color: white;
       padding: 8px 12px;
       border-radius: 6px;
       font-family: 'Papyrus', fantasy !important;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       white-space: nowrap;
       z-index: 100;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
       pointer-events: none;
     }
     
-    /* The little triangle at the bottom of the bubble */
+    /* The little triangle - now pointing LEFT */
     .custom-tooltip::after {
       content: "";
       position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -5px;
+      top: 50%;
+      right: 100%; /* Position on the left of the bubble */
+      margin-top: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: #ff4c4c transparent transparent transparent;
+      border-color: transparent #ff4c4c transparent transparent;
     }
     
-    /* Animation for the bubble */
-    @keyframes shake {
-      0%, 100% { transform: translateX(-50%); }
-      25% { transform: translateX(-52%); }
-      75% { transform: translateX(-48%); }
+    /* Updated shake animation for side-position */
+    @keyframes shakeSide {
+      0%, 100% { transform: translateY(-50%) translateX(0); }
+      25% { transform: translateY(-50%) translateX(4px); }
+      75% { transform: translateY(-50%) translateX(-2px); }
     }
     
     .custom-tooltip.show {
       display: block;
-      animation: fadeIn 0.3s ease, shake 0.2s ease 3;
+      animation: fadeIn 0.3s ease, shakeSide 0.2s ease 3;
+    }
+    /* MOBILE FIX: On phones, move it back to the top so it isn't cut off */
+    @media (max-width: 850px) {
+      .custom-tooltip {
+        left: 50%;
+        top: auto;
+        bottom: 110%;
+        transform: translateX(-50%);
+        white-space: normal; /* Allow text wrap on small screens */
+        width: max-content;
+      }
+      .custom-tooltip::after {
+        top: 100%;
+        left: 50%;
+        right: auto;
+        margin-left: -5px;
+        border-color: #ff4c4c transparent transparent transparent;
+      }
+      @keyframes shakeSide {
+        0%, 100% { transform: translateX(-50%); }
+        25% { transform: translateX(-52%); }
+        75% { transform: translateX(-48%); }
+      }
     }
   </style>
 </head>
