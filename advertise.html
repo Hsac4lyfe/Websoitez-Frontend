@@ -230,7 +230,7 @@
   </div>
 
   <!-- BACKGROUND -->
-  <video autoplay muted loop playsinline preload="auto" id="bg-video">
+  <video muted autoplay loop playsinline preload="auto" id="bg-video">
     <source src="JellyDarkMode12.webm" type="video/webm">
     <source src="JellyDarkMode12.mp4" type="video/mp4">
   </video>
@@ -240,7 +240,7 @@
     <!-- HOME LINK + LOGO -->
    <!-- The class is on the link so Flexbox can see it -->
     <a href="https://websoitez-frontend.vercel.app" aria-label="Shorts2Text animated logo" class="title-video">
-      <video autoplay muted loop playsinline preload="auto" oncontextmenu="return false" style="width: 100%; height: auto; -webkit-touch-callout:none; -webkit-user-select:none;">
+      <video muted autoplay loop playsinline preload="auto" oncontextmenu="return false" style="width: 100%; height: auto; -webkit-touch-callout:none; -webkit-user-select:none;">
         <source src="Shorts2Text02Pixelated02.mov" type='video/quicktime; codecs="hvc1"'>
         <source src="Shorts2Text02Pixelated02.webm" type="video/webm">
       </video>
@@ -370,6 +370,30 @@
         btn.textContent = "Send";
         btn.disabled = false;
       }
+    });
+        /* --- FORCE VIDEOS TO PLAY ON SAFARI/MAC --- */
+    function forceVideoPlay() {
+      const vids = document.querySelectorAll('video');
+      vids.forEach(video => {
+        // We attempt to play, and if it fails, we try again on the first click
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // If autoplay was blocked, play it when the user first clicks/touches the page
+            document.addEventListener('click', () => {
+              video.play();
+            }, { once: true });
+          });
+        }
+      });
+    }
+    
+    // Run on load
+    window.addEventListener('load', forceVideoPlay);
+    // Run when the tab becomes visible again
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') forceVideoPlay();
     });
   </script>
 </body>
