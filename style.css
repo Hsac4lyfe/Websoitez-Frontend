@@ -365,86 +365,80 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     display: block;
 }
 /* ----------  mobile roll-back (FULL VERSION)  ---------- */
-@media (pointer: coarse), (max-width: 768px) {
+/* ----------  mobile & tablet logic (REPAIRED)  ---------- */
+@media (pointer: coarse), (max-width: 850px) {
   .title-video { 
     display: block !important;
-    
-    /* 1. We control the WIDTH instead of height to prevent cutting */
-    width: 70vw !important;       /* Take up 70% of the screen width */
-    max-width: 280px !important;  /* But never get wider than 280px */
-    height: auto !important;      /* Let the height adjust naturally to show the whole logo */
-    
-    /* 2. Protection logic */
-    flex-shrink: 0 !important;    /* Prevents the container below from squishing the logo */
-    margin: 0 auto !important;    /* Centers it */
-    
-    /* 3. Layer logic (prevents the 'behind the box' issue) */
+    width: 70vw !important;
+    max-width: 280px !important;
+    height: auto !important;
+    flex-shrink: 0 !important;
+    margin: 0 auto !important;
     position: relative !important;
     z-index: 999 !important;
     transform: translateZ(0); 
   }
+
   .center-wrapper {
-    /* 3. Ensure the vertical flow is strict */
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: flex-start !important;
     padding-top: 1vh !important;
-    padding-bottom: 2vh !important; /* Extra room at bottom for mobile ads */
-    gap: 1vh !important;            /* Physical gap between logo and box */
+    padding-bottom: 2vh !important;
+    gap: 1.5vh !important;
     height: auto !important;
-    min-height: 20vh !important;
-    overflow-y: auto !important;    /* Allow scrolling if content is long */
+    min-height: 100vh !important;
+    overflow-y: auto !important;
   }
 
-  /* 4. Ensure the container box stays below the logo layer */
   .container, 
   body .ad-form { 
     position: relative !important;
-    z-index: 1 !important; /* Lower than logo */
-    width: 90vw !important; 
+    z-index: 1 !important;
+    width: 92vw !important; 
     max-width: 420px; 
     margin: 0 auto !important; 
     flex-shrink: 0 !important; 
-    /* Prevent backdrop-filter from creating a layer conflict */
-    transform: translateZ(0);
     background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-    backdrop-filter: blur(20px) saturate(160%); /* Increased blur */
-    border: 1px solid rgba(255, 255, 255, 0.15); /* Sharper border */
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
   }
 
-  /* The rest of your mobile logic */
-  .disclaimer { margin-bottom: 2vh; flex-shrink: 0; }
-  #timer #colon { top: -2px; font-size: 1.6rem; }
+  /* Hide sidebars and show mobile ad ONLY in this media query */
   .s2t-ad-sidebar { display: none !important; }
   .s2t-ad-bottom-mobile { display: flex !important; }
 
-  /* Transcription box height fix */
+  /* Stack inputs for mobile */
   .container { flex-direction: column !important; }
   #result { width: 100% !important; height: 25vh !important; min-height: 160px !important; }
   .right-stack { width: 100% !important; }
-}
+  
   #url {
-    width: 100% !important;   /* Force it to fill the container width */
+    width: 100% !important;
     box-sizing: border-box !important;
     margin: 0 auto !important;
   }
 
   .button-group.side {
-    width: 100% !important;   /* Buttons will now match the URL box width */
+    width: 100% !important;
     display: flex;
     gap: 1rem;
   }
-/* ----------  micro-animations  ---------- */
+
+  .disclaimer { margin-bottom: 2vh; flex-shrink: 0; }
+  #timer #colon { top: -2px; font-size: 1.6rem; }
+}
+
+/* ----------  PC/Global micro-animations  ---------- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .container { animation: fadeIn 0.6s ease-out both; }
 
-/* ----------  cursor  ---------- */
+/* ----------  Global Cursor Fixes  ---------- */
 #customCursor {
     z-index: 999999 !important;
     width: 75px;
@@ -456,57 +450,37 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     transform-origin: center center;
     object-fit: cover;
     transition: opacity 0.2s ease;
-}
-#customCursor.paused { opacity: 0.80; }
-#customCursor { cursor: auto !important; }
-#transcribeBtn.is-pending {
-    background: #e74c3c;   /* red  */
-    color: #ffffff;        /* white text */
-}
-#customCursor {
     transform: translate(-100px, -100px);
 }
-/* --- THIS TARGETS ONLY SAFARI (MAC & IOS) --- */
-/* It leaves Windows Chrome/Firefox/Edge completely untouched */
+#customCursor.paused { opacity: 0.80; }
+
+#transcribeBtn.is-pending {
+    background: #e74c3c;
+    color: #ffffff;
+}
+
+/* --- SAFARI SPECIFIC FIX --- */
 @supports (-webkit-hyphens:none) {
   .title-video {
     flex-shrink: 0 !important;
-    min-height: 200px !important; /* Forces Safari to respect the space */
+    min-height: 200px !important;
   }
-  
-  .title-video video {
-    display: block !important;
-  }
-
-  .center-wrapper {
-    gap: 2.5vh !important; /* Only Safari gets the slightly larger gap */
-  }
+  .title-video video { display: block !important; }
+  .center-wrapper { gap: 2.5vh !important; }
 }
+
 /* Hides the Safari 'Play' button overlay */
 video::-webkit-media-controls-start-playback-button {
     display: none !important;
     -webkit-appearance: none;
 }
-/* Custom Scrollbar for Chrome/Safari/Edge */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
 
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
-}
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
 
 
 
