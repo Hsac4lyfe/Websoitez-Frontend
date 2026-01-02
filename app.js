@@ -141,9 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const taskId = await startTranscription(url);
       const transcript = await pollForResult(taskId);
 
+      // 1. Set the value
       DOM.resultEl.value = transcript;
       DOM.statusEl.textContent = 'Transcription complete!';
       DOM.barEl.style.width = '100%';
+
+      // 2. Apply the Fade-in Effect
+      DOM.resultEl.style.opacity = '0';
+      setTimeout(() => {
+        DOM.resultEl.style.transition = 'opacity 1s ease';
+        DOM.resultEl.style.opacity = '1';
+      }, 100);
 
     } catch (err) {
       console.error(err);
@@ -152,13 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
       stopTimer();
       setUIState(false);
     }
-    // Add a simple fade-in effect via JS
-      DOM.resultEl.style.opacity = '0';
-      DOM.resultEl.value = transcript;
-      setTimeout(() => {
-        DOM.resultEl.style.transition = 'opacity 1s ease';
-        DOM.resultEl.style.opacity = '1';
-      }, 100);
   }
 
   async function startTranscription(url) {
@@ -242,6 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
 
 
 
