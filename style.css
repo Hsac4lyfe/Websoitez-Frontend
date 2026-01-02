@@ -107,6 +107,7 @@ body {
     min-height: 100vh;
     gap: 1.75vh;             /* Matches your original spacing logic */
     overflow: hidden;
+    overflow-x: visible !important; /* Allows the side-tooltips to be seen */
     padding-top: 5vh;        /* This is the master "ruler" for logo height */
     padding-bottom: 5vh;
     box-sizing: border-box;
@@ -452,6 +453,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 #customCursor {
     transform: translate(-100px, -100px);
 }
+
 
 
 
