@@ -24,7 +24,7 @@
 
 <body>
   <!-- BACKGROUND -->
-  <video autoplay muted loop playsinline preload="auto" id="bg-video">
+  <video muted autoplay loop playsinline preload="auto" id="bg-video">
     <source src="JellyDarkMode12.mp4" type="video/mp4">
     <source src="JellyDarkMode12.webm" type="video/webm">
   </video>
@@ -50,7 +50,7 @@
 
   <!-- 2. The Logo -->
   <div class="title-video">
-    <video autoplay muted loop playsinline preload="auto" 
+    <video muted autoplay loop playsinline preload="auto" 
        oncontextmenu="return false" 
        style="width: 100%; height: auto; -webkit-touch-callout:none; -webkit-user-select:none;">
       <source src="Shorts2Text02Pixelated02.mov" type='video/quicktime; codecs="hvc1"'>
@@ -90,7 +90,7 @@
 </div> <!-- 5. This closes the center-wrapper -->
 
   <!-- CURSOR -->
-  <video autoplay muted loop playsinline preload="auto" id="customCursor" class="custom-cursor">
+  <video muted autoplay loop playsinline preload="auto" id="customCursor" class="custom-cursor">
     <source src="cursor05.webm" type="video/webm">
   </video>
 
@@ -109,9 +109,34 @@
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') vids.forEach(v => v.play().catch(()=>{}));
     });
+        /* --- FORCE VIDEOS TO PLAY ON SAFARI/MAC --- */
+    function forceVideoPlay() {
+      const vids = document.querySelectorAll('video');
+      vids.forEach(video => {
+        // We attempt to play, and if it fails, we try again on the first click
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // If autoplay was blocked, play it when the user first clicks/touches the page
+            document.addEventListener('click', () => {
+              video.play();
+            }, { once: true });
+          });
+        }
+      });
+    }
+    
+    // Run on load
+    window.addEventListener('load', forceVideoPlay);
+    // Run when the tab becomes visible again
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') forceVideoPlay();
+    });
   </script>
   
 </body>
 </html>
+
 
 
