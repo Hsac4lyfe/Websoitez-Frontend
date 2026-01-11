@@ -374,6 +374,32 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     transform: scale(1.05);
     filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
 }
+/* --- FIRST-HOVER EMPHASIS (logo + ads) --- */
+.title-video,
+.s2t-ad-box {
+    transform-origin: center;
+}
+
+/* Stronger first-hover pop */
+.title-video:hover,
+.s2t-ad-link:hover .s2t-ad-box {
+    animation: firstHoverPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Overshoot → settle */
+@keyframes firstHoverPop {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.08); }
+    100% { transform: scale(1.05); }
+}
+
+/* --- PRESS-DOWN FEEDBACK (logo + ads) --- */
+.title-video:active,
+.s2t-ad-link:active .s2t-ad-box {
+    transform: scale(0.97);
+    transition: transform 0.08s ease;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+}
 
 /* ----------  mobile roll-back (FULL VERSION)  ---------- */
 /* ----------  mobile & tablet logic (REPAIRED)  ---------- */
@@ -491,6 +517,7 @@ video::-webkit-media-controls-start-playback-button {
 ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
 
 
 
