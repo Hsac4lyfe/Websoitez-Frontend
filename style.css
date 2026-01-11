@@ -364,6 +364,17 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
     color: inherit;
     display: block;
 }
+/* --- AD HOVER EFFECT (matches logo hover exactly) --- */
+.s2t-ad-box {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                filter 0.4s ease;
+}
+
+.s2t-ad-link:hover .s2t-ad-box {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+}
+
 /* ----------  mobile roll-back (FULL VERSION)  ---------- */
 /* ----------  mobile & tablet logic (REPAIRED)  ---------- */
 @media (pointer: coarse), (max-width: 850px) {
@@ -480,6 +491,7 @@ video::-webkit-media-controls-start-playback-button {
 ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
 
 
 
