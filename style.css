@@ -369,7 +369,7 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 @media (pointer: coarse), (max-width: 850px) {
   .title-video { 
     display: block !important;
-    width: 150vw !important;
+    width: 80vw !important;
     max-width: 150px !important;
     height: auto !important;
     flex-shrink: 0 !important;
@@ -480,6 +480,7 @@ video::-webkit-media-controls-start-playback-button {
 ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
 
 
 
