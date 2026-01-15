@@ -231,18 +231,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ================= BG VIDEO ================= */
-
   function setupBackgroundVideo() {
     if (!DOM.bgVideo) return;
-    DOM.bgVideo.muted = true;
-    const play = () => DOM.bgVideo.play().catch(() => {});
-    window.addEventListener('load', play);
+  
+    const video = DOM.bgVideo;
+    video.muted = true;
+    video.playsInline = true;
+  
+    const safePlay = () => {
+      video.play().catch(() => {});
+    };
+  
+    // Initial play
+    window.addEventListener('load', safePlay);
+  
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') play();
+      if (document.visibilityState === 'visible') {
+  
+        // 1. Hide stutter instantly
+        document.body.classList.add('is-returning');
+  
+        // 2. Restart cleanly
+        requestAnimationFrame(() => {
+          video.currentTime = 0;
+          safePlay();
+  
+          // 3. Fade back in
+          requestAnimationFrame(() => {
+            document.body.classList.remove('is-returning');
+          });
+        });
+      }
     });
   }
-
 });
+
 
 
 
