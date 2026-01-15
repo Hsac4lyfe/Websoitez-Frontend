@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     copyBtn: document.getElementById('copyBtn'),
     cursor: document.getElementById('customCursor'),
     bgVideo: document.getElementById('bg-video'),
+    logoVideo: document.querySelector('.title-video video'),
   };
 
   /* ================= STATE ================= */
@@ -232,31 +233,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ================= BG VIDEO ================= */
   function setupBackgroundVideo() {
-    if (!DOM.bgVideo) return;
+    const videos = [DOM.bgVideo, DOM.logoVideo].filter(Boolean);
+    if (!videos.length) return;
   
-    const video = DOM.bgVideo;
-    video.muted = true;
-    video.playsInline = true;
+    videos.forEach(video => {
+      video.muted = true;
+      video.playsInline = true;
+    });
   
-    const safePlay = () => {
-      video.play().catch(() => {});
+    const safePlayAll = () => {
+      videos.forEach(v => v.play().catch(() => {}));
     };
   
     // Initial play
-    window.addEventListener('load', safePlay);
+    window.addEventListener('load', safePlayAll);
   
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
   
-        // 1. Hide stutter instantly
+        // Hide visual stutter
         document.body.classList.add('is-returning');
   
-        // 2. Restart cleanly
         requestAnimationFrame(() => {
-          video.currentTime = 0;
-          safePlay();
+          videos.forEach(v => {
+            v.currentTime = 0;
+            v.play().catch(() => {});
+          });
   
-          // 3. Fade back in
+          // Fade back in smoothly
           requestAnimationFrame(() => {
             document.body.classList.remove('is-returning');
           });
@@ -265,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
 
 
 
