@@ -518,6 +518,16 @@ video::-webkit-media-controls-start-playback-button {
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
 
+body.is-returning #bg-video {
+  opacity: 0;
+}
+body.ready #bg-video {
+  transition: opacity 0.4s ease;
+  opacity: 1;
+}
+
+
+
 
 
 
