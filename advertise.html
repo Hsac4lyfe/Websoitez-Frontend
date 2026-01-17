@@ -211,7 +211,7 @@
   </style>
 </head>
 
-<body>
+<body class="is-loading">
   <!-- AD-BOXES (same as index.html) -->
   <div class="s2t-ad-placeholder s2t-ad-sidebar s2t-ad-left" aria-hidden="true">
     <a href="/advertise.html" class="s2t-ad-link"><div class="s2t-ad-box">YOUR AD!<br />CLICK HERE!</div></a>
@@ -283,13 +283,6 @@
 
   <!-- SCRIPTS -->
   <script>
-    /* background video */
-    const bgv = document.getElementById('bg-video');
-    window.addEventListener('load', () => bgv.play().catch(()=>{}));
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') bgv.play().catch(()=>{});
-    });
-
     /* cursor + soft-fade */
     const cursor = document.getElementById('customCursor');
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
@@ -370,30 +363,6 @@
         btn.textContent = "Send";
         btn.disabled = false;
       }
-    });
-        /* --- FORCE VIDEOS TO PLAY ON SAFARI/MAC --- */
-    function forceVideoPlay() {
-      const vids = document.querySelectorAll('video');
-      vids.forEach(video => {
-        // We attempt to play, and if it fails, we try again on the first click
-        const playPromise = video.play();
-        
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            // If autoplay was blocked, play it when the user first clicks/touches the page
-            document.addEventListener('click', () => {
-              video.play();
-            }, { once: true });
-          });
-        }
-      });
-    }
-    
-    // Run on load
-    window.addEventListener('load', forceVideoPlay);
-    // Run when the tab becomes visible again
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') forceVideoPlay();
     });
   </script>
 </body>
