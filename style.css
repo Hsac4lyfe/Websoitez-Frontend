@@ -542,6 +542,9 @@ body.is-loading .title-video {
   opacity: 1;
   transition: opacity 0.6s ease;
 }
+#bg-video { transition-delay: 0s; }
+.title-video { transition-delay: 0.12s; }
+
 
 
 
