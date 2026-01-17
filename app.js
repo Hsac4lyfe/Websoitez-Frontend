@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ================= CURSOR ================= */
-
+  
   function setupCursor() {
     if (!DOM.cursor || window.matchMedia('(pointer: coarse)').matches) return;
 
@@ -232,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ================= BG VIDEO ================= */
+
   function setupBackgroundVideo() {
     const videos = [DOM.bgVideo, DOM.logoVideo].filter(Boolean);
     if (!videos.length) return;
@@ -245,13 +246,18 @@ document.addEventListener('DOMContentLoaded', () => {
       videos.forEach(v => v.play().catch(() => {}));
     };
   
-    // Initial play
-    window.addEventListener('load', safePlayAll);
+    // Initial play + fade-in
+    window.addEventListener('load', () => {
+      safePlayAll();
+  
+      // Let the first frame render, then fade in
+      requestAnimationFrame(() => {
+        document.body.classList.remove('is-loading');
+      });
+    });
   
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
-  
-        // Hide visual stutter
         document.body.classList.add('is-returning');
   
         requestAnimationFrame(() => {
@@ -260,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
             v.play().catch(() => {});
           });
   
-          // Fade back in smoothly
           requestAnimationFrame(() => {
             document.body.classList.remove('is-returning');
           });
@@ -269,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
 
 
 
