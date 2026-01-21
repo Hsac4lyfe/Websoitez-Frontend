@@ -364,6 +364,24 @@
         btn.disabled = false;
       }
     });
+    window.addEventListener('load', () => {
+      // Remove loading state so videos fade in
+      document.body.classList.remove('is-loading');
+  
+      // Ensure videos resume if tab was inactive
+      document.querySelectorAll('video').forEach(v => {
+        v.play().catch(() => {});
+      });
+    });
+  
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        document.querySelectorAll('video').forEach(v => {
+          v.currentTime = 0;
+          v.play().catch(() => {});
+        });
+      }
+    });
   </script>
 </body>
 </html>
