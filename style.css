@@ -194,7 +194,7 @@ input#url {
     width: 100%; 
     box-sizing: border-box; 
 }
-textarea { width: 100%; }
+textarea { width: 20%; }
 
 ::placeholder { font-family: 'Papyrus', fantasy; }
 
@@ -544,6 +544,7 @@ body.is-loading .title-video {
 }
 #bg-video { transition-delay: 0s; }
 .title-video { transition-delay: 0.12s; }
+
 
 
 
