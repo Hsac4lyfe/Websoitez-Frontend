@@ -466,7 +466,16 @@ button:active { transform: scale(0.97); transition: transform 0.08s ease; }
 
   .disclaimer { margin-bottom: 2vh; flex-shrink: 0; }
   #timer #colon { top: -2px; font-size: 1.6rem; }
+    
+  .container textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
+
 
 /* ----------  PC/Global micro-animations  ---------- */
 @keyframes fadeIn {
@@ -544,6 +553,7 @@ body.is-loading .title-video {
 }
 #bg-video { transition-delay: 0s; }
 .title-video { transition-delay: 0.12s; }
+
 
 
 
